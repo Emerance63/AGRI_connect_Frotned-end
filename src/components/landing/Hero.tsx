@@ -16,7 +16,7 @@ export default function Hero() {
           priority
           quality={90}
         />
-        
+
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/25" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
       </div>
@@ -27,13 +27,13 @@ export default function Hero() {
         <div
           className="mb-8 animate-[fadeInUp_0.6s_ease-out_both]"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-accent-500/30 bg-accent-500/15 px-5 py-2.5 text-sm font-medium text-accent-300 backdrop-blur-sm">
+          <span className="inline-flex items-center gap-2 rounded-full border border-accent-500/30 bg-accent-500/15 px-5 py-2.5 text-sm font-medium text-accent-400 backdrop-blur-sm">
             <span className="text-base">🌾</span>
             Rwanda&apos;s #1 Agricultural Marketplace
           </span>
         </div>
 
-       
+
         <h1
           className="max-w-4xl text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl lg:text-[5.25rem] animate-[fadeInUp_0.8s_ease-out_0.15s_both]"
         >
@@ -42,7 +42,7 @@ export default function Hero() {
           <span className="text-brand-500">Directly to Markets</span>
         </h1>
 
-        
+
         <p
           className="mt-6 max-w-2xl text-base leading-relaxed text-gray-300 sm:text-lg md:text-xl animate-[fadeInUp_0.8s_ease-out_0.3s_both]"
         >
@@ -82,8 +82,7 @@ export default function Hero() {
 
       </div>
 
-      {/* Bottom fade to page content */}
-      <div className="absolute inset-x-0 bottom-0 z-10 h-32 bg-gradient-to-t from-surface to-transparent" />
+
     </section>
   );
 }

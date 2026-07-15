@@ -39,8 +39,8 @@ export default function Navbar() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-brand-900/95 backdrop-blur-lg shadow-lg shadow-black/10 border-b border-brand-700/30"
-          : "bg-brand-900/70 backdrop-blur-sm"
+          ? "bg-white/95 backdrop-blur-lg shadow-lg shadow-black/5 border-b border-border dark:bg-brand-900/95 dark:shadow-black/10 dark:border-brand-700/30"
+          : "bg-white/70 backdrop-blur-sm dark:bg-brand-900/70"
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 lg:px-8">
@@ -57,10 +57,10 @@ export default function Navbar() {
           </div>
           {/* Text */}
           <div className="hidden sm:block">
-            <span className="block text-base font-bold leading-tight text-white">
+            <span className="block text-base font-bold leading-tight text-black dark:text-white">
               AgriConnect Rwanda
             </span>
-            <span className="block text-[11px] font-medium leading-tight text-brand-300/70">
+            <span className="block text-[11px] font-medium leading-tight text-gray-600 dark:text-brand-300/70">
               Connecting Farmers to Markets
             </span>
           </div>
@@ -81,7 +81,7 @@ export default function Navbar() {
                       "rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200",
                       active
                         ? "bg-brand-500 text-white shadow-md shadow-brand-500/25"
-                        : "text-brand-200 hover:text-white hover:bg-white/[.06]"
+                        : "text-gray-700 hover:text-black hover:bg-black/5 dark:text-brand-200 dark:hover:text-white dark:hover:bg-white/[.06]"
                     )}
                   >
                     {label}
@@ -93,7 +93,7 @@ export default function Navbar() {
 
           {/* ── RW badge + theme toggle ── */}
           <div className="ml-5 flex items-center gap-3">
-            <span className="inline-flex items-center gap-1 rounded-md bg-white/[.07] border border-white/[.08] px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-200">
+            <span className="inline-flex items-center gap-1 rounded-md bg-black/5 border border-black/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-black dark:bg-white/[.07] dark:border-white/[.08] dark:text-brand-200">
               <span className="text-[10px]">🇷🇼</span> RW
             </span>
             <ThemeToggle />
@@ -103,7 +103,7 @@ export default function Navbar() {
         {/* ── Mobile hamburger ── */}
         <button
           onClick={() => setMobileOpen((v) => !v)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg text-brand-200 transition-colors hover:bg-white/[.06] hover:text-white lg:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-black transition-colors hover:bg-black/5 dark:text-brand-200 dark:hover:bg-white/[.06] dark:hover:text-white lg:hidden"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
         >
@@ -142,7 +142,7 @@ export default function Navbar() {
       {/* ── Mobile menu panel ── */}
       <div
         className={cn(
-          "absolute inset-x-0 top-16 border-b border-brand-700/30 bg-brand-900 shadow-2xl shadow-black/30 transition-all duration-300 lg:hidden max-h-[calc(100vh-4rem)] overflow-y-auto",
+          "absolute inset-x-0 top-16 border-b border-border bg-white shadow-2xl shadow-black/10 transition-all duration-300 lg:hidden max-h-[calc(100vh-4rem)] overflow-y-auto dark:border-brand-700/30 dark:bg-brand-900 dark:shadow-black/30",
           mobileOpen
             ? "translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-2 opacity-0"
@@ -161,7 +161,7 @@ export default function Navbar() {
                     "block rounded-lg px-4 py-3 text-sm font-medium transition-colors",
                     active
                       ? "bg-brand-500 text-white"
-                      : "text-brand-200 hover:bg-white/[.06] hover:text-white"
+                      : "text-gray-700 hover:bg-black/5 hover:text-black dark:text-brand-200 dark:hover:bg-white/[.06] dark:hover:text-white"
                   )}
                 >
                   {label}
@@ -171,8 +171,8 @@ export default function Navbar() {
           })}
 
           {/* Mobile theme toggle */}
-          <li className="mt-2 flex items-center justify-between border-t border-brand-700/30 px-4 pt-4">
-            <span className="text-sm text-brand-300">Appearance</span>
+          <li className="mt-2 flex items-center justify-between border-t border-border px-4 pt-4 dark:border-brand-700/30">
+            <span className="text-sm text-black dark:text-brand-300">Appearance</span>
             <ThemeToggle />
           </li>
         </ul>
