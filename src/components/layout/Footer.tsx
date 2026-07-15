@@ -165,7 +165,7 @@ export default function Footer() {
               © 2025 AgriConnect Rwanda. All rights reserved.
             </p>
             <p className="text-sm text-ink-muted">
-              Made with ❤️ in Rwanda
+              Made with in Rwanda
             </p>
             <div className="flex items-center gap-2">
               <span className="text-sm text-ink-muted">Currency:</span>
