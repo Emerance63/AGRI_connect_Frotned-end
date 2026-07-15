@@ -23,7 +23,7 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="bg-[#0b1b12] py-20 px-4 sm:px-6 lg:px-8">
+    <section className="bg-[#0b1b12] py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-white sm:text-4xl">
