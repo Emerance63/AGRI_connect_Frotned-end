@@ -35,7 +35,7 @@ export default function Hero() {
 
        
         <h1
-          className="max-w-4xl text-5xl font-extrabold leading-[1.08] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.25rem] animate-[fadeInUp_0.8s_ease-out_0.15s_both]"
+          className="max-w-4xl text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl lg:text-[5.25rem] animate-[fadeInUp_0.8s_ease-out_0.15s_both]"
         >
           <span className="text-white">Connecting Farmers</span>
           <br />
@@ -44,7 +44,7 @@ export default function Hero() {
 
         
         <p
-          className="mt-6 max-w-2xl text-lg leading-relaxed text-gray-300 sm:text-xl animate-[fadeInUp_0.8s_ease-out_0.3s_both]"
+          className="mt-6 max-w-2xl text-base leading-relaxed text-gray-300 sm:text-lg md:text-xl animate-[fadeInUp_0.8s_ease-out_0.3s_both]"
         >
           Rwanda&apos;s most trusted agricultural cooperative platform. Buy
           fresh produce directly from verified farmer cooperatives across the
