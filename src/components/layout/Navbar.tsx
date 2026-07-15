@@ -142,7 +142,7 @@ export default function Navbar() {
       {/* ── Mobile menu panel ── */}
       <div
         className={cn(
-          "absolute inset-x-0 top-16 border-b border-brand-700/30 bg-brand-900 shadow-2xl shadow-black/30 transition-all duration-300 lg:hidden",
+          "absolute inset-x-0 top-16 border-b border-brand-700/30 bg-brand-900 shadow-2xl shadow-black/30 transition-all duration-300 lg:hidden max-h-[calc(100vh-4rem)] overflow-y-auto",
           mobileOpen
             ? "translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-2 opacity-0"
