@@ -48,7 +48,7 @@ export default function Footer() {
               <h4 className="text-xs font-semibold uppercase tracking-wider text-ink">
                 STAY UPDATED WITH HARVEST NEWS
               </h4>
-              <form onSubmit={handleSubscribe} className="flex gap-2">
+              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="email"
                   placeholder="Your email address"
@@ -59,7 +59,7 @@ export default function Footer() {
                 />
                 <button
                   type="submit"
-                  className="rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-500"
+                  className="w-full sm:w-auto rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-500"
                 >
                   Subscribe
                 </button>
