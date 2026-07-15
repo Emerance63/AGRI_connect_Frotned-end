@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------
+   Color tokens: light mode is default, .dark overrides.
+   These map to `surface`, `surface-alt`, `surface-card`,
+   `ink`, `ink-muted`, `border` in tailwind.config.ts
+--------------------------------------------------- */
+:root {
+  --surface: #FFFFFF;
+  --surface-alt: #F0F9F1;   /* "Why Choose AgriConnect" section bg */
+  --surface-card: #FFFFFF;
+  --ink: #0F172A;
+  --ink-muted: #4B5A52;
+  --border: #E3ECE6;
+
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Sora", sans-serif;
+}
+
+.dark {
+  --surface: #0B0F0D;
+  --surface-alt: #101512;
+  --surface-card: #141B17;
+  --ink: #F1F5F1;
+  --ink-muted: #9AAAA1;
+  --border: #22302A;
+}
+
+body {
+  background-color: var(--surface);
+  color: var(--ink);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+:focus-visible {
+  outline: 2px solid theme("colors.brand.500");
+  outline-offset: 2px;
+}
