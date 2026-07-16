@@ -33,7 +33,42 @@ export default function InventoryPage() {
         <span className="rounded-full bg-red-100 px-3 py-1 text-red-700 dark:bg-red-500/20 dark:text-red-400">1 Out</span>
       </div>
 
-      <div className="overflow-x-auto rounded-xl bg-white shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10">
+      <div className="space-y-3 sm:hidden">
+        {items.map((item) => (
+          <article key={item.name} className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="font-semibold text-gray-900 dark:text-white">{item.name}</p>
+                <p className="text-xs text-gray-400 dark:text-green-100/50">{item.category}</p>
+              </div>
+              <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${statusColor[item.status]}`}>
+                {item.status}
+              </span>
+            </div>
+
+            <div className="mt-3 grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <p className="text-gray-400 dark:text-green-100/50">Current stock</p>
+                <p className="font-semibold text-gray-900 dark:text-white">{item.stock}</p>
+              </div>
+              <div>
+                <p className="text-gray-400 dark:text-green-100/50">Available</p>
+                <p className="font-semibold text-gray-900 dark:text-white">{item.available}</p>
+              </div>
+              <div className="col-span-2">
+                <p className="text-gray-400 dark:text-green-100/50">Last updated</p>
+                <p className="font-semibold text-gray-900 dark:text-white">{item.updated}</p>
+              </div>
+            </div>
+
+            <div className="mt-4 flex justify-end">
+              <button className="text-xs font-medium text-green-600 hover:underline dark:text-green-400">Update</button>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="hidden overflow-x-auto rounded-xl bg-white shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10 sm:block">
         <table className="min-w-[760px] w-full text-sm">
           <thead>
             <tr className="border-b border-gray-100 dark:border-white/10 text-xs text-gray-500 dark:text-green-100/50">

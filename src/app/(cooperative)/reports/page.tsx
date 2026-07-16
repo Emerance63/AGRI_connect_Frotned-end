@@ -40,9 +40,9 @@ export default function ReportsPage() {
 
       {/* Charts row */}
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-        <div className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10">
+        <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-100 sm:p-5 dark:bg-[#112d1a] dark:ring-white/10">
           <h2 className="mb-4 text-sm font-semibold text-gray-800 dark:text-white">Revenue Trend</h2>
-          <ResponsiveContainer width="100%" height={200}>
+          <ResponsiveContainer width="100%" height={180}>
             <LineChart data={revenueData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
               <XAxis dataKey="month" tick={{ fontSize: 11 }} tickLine={false} axisLine={false} />
@@ -53,7 +53,7 @@ export default function ReportsPage() {
           </ResponsiveContainer>
         </div>
 
-        <div className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10">
+        <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-100 sm:p-5 dark:bg-[#112d1a] dark:ring-white/10">
           <h2 className="mb-4 text-sm font-semibold text-gray-800 dark:text-white">Top Selling Products</h2>
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <ResponsiveContainer width="100%" height={180}>
@@ -77,7 +77,43 @@ export default function ReportsPage() {
       </div>
 
       {/* Best Buyers table */}
-      <div className="overflow-x-auto rounded-xl bg-white shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10">
+      <div className="space-y-3 md:hidden">
+        {buyers.map((b) => (
+          <article key={b.name} className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="font-semibold text-gray-900 dark:text-white">{b.name}</p>
+                <p className="text-xs text-gray-400 dark:text-green-100/60">{b.location}</p>
+              </div>
+              <span className="rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700 dark:bg-green-500/20 dark:text-green-400">
+                Active
+              </span>
+            </div>
+
+            <div className="mt-3 grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <p className="text-gray-400 dark:text-green-100/50">Total orders</p>
+                <p className="font-semibold text-gray-900 dark:text-white">{b.orders}</p>
+              </div>
+              <div>
+                <p className="text-gray-400 dark:text-green-100/50">Total spend</p>
+                <p className="font-semibold text-gray-900 dark:text-white">{b.spend}</p>
+              </div>
+              <div className="col-span-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-gray-400 dark:text-green-100/50">Reliability</span>
+                  <span className="font-semibold text-gray-600 dark:text-green-100/70">{b.reliability}%</span>
+                </div>
+                <div className="mt-1.5 h-1.5 w-full rounded-full bg-gray-100 dark:bg-white/10">
+                  <div className="h-1.5 rounded-full bg-green-500" style={{ width: `${b.reliability}%` }} />
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="hidden overflow-x-auto rounded-xl bg-white shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10 md:block">
         <div className="px-5 py-4 border-b border-gray-100 dark:border-white/10">
           <h2 className="text-sm font-semibold text-gray-800 dark:text-white">Best Buyers Report</h2>
         </div>
