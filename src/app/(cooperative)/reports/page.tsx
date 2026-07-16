@@ -26,12 +26,12 @@ const buyers = [
 export default function ReportsPage() {
   return (
     <div className="space-y-5">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <p className="text-xs text-gray-400 dark:text-green-100/50">Export and share cooperative performance reports</p>
           <h1 className="text-lg font-bold text-gray-900 dark:text-white">Reports</h1>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-white/10 dark:text-green-100/70 dark:hover:bg-white/5">Preview PDF</button>
           <button className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 dark:border-white/10 dark:text-green-100/70 dark:hover:bg-white/5">Export Excel</button>
           <button className="rounded-lg bg-green-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-green-700">↑ Share Report</button>
@@ -55,15 +55,15 @@ export default function ReportsPage() {
 
         <div className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10">
           <h2 className="mb-4 text-sm font-semibold text-gray-800 dark:text-white">Top Selling Products</h2>
-          <div className="flex items-center gap-4">
-            <ResponsiveContainer width="50%" height={180}>
+          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            <ResponsiveContainer width="100%" height={180}>
               <PieChart>
                 <Pie data={topProducts} cx="50%" cy="50%" innerRadius={50} outerRadius={80} dataKey="value">
                   {topProducts.map((p, i) => <Cell key={i} fill={p.color} />)}
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
-            <ul className="space-y-2 text-xs">
+            <ul className="w-full space-y-2 text-xs sm:w-auto">
               {topProducts.map((p) => (
                 <li key={p.name} className="flex items-center gap-2">
                   <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ background: p.color }} />
@@ -77,11 +77,11 @@ export default function ReportsPage() {
       </div>
 
       {/* Best Buyers table */}
-      <div className="rounded-xl bg-white shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10 overflow-hidden">
+      <div className="overflow-x-auto rounded-xl bg-white shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10">
         <div className="px-5 py-4 border-b border-gray-100 dark:border-white/10">
           <h2 className="text-sm font-semibold text-gray-800 dark:text-white">Best Buyers Report</h2>
         </div>
-        <table className="w-full text-sm">
+        <table className="min-w-[820px] w-full text-sm">
           <thead>
             <tr className="text-xs text-gray-500 dark:text-green-100/50 border-b border-gray-100 dark:border-white/10">
               <th className="px-5 py-3 text-left font-medium">Buyer</th>

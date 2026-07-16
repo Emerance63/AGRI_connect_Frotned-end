@@ -18,7 +18,7 @@ const statusColor: Record<string, string> = {
 export default function InventoryPage() {
   return (
     <div className="space-y-5">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-xs text-gray-400 dark:text-green-100/50">Manage your product catalog</p>
           <h1 className="text-lg font-bold text-gray-900 dark:text-white">Inventory</h1>
@@ -27,14 +27,14 @@ export default function InventoryPage() {
       </div>
 
       {/* Summary badges */}
-      <div className="flex gap-2 text-xs font-medium">
+      <div className="flex flex-wrap gap-2 text-xs font-medium">
         <span className="rounded-full bg-green-100 px-3 py-1 text-green-700 dark:bg-green-500/20 dark:text-green-400">4 Healthy</span>
         <span className="rounded-full bg-amber-100 px-3 py-1 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400">2 Low Stock</span>
         <span className="rounded-full bg-red-100 px-3 py-1 text-red-700 dark:bg-red-500/20 dark:text-red-400">1 Out</span>
       </div>
 
-      <div className="rounded-xl bg-white shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10 overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-xl bg-white shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10">
+        <table className="min-w-[760px] w-full text-sm">
           <thead>
             <tr className="border-b border-gray-100 dark:border-white/10 text-xs text-gray-500 dark:text-green-100/50">
               <th className="px-5 py-3 text-left font-medium">Product</th>
