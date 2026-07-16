@@ -8,19 +8,19 @@ const buyers = [
 
 export default function BuyerMatchCard() {
   return (
-    <div className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10">
+    <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-100 sm:p-5 dark:bg-[#112d1a] dark:ring-white/10">
       <h2 className="mb-4 text-sm font-semibold text-gray-800 dark:text-white">
         Smart Buyer Matching
       </h2>
-      <ul className="space-y-4">
+      <ul className="space-y-3 sm:space-y-4">
         {buyers.map((b) => (
           <li key={b.id}>
-            <div className="flex items-center justify-between">
-              <div>
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
                 <p className="text-sm font-medium text-gray-900 dark:text-white">{b.name}</p>
-                <p className="text-xs text-gray-400 dark:text-green-100/50">{b.location}</p>
+                <p className="truncate text-xs text-gray-400 dark:text-green-100/50">{b.location}</p>
               </div>
-              <span className="text-xs font-semibold text-green-600 dark:text-green-400">
+              <span className="shrink-0 text-xs font-semibold text-green-600 dark:text-green-400">
                 {b.reliability}%
               </span>
             </div>

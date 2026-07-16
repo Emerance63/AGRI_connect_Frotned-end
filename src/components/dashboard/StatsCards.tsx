@@ -60,17 +60,17 @@ const stats = [
 
 export default function StatsCards() {
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
       {stats.map((s) => (
         <div
           key={s.label}
-          className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10"
+          className="rounded-xl bg-white p-3 shadow-sm ring-1 ring-gray-100 sm:p-4 dark:bg-[#112d1a] dark:ring-white/10"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-gray-500 dark:text-green-100/60">{s.label}</span>
             <span className="text-green-600 dark:text-green-400">{s.icon}</span>
           </div>
-          <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">{s.value}</p>
+          <p className="mt-2 text-xl font-bold text-gray-900 sm:text-2xl dark:text-white">{s.value}</p>
           <p className={`mt-1 flex items-center gap-1 text-xs font-medium ${s.trendUp ? "text-green-600 dark:text-green-400" : "text-amber-500"}`}>
             {s.trendUp ? (
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M18 15l-6-6-6 6" /></svg>
