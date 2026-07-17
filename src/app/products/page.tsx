@@ -38,7 +38,7 @@ export default function ProductsPage() {
           </h1>
 
           <p className="text-gray-600 dark:text-gray-300">
-            Certified produce from cooperatives here in Rwanda  across 30 districts.
+            Certified produce from cooperatives across Rwanda's 30 districts.
           </p>
         </div>
       </section>
