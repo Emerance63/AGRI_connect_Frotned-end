@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Sora } from "next/font/google";
+// @ts-ignore: allow importing global css without type declarations
 import "./globals.css";
 import ThemeProvider from "@/components/layout/ThemeProvider";
 import ShellWrapper from "@/components/layout/ShellWrapper";
