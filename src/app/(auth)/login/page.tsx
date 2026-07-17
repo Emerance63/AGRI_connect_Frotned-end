@@ -13,8 +13,8 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#06170d] px-4 py-6 sm:px-6 lg:flex lg:items-center lg:justify-center lg:px-10">
-      <div className="w-full max-w-6xl overflow-hidden rounded-sm border border-emerald-500/50 bg-[#071b0f] shadow-2xl shadow-black/30 lg:grid lg:min-h-[600px] lg:grid-cols-2">
+    <main className="min-h-screen bg-gray-50 px-4 py-6 dark:bg-[#06170d] sm:px-6 lg:flex lg:items-center lg:justify-center lg:px-10">
+      <div className="w-full max-w-6xl overflow-hidden rounded-sm border border-emerald-500/50 bg-white shadow-2xl shadow-black/30 dark:bg-[#071b0f] lg:grid lg:min-h-[600px] lg:grid-cols-2">
         <section
           className="relative min-h-[400px] overflow-hidden bg-cover bg-center sm:min-h-[480px] lg:min-h-full"
           style={{ backgroundImage: "url('/images/products/regg.jpg')" }}
@@ -39,31 +39,31 @@ export default function LoginPage() {
           </div>
         </section>
 
-        <section className="flex items-center bg-[#071b0f] px-6 py-12 sm:px-12 lg:px-16">
+        <section className="flex items-center bg-white px-6 py-12 dark:bg-[#071b0f] sm:px-12 lg:px-16">
           <div className="mx-auto w-full max-w-md">
-            <h2 className="text-2xl font-bold text-white">Cooperative Login</h2>
-            <p className="mt-1 text-sm text-emerald-100/55">Access your cooperative dashboard</p>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Cooperative Login</h2>
+            <p className="mt-1 text-sm text-gray-500 dark:text-emerald-100/55">Access your cooperative dashboard</p>
             <form onSubmit={handleSubmit} className="mt-8 space-y-4">
               <div>
-                <label className="mb-2 block text-xs font-medium text-emerald-50">Cooperative Name</label>
-                <input value={coopName} onChange={(event) => setCoopName(event.target.value)} placeholder="e.g. Musanze Farmers Cooperative" className="w-full rounded-lg border border-emerald-900/70 bg-[#0d2a19] px-4 py-3 text-sm text-white outline-none placeholder:text-emerald-100/30 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+                <label className="mb-2 block text-xs font-medium text-gray-700 dark:text-emerald-50">Cooperative Name</label>
+                <input value={coopName} onChange={(event) => setCoopName(event.target.value)} placeholder="e.g. Musanze Farmers Cooperative" className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 dark:border-emerald-900/70 dark:bg-[#0d2a19] dark:text-white dark:placeholder:text-emerald-100/30" />
               </div>
               <div>
-                <label className="mb-2 block text-xs font-medium text-emerald-50">Email Address</label>
-                <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="admin@coop.rw" className="w-full rounded-lg border border-emerald-900/70 bg-[#0d2a19] px-4 py-3 text-sm text-white outline-none placeholder:text-emerald-100/30 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+                <label className="mb-2 block text-xs font-medium text-gray-700 dark:text-emerald-50">Email Address</label>
+                <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="admin@coop.rw" className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 dark:border-emerald-900/70 dark:bg-[#0d2a19] dark:text-white dark:placeholder:text-emerald-100/30" />
               </div>
               <div>
                 <div className="mb-2 flex items-center justify-between gap-4">
-                  <label className="text-xs font-medium text-emerald-50">Password</label>
-                  <Link href="/forgot-password" className="text-xs text-emerald-400 transition hover:text-emerald-300 hover:underline">Forgot password?</Link>
+                  <label className="text-xs font-medium text-gray-700 dark:text-emerald-50">Password</label>
+                  <Link href="/forgot-password" className="text-xs text-emerald-600 transition hover:text-emerald-500 hover:underline dark:text-emerald-400 dark:hover:text-emerald-300">Forgot password?</Link>
                 </div>
-                <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Enter your password" className="w-full rounded-lg border border-emerald-900/70 bg-[#0d2a19] px-4 py-3 text-sm text-white outline-none placeholder:text-emerald-100/30 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500" />
+                <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Enter your password" className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 dark:border-emerald-900/70 dark:bg-[#0d2a19] dark:text-white dark:placeholder:text-emerald-100/30" />
               </div>
-              <button type="submit" className="w-full rounded-lg bg-gradient-to-r from-emerald-600 to-emerald-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-950/30 transition hover:from-emerald-500 hover:to-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-[#071b0f]">Sign In</button>
+              <button type="submit" className="w-full rounded-lg bg-gradient-to-r from-emerald-600 to-emerald-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-950/30 transition hover:from-emerald-500 hover:to-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 dark:focus:ring-offset-[#071b0f]">Sign In</button>
             </form>
-            <p className="mt-6 text-center text-xs text-emerald-100/55">
+            <p className="mt-6 text-center text-xs text-gray-500 dark:text-emerald-100/55">
               Don&apos;t have an account?{" "}
-              <Link href="/register" className="text-emerald-400 hover:underline">Register your cooperative</Link>
+              <Link href="/register" className="text-emerald-600 hover:underline dark:text-emerald-400">Register your cooperative</Link>
             </p>
           </div>
         </section>

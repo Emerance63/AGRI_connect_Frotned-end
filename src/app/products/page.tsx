@@ -45,14 +45,14 @@ export default function ProductsPage() {
   }, [filteredProducts, currentPage]);
 
   return (
-    <main className="min-h-screen bg-[#0A100D] dark:bg-[#0A100D]">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-950">
       {/* Hero */}
-      <section className="bg-[#111811] px-6 py-12 border-b border-white/5">
+      <section className="bg-green-50 border-b border-gray-200 px-6 py-12 dark:bg-gray-900 dark:border-gray-800">
         <div className="mx-auto max-w-7xl">
-          <h1 className="mb-2 text-4xl font-extrabold text-white">
+          <h1 className="mb-2 text-4xl font-extrabold text-gray-900 dark:text-white">
             All Products
           </h1>
-          <p className="text-gray-400">
+          <p className="text-gray-600 dark:text-gray-300">
             Certified produce from cooperatives across Rwanda's 30 districts.
           </p>
         </div>
@@ -77,7 +77,7 @@ export default function ProductsPage() {
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition-colors hover:bg-white/10 disabled:opacity-50 disabled:hover:bg-white/5"
+              className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50 disabled:hover:bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:disabled:hover:bg-gray-800"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
@@ -90,7 +90,7 @@ export default function ProductsPage() {
                   className={`flex h-10 w-10 items-center justify-center rounded-lg text-sm font-semibold transition-colors ${
                     currentPage === i + 1
                       ? "bg-green-600 text-white"
-                      : "border border-white/10 bg-white/5 text-gray-300 hover:bg-white/10"
+                      : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                   }`}
                 >
                   {i + 1}
@@ -101,7 +101,7 @@ export default function ProductsPage() {
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
-              className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition-colors hover:bg-white/10 disabled:opacity-50 disabled:hover:bg-white/5"
+              className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50 disabled:hover:bg-white dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:disabled:hover:bg-gray-800"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
