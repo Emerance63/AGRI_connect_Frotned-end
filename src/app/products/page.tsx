@@ -36,9 +36,8 @@ export default function ProductsPage() {
           <h1 className="mb-2 text-4xl font-extrabold text-gray-900 dark:text-white">
             All Products
           </h1>
-
           <p className="text-gray-600 dark:text-gray-300">
-            Certified produce from cooperatives here in Rwanda  across 30 districts.
+            Certified produce from cooperatives here in Rwanda across 30 districts.
           </p>
         </div>
       </section>
@@ -47,7 +46,6 @@ export default function ProductsPage() {
       <section className="mx-auto max-w-7xl px-6 py-10">
         <div className="mb-8 flex flex-col gap-4 md:flex-row">
           <SearchBar value={search} onChange={setSearch} />
-
           <CategoryFilter
             categories={categories}
             value={category}
