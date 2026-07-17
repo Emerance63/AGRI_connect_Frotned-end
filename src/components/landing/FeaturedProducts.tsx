@@ -7,7 +7,7 @@ export default function FeaturedProducts() {
   const featured = products.slice(0, 8);
 
   return (
-    <section className="bg-gray-50 py-16 dark:bg-gray-950 sm:py-24">
+    <section className="bg-surface py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-col items-center justify-between gap-4 sm:flex-row">
           <div>

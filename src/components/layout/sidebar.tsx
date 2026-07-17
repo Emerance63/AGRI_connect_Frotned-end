@@ -93,11 +93,10 @@ export default function Sidebar({ onClose }: SidebarProps) {
               key={item.href}
               href={item.href}
               onClick={onClose}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                isActive
+              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${isActive
                   ? "bg-green-600 text-white"
                   : "text-green-100/70 hover:bg-white/5 hover:text-white"
-              }`}
+                }`}
             >
               {item.icon}
               {item.name}
