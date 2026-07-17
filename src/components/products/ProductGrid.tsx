@@ -1,5 +1,5 @@
 import type { Product } from "@/data/products";
-import ProductCard from "./Productcard";
+import ProductCard from "./ProductCard";
 
 export default function ProductGrid({ products }: { products: Product[] }) {
   if (products.length === 0) {
