@@ -33,8 +33,19 @@ body {
   color: var(--ink);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
-
 :focus-visible {
   outline: 2px solid theme("colors.brand.500");
   outline-offset: 2px;
+}
+
+/* ── Hero animations ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
