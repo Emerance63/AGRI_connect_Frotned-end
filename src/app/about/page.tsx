@@ -126,7 +126,7 @@ const COMMUNITY = [
   {
     role: "Farmers",
     description: "Empowering farmers to grow better and earn more",
-    image: "/images/hero-bg.png",
+    image: "/images/products/famers.jpeg",
   },
   {
     role: "Cooperatives",
@@ -136,7 +136,7 @@ const COMMUNITY = [
   {
     role: "Buyers",
     description: "Bridging buyers with quality Rwandan produce",
-    image: "/images/hero-bg.png",
+    image: "/images/products/Buyers.jpg",
   },
 ];
 
@@ -154,7 +154,7 @@ export default function AboutPage() {
           {/* Image */}
           <div className="relative h-72 sm:h-96 lg:h-[460px] rounded-2xl overflow-hidden shadow-2xl shadow-black/20">
             <Image
-              src="/images/hero-bg.png"
+              src="/images/products/who.jpeg"
               alt="Rwandan farmer working in the field"
               fill
               className="object-cover"
