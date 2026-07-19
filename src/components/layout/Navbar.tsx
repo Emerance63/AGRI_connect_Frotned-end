@@ -5,19 +5,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import ThemeToggle from "./ThemeToggle";
+import { useLanguage } from "@/lib/LanguageContext";
 
-const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/products", label: "Products" },
-  { href: "/dashboard", label: "Cooperative Dashboard" },
-  { href: "/login", label: "Cooperative Login" },
-] as const;
+type NavLink = { href: string; labelKey: keyof ReturnType<typeof useLanguage>["t"]["nav"] };
+
+const NAV_LINK_KEYS: NavLink[] = [
+  { href: "/", labelKey: "home" },
+  { href: "/about", labelKey: "about" },
+  { href: "/products", labelKey: "products" },
+  { href: "/dashboard", labelKey: "dashboard" },
+  { href: "/login", labelKey: "login" },
+];
 
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { locale, t, toggleLocale } = useLanguage();
 
   /* ── Track scroll for background blur ── */
   useEffect(() => {
@@ -70,7 +74,7 @@ export default function Navbar() {
         {/* ── Desktop links ── */}
         <div className="hidden lg:flex items-center gap-1">
           <ul className="flex items-center gap-0.5">
-            {NAV_LINKS.map(({ href, label }) => {
+            {NAV_LINK_KEYS.map(({ href, labelKey }) => {
               const active =
                 href === "/" ? pathname === "/" : pathname.startsWith(href);
 
@@ -85,18 +89,24 @@ export default function Navbar() {
                         : "text-gray-700 hover:text-black hover:bg-black/5 dark:text-brand-200 dark:hover:text-white dark:hover:bg-white/[.06]"
                     )}
                   >
-                    {label}
+                    {t.nav[labelKey]}
                   </Link>
                 </li>
               );
             })}
           </ul>
 
-          {/* ── RW badge + theme toggle ── */}
+          {/* ── Language switcher + theme toggle ── */}
           <div className="ml-5 flex items-center gap-3">
-            <span className="inline-flex items-center gap-1 rounded-md bg-black/5 border border-black/10 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-black dark:bg-white/[.07] dark:border-white/[.08] dark:text-brand-200">
-              <span className="text-[10px]">🇷🇼</span> RW
-            </span>
+            {/* Language toggle button */}
+            <button
+              onClick={toggleLocale}
+              aria-label={locale === "en" ? "Switch to Kinyarwanda" : "Switch to English"}
+              className="inline-flex items-center gap-1.5 rounded-md border border-black/10 bg-black/5 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-black transition-all duration-200 hover:bg-brand-500 hover:text-white hover:border-brand-500 dark:bg-white/[.07] dark:border-white/[.08] dark:text-brand-200 dark:hover:bg-brand-500 dark:hover:text-white dark:hover:border-brand-500"
+            >
+              <span className="text-[10px]">🇷🇼</span>
+              {locale === "en" ? "EN" : "RW"}
+            </button>
             <ThemeToggle />
           </div>
         </div>
@@ -150,7 +160,7 @@ export default function Navbar() {
         )}
       >
         <ul className="flex flex-col gap-1 px-5 py-4">
-          {NAV_LINKS.map(({ href, label }) => {
+          {NAV_LINK_KEYS.map(({ href, labelKey }) => {
             const active =
               href === "/" ? pathname === "/" : pathname.startsWith(href);
 
@@ -165,15 +175,26 @@ export default function Navbar() {
                       : "text-gray-700 hover:bg-black/5 hover:text-black dark:text-brand-200 dark:hover:bg-white/[.06] dark:hover:text-white"
                   )}
                 >
-                  {label}
+                  {t.nav[labelKey]}
                 </Link>
               </li>
             );
           })}
 
-          {/* Mobile theme toggle */}
+          {/* Mobile: Language switcher */}
           <li className="mt-2 flex items-center justify-between border-t border-border px-4 pt-4 dark:border-brand-700/30">
-            <span className="text-sm text-black dark:text-brand-300">Appearance</span>
+            <span className="text-sm text-black dark:text-brand-300">🇷🇼 Language</span>
+            <button
+              onClick={toggleLocale}
+              className="rounded-md border border-black/10 bg-black/5 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-black transition-all duration-200 hover:bg-brand-500 hover:text-white dark:bg-white/[.07] dark:border-white/[.08] dark:text-brand-200"
+            >
+              {locale === "en" ? "Switch to RW" : "Switch to EN"}
+            </button>
+          </li>
+
+          {/* Mobile theme toggle */}
+          <li className="flex items-center justify-between px-4 pt-3 dark:border-brand-700/30">
+            <span className="text-sm text-black dark:text-brand-300">{t.nav.appearance}</span>
             <ThemeToggle />
           </li>
         </ul>

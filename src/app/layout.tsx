@@ -4,6 +4,7 @@ import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/layout/ThemeProvider";
 import ShellWrapper from "@/components/layout/ShellWrapper";
+import { LanguageProvider } from "@/lib/LanguageContext";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -40,7 +41,9 @@ export default function RootLayout({
     >
       <body className="min-h-screen font-sans flex flex-col">
         <ThemeProvider>
-          <ShellWrapper>{children}</ShellWrapper>
+          <LanguageProvider>
+            <ShellWrapper>{children}</ShellWrapper>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
