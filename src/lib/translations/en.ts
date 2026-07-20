@@ -192,6 +192,27 @@ const en = {
     sidebarReports: "Reports",
     sidebarCooperative: "Cooperative",
   },
+
+  // Inventory Page
+  inventory: {
+    title: "Inventory",
+    subtitle: "Manage your product catalog",
+    home: "Home",
+    healthy: "Healthy",
+    lowStock: "Low Stock",
+    out: "Out",
+    infoBanner: "Update is now a live action. Click it to refresh the item's last-updated state and surface the selected item above the list.",
+    currentStock: "Current Stock",
+    available: "Available",
+    lastUpdated: "Last Updated",
+    product: "Product",
+    category: "Category",
+    status: "Status",
+    action: "Action",
+    update: "Update",
+    selectedStockItem: "Selected Stock Item",
+    selectedDescription: "Update shows exactly which item changed and when it was touched.",
+  },
 };
 
 export type Translations = typeof en;

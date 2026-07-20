@@ -194,6 +194,27 @@ const rw: Translations = {
     sidebarReports: "Raporo",
     sidebarCooperative: "Koperative",
   },
+
+  // Inventory Page
+  inventory: {
+    title: "Ububiko",
+    subtitle: "Gucunga ibicuruzwa byawe",
+    home: "Ahabanza",
+    healthy: "Byiza",
+    lowStock: "Ububiko Buke",
+    out: "Byarangiye",
+    infoBanner: "Guhindura ni igikorwa kizima. Kanda kugirango uhindure imiterere y'igicuruzwa n'igihe cyahindutse.",
+    currentStock: "Ububiko Buriho",
+    available: "Iboneka",
+    lastUpdated: "Byahinduwe",
+    product: "Igicuruzwa",
+    category: "Icyiciro",
+    status: "Imiterere",
+    action: "Igikorwa",
+    update: "Hindura",
+    selectedStockItem: "Igicuruzwa Cyahiswemo",
+    selectedDescription: "Guhindura kwerekana neza igicuruzwa cyahindutse n'igihe cyakoreshejwe.",
+  },
 };
 
 export default rw;
