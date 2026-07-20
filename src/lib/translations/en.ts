@@ -168,8 +168,23 @@ const en = {
     requestsPending: "requests pending review today",
     monthlyRevenue: "Monthly Revenue",
     august: "August 2025",
+    // Stats Card labels
+    totalProducts: "Total Products",
+    inventoryAvailable: "Inventory Available",
+    newRequests: "New Requests",
+    monthlyRevenueStat: "Monthly Revenue",
+    pendingDeliveries: "Pending Deliveries",
+    // Stats trends
+    trendUp: "+3 this week",
+    trendDown: "-1 scheduled",
+    // RevenueChart
+    revenueChartTitle: "Monthly Revenue (RWF)",
+    revenueChartPeriod: "Aug 2024 — Jan 2025",
+    // BuyerMatchCard
+    smartBuyerMatching: "Smart Buyer Matching",
+    viewAllMatches: "View all matches →"
   },
-} as const;
+};
 
 export type Translations = typeof en;
 export default en;

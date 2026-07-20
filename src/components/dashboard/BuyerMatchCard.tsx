@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const buyers = [
   { id: 1, name: "School A — St. Joseph", location: "Kigali, 5 km", reliability: 96 },
@@ -7,10 +10,12 @@ const buyers = [
 ];
 
 export default function BuyerMatchCard() {
+  const { t } = useLanguage();
+
   return (
     <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-100 sm:p-5 dark:bg-[#112d1a] dark:ring-white/10">
       <h2 className="mb-4 text-sm font-semibold text-gray-800 dark:text-white">
-        Smart Buyer Matching
+        {t.dashboard.smartBuyerMatching}
       </h2>
       <ul className="space-y-3 sm:space-y-4">
         {buyers.map((b) => (
@@ -38,7 +43,7 @@ export default function BuyerMatchCard() {
         href="/buyers"
         className="mt-5 block text-center text-xs font-medium text-green-600 hover:underline dark:text-green-400"
       >
-        View all matches →
+        {t.dashboard.viewAllMatches}
       </Link>
     </div>
   );

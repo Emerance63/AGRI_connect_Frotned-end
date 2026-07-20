@@ -170,6 +170,21 @@ const rw: Translations = {
     requestsPending: "zitegereje gusuzumwa uyu munsi",
     monthlyRevenue: "Akinjizwa mu Kwezi",
     august: "Kanama 2025",
+    // Stats Card labels
+    totalProducts: "Ibicuruzwa Byose",
+    inventoryAvailable: "Ububiko Buhari",
+    newRequests: "Ibisabwa Bishya",
+    monthlyRevenueStat: "Akinjizwa mu Kwezi",
+    pendingDeliveries: "Ibigenewe Gutangwa",
+    // Stats trends
+    trendUp: "+3 iki cyumweru",
+    trendDown: "-1 iteganijwe",
+    // RevenueChart
+    revenueChartTitle: "Akinjizwa mu Kwezi (RWF)",
+    revenueChartPeriod: "Kanama 2024 — Mutarama 2025",
+    // BuyerMatchCard
+    smartBuyerMatching: "Guhuza Abashoramari mu Buryo Bwiza",
+    viewAllMatches: "Reba ibihuye byose →",
   },
 };
 
