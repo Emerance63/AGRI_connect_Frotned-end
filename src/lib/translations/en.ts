@@ -106,6 +106,69 @@ const en = {
     ctaJoin: "Join AgriConnect",
     ctaExplore: "Explore Products",
   },
+
+  // Products Page
+  productsPage: {
+    title: "All Products",
+    subtitle: "Certified produce from cooperatives across Rwanda's 30 districts.",
+    searchPlaceholder: "Search products...",
+    allCategories: "All Categories",
+  },
+
+  // Product Detail
+  productDetail: {
+    backToProducts: "Back to Products",
+    availableQuantity: "Available Quantity",
+    unitPrice: "Unit Price",
+    district: "District",
+    postedOn: "Posted On",
+    contactCooperative: "Contact Cooperative",
+  },
+
+  // Product Grid
+  productGrid: {
+    viewDetails: "View Details",
+    noProducts: "No products found matching your criteria.",
+  },
+
+  // Login Page
+  login: {
+    title: "AgriConnect",
+    subtitle: "Rwanda",
+    description: "Rwanda's most trusted platform connecting farmer cooperatives to markets.",
+    whyJoin: "Why join AgriConnect?",
+    benefits: [
+      "Reach thousands of buyers nationwide",
+      "Real-time order and inventory management",
+      "Secure mobile money payments (MTN, Airtel)",
+      "Government-backed quality certification",
+      "Full Kinyarwanda & English support"
+    ],
+    formTitle: "Cooperative Login",
+    formSubtitle: "Access your cooperative dashboard",
+    coopName: "Cooperative Name",
+    coopNamePlaceholder: "e.g. Musanze Farmers Cooperative",
+    email: "Email Address",
+    emailPlaceholder: "admin@coop.rw",
+    password: "Password",
+    passwordPlaceholder: "Enter your password",
+    forgotPassword: "Forgot password?",
+    signIn: "Sign In",
+    noAccount: "Don't have an account?",
+    register: "Register your cooperative",
+  },
+
+  // Dashboard Page
+  dashboard: {
+    portal: "AgriConnect Cooperative Portal",
+    title: "Dashboard",
+    home: "Home",
+    welcomeBack: "WELCOME BACK",
+    urgentRequests: "urgent",
+    requestsPending: "requests pending review today",
+    monthlyRevenue: "Monthly Revenue",
+    august: "August 2025",
+  },
 } as const;
 
 export type Translations = typeof en;

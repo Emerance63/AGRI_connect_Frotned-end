@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Star, Heart } from "lucide-react";
 import type { Product, BadgeType } from "@/data/products";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const badgeColors: Record<BadgeType, string> = {
   Organic: "bg-green-500 text-white",
@@ -11,6 +12,7 @@ const badgeColors: Record<BadgeType, string> = {
 };
 
 export default function ProductCard({ product }: { product: Product }) {
+  const { t } = useLanguage();
   // Default values if data is missing
   const rating = product.rating || 4.5;
   const reviewsCount = product.reviewsCount || 100;
@@ -78,7 +80,7 @@ export default function ProductCard({ product }: { product: Product }) {
             href={`/products/${product.id}`}
             className="rounded-full bg-green-500 px-4 py-1.5 text-xs font-bold text-white transition-colors hover:bg-green-600"
           >
-            View Detail
+            {t.productGrid.viewDetails}
           </Link>
         </div>
       </div>

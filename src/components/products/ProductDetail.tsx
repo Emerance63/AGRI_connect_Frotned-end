@@ -4,12 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import type { Product } from "@/data/products";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function ProductDetail({
   product,
 }: {
   product: Product;
 }) {
+  const { t } = useLanguage();
   return (
     <main className="min-h-screen bg-green-50 dark:bg-gray-950">
       <div className="mx-auto max-w-6xl px-6 pt-24 pb-10">
@@ -20,7 +22,7 @@ export default function ProductDetail({
           className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400"
         >
           <ArrowLeft size={18} />
-          Back to Products
+          {t.productDetail.backToProducts}
         </Link>
 
         {/* Product Details */}
@@ -53,28 +55,28 @@ export default function ProductDetail({
             <div className="mt-8 divide-y divide-gray-200 rounded-lg border dark:divide-gray-700 dark:border-gray-700">
 
               <div className="flex justify-between p-4">
-                <span className="text-gray-500">Available Quantity</span>
+                <span className="text-gray-500">{t.productDetail.availableQuantity}</span>
                 <span className="font-semibold dark:text-white">
                   {product.availableQuantity} {product.unit}
                 </span>
               </div>
 
               <div className="flex justify-between p-4">
-                <span className="text-gray-500">Unit Price</span>
+                <span className="text-gray-500">{t.productDetail.unitPrice}</span>
                 <span className="font-semibold dark:text-white">
                   {product.unitPrice.toLocaleString()} RWF/{product.unit}
                 </span>
               </div>
 
               <div className="flex justify-between p-4">
-                <span className="text-gray-500">District</span>
+                <span className="text-gray-500">{t.productDetail.district}</span>
                 <span className="font-semibold dark:text-white">
                   {product.district}
                 </span>
               </div>
 
               <div className="flex justify-between p-4">
-                <span className="text-gray-500">Posted On</span>
+                <span className="text-gray-500">{t.productDetail.postedOn}</span>
                 <span className="font-semibold dark:text-white">
                   {product.postedOn}
                 </span>
@@ -95,7 +97,7 @@ export default function ProductDetail({
               </div>
 
               <button className="mt-8 w-full rounded-lg bg-orange-400 py-3 font-semibold text-gray-900 hover:bg-orange-500">
-                Contact Cooperative
+                {t.productDetail.contactCooperative}
               </button>
 
             </div>
