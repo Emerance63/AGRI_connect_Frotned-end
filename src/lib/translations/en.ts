@@ -182,7 +182,15 @@ const en = {
     revenueChartPeriod: "Aug 2024 — Jan 2025",
     // BuyerMatchCard
     smartBuyerMatching: "Smart Buyer Matching",
-    viewAllMatches: "View all matches →"
+    viewAllMatches: "View all matches →",
+    // Sidebar
+    sidebarDashboard: "Dashboard",
+    sidebarInventory: "Inventory",
+    sidebarProducts: "Products",
+    sidebarOrders: "Orders",
+    sidebarBuyers: "Buyers",
+    sidebarReports: "Reports",
+    sidebarCooperative: "Cooperative",
   },
 };
 

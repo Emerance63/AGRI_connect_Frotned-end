@@ -185,6 +185,14 @@ const rw: Translations = {
     // BuyerMatchCard
     smartBuyerMatching: "Guhuza Abashoramari mu Buryo Bwiza",
     viewAllMatches: "Reba ibihuye byose →",
+    // Sidebar
+    sidebarDashboard: "Ikibaho",
+    sidebarInventory: "Ububiko",
+    sidebarProducts: "Ibicuruzwa",
+    sidebarOrders: "Ibisabwa",
+    sidebarBuyers: "Abashoramari",
+    sidebarReports: "Raporo",
+    sidebarCooperative: "Koperative",
   },
 };
 
