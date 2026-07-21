@@ -80,31 +80,35 @@ export default function InventoryBoard() {
     useState<InventoryItem | null>(null);
 
   const [openModal, setOpenModal] = useState(false);
+  const [category, setCategory] = useState("All");
 
-  const filteredItems = useMemo(() => {
-    return items.filter((item) => {
-      const matchesSearch =
-        item.name.toLowerCase().includes(search.toLowerCase()) ||
-        item.category.toLowerCase().includes(search.toLowerCase());
+ const filteredItems = useMemo(() => {
+  return items.filter((item) => {
+    const matchesSearch =
+      item.name.toLowerCase().includes(search.toLowerCase()) ||
+      item.category.toLowerCase().includes(search.toLowerCase());
 
-      const matchesStatus =
-        filter === "All" ? true : item.status === filter;
+    const matchesStatus =
+      filter === "All" || item.status === filter;
 
-      return matchesSearch && matchesStatus;
-    });
-  }, [items, search, filter]);
+    const matchesCategory =
+      category === "All" || item.category === category;
 
-  const healthy = items.filter(
-    (item) => item.status === "Healthy"
-  ).length;
+    return matchesSearch && matchesStatus && matchesCategory;
+  });
+}, [items, search, filter, category]);
 
-  const low = items.filter(
-    (item) => item.status === "Low"
-  ).length;
+ const healthy = items.filter(
+  (item) => item.status === "Healthy"
+).length;
 
-  const out = items.filter(
-    (item) => item.status === "Out"
-  ).length;
+const low = items.filter(
+  (item) => item.status === "Low"
+).length;
+
+const out = items.filter(
+  (item) => item.status === "Out"
+).length;
 
   function handleOpen(item: InventoryItem) {
     setSelectedItem(item);
@@ -159,12 +163,14 @@ export default function InventoryBoard() {
         out={out}
       />
 
-      <SearchInventory
-        search={search}
-        onSearchChange={setSearch}
-        filter={filter}
-        onFilterChange={setFilter}
-      />
+   <SearchInventory
+  search={search}
+  onSearchChange={setSearch}
+  filter={filter}
+  onFilterChange={setFilter}
+  category={category}
+  onCategoryChange={setCategory}
+/>
             {/* Mobile Cards */}
 
       <div className="grid gap-4 lg:hidden">

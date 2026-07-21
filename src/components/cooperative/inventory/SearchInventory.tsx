@@ -1,10 +1,16 @@
 "use client";
 
+import { Search } from "lucide-react";
+
 interface SearchInventoryProps {
   search: string;
   onSearchChange: (value: string) => void;
+
   filter: string;
   onFilterChange: (value: string) => void;
+
+  category: string;
+  onCategoryChange: (value: string) => void;
 }
 
 export default function SearchInventory({
@@ -12,27 +18,56 @@ export default function SearchInventory({
   onSearchChange,
   filter,
   onFilterChange,
+  category,
+  onCategoryChange,
 }: SearchInventoryProps) {
   return (
-    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-      <input
-        type="text"
-        placeholder="Search product..."
-        value={search}
-        onChange={(e) => onSearchChange(e.target.value)}
-        className="w-full rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm text-gray-700 outline-none focus:border-green-600 dark:border-white/10 dark:bg-[#112d1a] dark:text-white"
-      />
+    <div className="flex flex-col gap-4 rounded-xl bg-white p-4 shadow-sm dark:bg-[#112d1a] md:flex-row md:items-center md:justify-between">
 
-      <select
-        value={filter}
-        onChange={(e) => onFilterChange(e.target.value)}
-        className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm outline-none focus:border-green-600 dark:border-white/10 dark:bg-[#112d1a] dark:text-white"
-      >
-        <option value="All">All Status</option>
-        <option value="Healthy">Healthy</option>
-        <option value="Low">Low</option>
-        <option value="Out">Out</option>
-      </select>
+      <div className="relative w-full md:max-w-md">
+
+        <Search
+          size={18}
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+        />
+
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => onSearchChange(e.target.value)}
+          placeholder="Search by product or category..."
+          className="w-full rounded-lg border border-gray-200 bg-white py-2 pl-10 pr-4 text-sm outline-none transition focus:border-green-600 dark:border-white/10 dark:bg-[#183622] dark:text-white"
+        />
+
+      </div>
+
+      <div className="flex flex-col gap-3 sm:flex-row">
+
+        <select
+          value={category}
+          onChange={(e) => onCategoryChange(e.target.value)}
+          className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm outline-none focus:border-green-600 dark:border-white/10 dark:bg-[#183622] dark:text-white"
+        >
+          <option value="All">All Categories</option>
+          <option value="Grains">Grains</option>
+          <option value="Vegetables">Vegetables</option>
+          <option value="Legumes">Legumes</option>
+          <option value="Root Veg">Root Veg</option>
+        </select>
+
+        <select
+          value={filter}
+          onChange={(e) => onFilterChange(e.target.value)}
+          className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm outline-none focus:border-green-600 dark:border-white/10 dark:bg-[#183622] dark:text-white"
+        >
+          <option value="All">All Status</option>
+          <option value="Healthy">Healthy</option>
+          <option value="Low">Low Stock</option>
+          <option value="Out">Out of Stock</option>
+        </select>
+
+      </div>
+
     </div>
   );
 }
