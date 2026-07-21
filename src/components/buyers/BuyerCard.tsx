@@ -14,13 +14,16 @@ interface BuyerCardProps {
   buyer: Buyer;
   onViewHistory?: () => void;
   onMessage?: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
-
 export default function BuyerCard({
   buyer,
   onViewHistory,
   onMessage,
-}: BuyerCardProps) {
+  onEdit,
+  onDelete,
+}: BuyerCardProps)  {
   const reliabilityStatus =
     buyer.reliability >= 90
       ? "Excellent"
@@ -117,22 +120,36 @@ export default function BuyerCard({
 
 
       {/* Actions */}
-      <div className="mt-5 flex gap-3 border-t border-gray-100 pt-4 dark:border-white/10">
+     {/* Actions */}
+<div className="mt-5 flex gap-2 border-t border-gray-100 pt-4 dark:border-white/10">
 
-        <button
-          onClick={onMessage}
-          className="flex-1 rounded-lg border border-green-600 py-2 text-xs font-medium text-green-600 transition hover:bg-green-600 hover:text-white dark:text-green-400"
-        >
-          Message
-        </button>
+  <button
+    onClick={onMessage}
+    className="flex-1 rounded-lg border border-green-600 py-2 text-xs font-medium text-green-600 transition hover:bg-green-600 hover:text-white dark:text-green-400"
+  >
+    Message
+  </button>
 
+  <button
+    onClick={onViewHistory}
+    className="flex-1 rounded-lg bg-green-600 py-2 text-xs font-medium text-white transition hover:bg-green-700"
+  >
+    History
+  </button>
 
-        <button
-          onClick={onViewHistory}
-          className="flex-1 rounded-lg bg-green-600 py-2 text-xs font-medium text-white transition hover:bg-green-700"
-        >
-          History
-        </button>
+  <button
+    onClick={onEdit}
+    className="rounded-lg bg-blue-600 px-3 py-2 text-xs font-medium text-white hover:bg-blue-700"
+  >
+    Edit
+  </button>
+
+  <button
+    onClick={onDelete}
+    className="rounded-lg bg-red-600 px-3 py-2 text-xs font-medium text-white hover:bg-red-700"
+  >
+    Delete
+  </button>
 
       </div>
 

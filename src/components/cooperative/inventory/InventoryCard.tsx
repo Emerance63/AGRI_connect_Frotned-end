@@ -7,6 +7,7 @@ interface InventoryCardProps {
   item: InventoryItem;
   onUpdate: () => void;
   onEdit: () => void;
+  onDelete: () => void;
 }
 
 const statusColor = {
@@ -22,6 +23,7 @@ export default function InventoryCard({
   item,
   onUpdate,
   onEdit,
+  onDelete,
 }: InventoryCardProps) {
   const stock = Number(item.stock.replace(" kg", ""));
   const available = Number(item.available.replace(" kg", ""));
@@ -130,25 +132,31 @@ export default function InventoryCard({
 
       </div>
 
-      <div className="mt-6 flex gap-3">
+<div className="mt-6 flex gap-2">
 
-        <button
-          onClick={onEdit}
-          className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-green-600 py-2 text-sm font-semibold text-green-600 transition hover:bg-green-50 dark:hover:bg-green-500/10"
-        >
-          <Pencil size={16} />
-          Edit
-        </button>
+  <button
+    onClick={onEdit}
+    className="flex-1 rounded-lg border border-green-600 py-2 text-sm font-semibold text-green-600 hover:bg-green-50 dark:hover:bg-green-500/10"
+  >
+    Edit
+  </button>
 
-        <button
-          onClick={onUpdate}
-          className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-green-600 py-2 text-sm font-semibold text-white transition hover:bg-green-700"
-        >
-          <RefreshCw size={16} />
-          Update
-        </button>
+  <button
+    onClick={onUpdate}
+    className="flex-1 rounded-lg bg-green-600 py-2 text-sm font-semibold text-white hover:bg-green-700"
+  >
+    Update
+  </button>
 
-      </div>
+  <button
+    onClick={onDelete}
+    className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
+  >
+    Delete
+  </button>
+
+</div>
+     
 
     </div>
   );

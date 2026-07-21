@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import InventoryCard from "./InventoryCard";
 import InventoryStats from "./InventoryStats";
 import SearchInventory from "./SearchInventory";
+import AddProductModal from "../AddProductModal";
 import UpdateStockModal, {
   InventoryItem,
 } from "./UpdateStockModal";
@@ -80,6 +81,7 @@ export default function InventoryBoard() {
     useState<InventoryItem | null>(null);
 
   const [openModal, setOpenModal] = useState(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
   const [category, setCategory] = useState("All");
 
  const filteredItems = useMemo(() => {
@@ -110,10 +112,15 @@ const out = items.filter(
   (item) => item.status === "Out"
 ).length;
 
+function handleAdd(item: InventoryItem) {
+  setItems((current) => [...current, item]);
+}
+
   function handleOpen(item: InventoryItem) {
     setSelectedItem(item);
     setOpenModal(true);
   }
+  
 
   function handleSave(updated: InventoryItem) {
     setItems((current) =>
@@ -125,6 +132,13 @@ const out = items.filter(
     setOpenModal(false);
   }
 
+  function handleDelete(name: string) {
+  if (!confirm("Delete this product?")) return;
+
+  setItems((current) =>
+    current.filter((item) => item.name !== name)
+  );
+}
   function refreshItem(item: InventoryItem) {
     setItems((current) =>
       current.map((i) =>
@@ -141,21 +155,28 @@ const out = items.filter(
   return (
     <div className="space-y-6">
 
-      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
 
-        <div>
+  <div>
 
-          <p className="text-sm text-gray-400 dark:text-green-100/50">
-            Manage your cooperative inventory
-          </p>
+    <p className="text-sm text-gray-400 dark:text-green-100/50">
+      Manage your cooperative inventory
+    </p>
 
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Inventory
-          </h1>
+    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+      Inventory
+    </h1>
 
-        </div>
+  </div>
 
-      </div>
+  <button
+    onClick={() => setOpenAddModal(true)}
+    className="rounded-lg bg-green-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-700"
+  >
+    + Add Product
+  </button>
+
+</div>
 
       <InventoryStats
         healthy={healthy}
@@ -184,12 +205,13 @@ const out = items.filter(
         )}
 
         {filteredItems.map((item) => (
-          <InventoryCard
-            key={item.name}
-            item={item}
-            onEdit={() => handleOpen(item)}
-            onUpdate={() => refreshItem(item)}
-          />
+       <InventoryCard
+  key={item.name}
+  item={item}
+  onEdit={() => handleOpen(item)}
+  onUpdate={() => refreshItem(item)}
+  onDelete={() => handleDelete(item.name)}
+/>
         ))}
 
       </div>
@@ -330,6 +352,11 @@ const out = items.filter(
         }}
         onSave={handleSave}
       />
+      {/* <AddProductModal
+  open={openAddModal}
+  onClose={() => setOpenAddModal(false)}
+  onAdd={handleAdd}
+/> */}
 
       {selectedItem && (
         <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10">

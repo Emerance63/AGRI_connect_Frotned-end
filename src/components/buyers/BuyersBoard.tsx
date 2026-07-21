@@ -5,8 +5,8 @@ import BuyerCard from "./BuyerCard";
 import BuyersStats from "./BuyersStats";
 import SearchBuyers from "./SearchBuyers";
 import BuyerDetailsModal from "./BuyerDetailsModal";
-import AddBuyerModal from "./AddBuyerModal";
 
+import AddBuyerModal from "./AddBuyerModal";
 
 export type Buyer = {
   initials: string;
@@ -76,11 +76,11 @@ const initialBuyers: Buyer[] = [
 export default function BuyersBoard() {
 
 
-const [buyers, setBuyers] =
+  const [buyers, setBuyers] =
   useState<Buyer[]>(initialBuyers);
+
   const [showAddBuyer, setShowAddBuyer] =
   useState(false);
-
 
   const [search, setSearch] = useState("");
 
@@ -121,13 +121,13 @@ const [buyers, setBuyers] =
     return searchMatch && filterMatch;
 
   });
-
   const handleAddBuyer = (buyer: Buyer) => {
   setBuyers((prev) => [
     ...prev,
     buyer,
   ]);
 };
+
 
 
 
@@ -156,8 +156,7 @@ const [buyers, setBuyers] =
         </div>
 
 
-
-       <button
+<button
   onClick={() => setShowAddBuyer(true)}
   className="rounded-lg bg-green-600 px-4 py-2 text-xs font-semibold text-white hover:bg-green-700"
 >
