@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const provinces = [
   "Northern Province",
@@ -45,6 +46,7 @@ const districts = [
 ];
 
 export default function RegisterCooperativePage() {
+  const { t } = useLanguage();
   const [form, setForm] = useState({
     fullName: "",
     nationalId: "",
@@ -94,15 +96,14 @@ export default function RegisterCooperativePage() {
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-amber-500 to-emerald-500" />
 
         <span className="inline-block text-[11px] tracking-wide font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 rounded-full px-3 py-1 mb-4">
-          COOPERATIVE ACCOUNT
+          {t.register.badge}
         </span>
 
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          Register your cooperative
+          {t.register.title}
         </h1>
         <p className="text-sm text-gray-500 dark:text-emerald-100/60 mb-4">
-          Join AgriConnect to list produce, reach buyers across Rwanda, and
-          manage orders from one dashboard.
+          {t.register.description}
         </p>
 
         <form onSubmit={handleSubmit}>
@@ -112,80 +113,80 @@ export default function RegisterCooperativePage() {
             <div className="space-y-3">
               <h3 className="text-sm font-bold text-emerald-600 dark:text-emerald-400 mb-4 flex items-center gap-2 uppercase tracking-wider">
                 <div className="w-1 h-5 bg-emerald-500 rounded-full" />
-                User Information
+                {t.register.userInfo}
               </h3>
 
               {/* Full Name */}
               <div>
-                <label className={labelClass}>Full Name</label>
+                <label className={labelClass}>{t.register.fullName}</label>
                 <input
                   name="fullName"
                   value={form.fullName}
                   onChange={handleChange}
-                  placeholder="e.g. Jean Bosco"
+                  placeholder={t.register.fullNamePlaceholder}
                   className={inputClass}
                 />
               </div>
 
               {/* National ID */}
               <div>
-                <label className={labelClass}>National ID</label>
+                <label className={labelClass}>{t.register.nationalId}</label>
                 <input
                   name="nationalId"
                   value={form.nationalId}
                   onChange={handleChange}
-                  placeholder="e.g. 1234567890123456"
+                  placeholder={t.register.nationalIdPlaceholder}
                   className={inputClass}
                 />
               </div>
 
               {/* Phone Number */}
               <div>
-                <label className={labelClass}>Phone Number</label>
+                <label className={labelClass}>{t.register.phoneNumber}</label>
                 <input
                   name="phoneNumber"
                   value={form.phoneNumber}
                   onChange={handleChange}
-                  placeholder="+250 788 000 000"
+                  placeholder={t.register.phoneNumberPlaceholder}
                   className={inputClass}
                 />
               </div>
 
               {/* Email Address */}
               <div>
-                <label className={labelClass}>Email Address</label>
+                <label className={labelClass}>{t.register.email}</label>
                 <input
                   name="email"
                   type="email"
                   value={form.email}
                   onChange={handleChange}
-                  placeholder="cooperative@example.rw"
+                  placeholder={t.register.emailPlaceholder}
                   className={inputClass}
                 />
               </div>
 
               {/* Password */}
               <div>
-                <label className={labelClass}>Password</label>
+                <label className={labelClass}>{t.register.password}</label>
                 <input
                   name="password"
                   type="password"
                   value={form.password}
                   onChange={handleChange}
-                  placeholder="At least 8 characters"
+                  placeholder={t.register.passwordPlaceholder}
                   className={inputClass}
                 />
               </div>
 
               {/* Confirm Password */}
               <div>
-                <label className={labelClass}>Confirm Password</label>
+                <label className={labelClass}>{t.register.confirmPassword}</label>
                 <input
                   name="confirmPassword"
                   type="password"
                   value={form.confirmPassword}
                   onChange={handleChange}
-                  placeholder="Re-enter password"
+                  placeholder={t.register.confirmPasswordPlaceholder}
                   className={inputClass}
                 />
               </div>
@@ -195,46 +196,46 @@ export default function RegisterCooperativePage() {
             <div className="space-y-3">
               <h3 className="text-sm font-bold text-amber-500 dark:text-amber-400 mb-4 flex items-center gap-2 uppercase tracking-wider">
                 <div className="w-1 h-5 bg-amber-500 rounded-full" />
-                Cooperative Details
+                {t.register.coopInfo}
               </h3>
 
               {/* Cooperative Name */}
               <div>
-                <label className={labelClass}>Cooperative Name</label>
+                <label className={labelClass}>{t.register.coopName}</label>
                 <input
                   name="cooperativeName"
                   value={form.cooperativeName}
                   onChange={handleChange}
-                  placeholder="e.g. Musanze Growers Cooperative"
+                  placeholder={t.register.coopNamePlaceholder}
                   className={inputClass}
                 />
               </div>
 
               {/* Registration Number */}
               <div>
-                <label className={labelClass}>Registration Number</label>
+                <label className={labelClass}>{t.register.regNumber}</label>
                 <input
                   name="registrationNumber"
                   value={form.registrationNumber}
                   onChange={handleChange}
-                  placeholder="e.g. RCA/COOP/2024/..."
+                  placeholder={t.register.regNumberPlaceholder}
                   className={inputClass}
                 />
                 <p className="text-[11px] text-gray-400 dark:text-emerald-100/40 mt-1">
-                  As issued by RCA on your cooperative certificate
+                  {t.register.regNumberHint}
                 </p>
               </div>
 
               {/* Province */}
               <div>
-                <label className={labelClass}>Province</label>
+                <label className={labelClass}>{t.register.province}</label>
                 <select
                   name="province"
                   value={form.province}
                   onChange={handleChange}
                   className={inputClass + " appearance-none"}
                 >
-                  <option value="">Select province</option>
+                  <option value="">{t.register.provincePlaceholder}</option>
                   {provinces.map((p) => (
                     <option key={p} value={p}>
                       {p}
@@ -245,14 +246,14 @@ export default function RegisterCooperativePage() {
 
               {/* District */}
               <div>
-                <label className={labelClass}>District</label>
+                <label className={labelClass}>{t.register.district}</label>
                 <select
                   name="district"
                   value={form.district}
                   onChange={handleChange}
                   className={inputClass + " appearance-none"}
                 >
-                  <option value="">Select district</option>
+                  <option value="">{t.register.districtPlaceholder}</option>
                   {districts.map((d) => (
                     <option key={d} value={d}>
                       {d}
@@ -263,24 +264,24 @@ export default function RegisterCooperativePage() {
 
               {/* Sector */}
               <div>
-                <label className={labelClass}>Sector</label>
+                <label className={labelClass}>{t.register.sector}</label>
                 <input
                   name="sector"
                   value={form.sector}
                   onChange={handleChange}
-                  placeholder="Sector"
+                  placeholder={t.register.sectorPlaceholder}
                   className={inputClass}
                 />
               </div>
 
               {/* Contact Info */}
               <div>
-                <label className={labelClass}>Contact Info</label>
+                <label className={labelClass}>{t.register.contactInfo}</label>
                 <input
                   name="contactInfo"
                   value={form.contactInfo}
                   onChange={handleChange}
-                  placeholder="Contact person / additional phone"
+                  placeholder={t.register.contactInfoPlaceholder}
                   className={inputClass}
                 />
               </div>
@@ -289,12 +290,12 @@ export default function RegisterCooperativePage() {
 
           {/* Description - Full Width */}
           <div className="mb-6">
-            <label className={labelClass}>Description</label>
+            <label className={labelClass}>{t.register.desc}</label>
             <textarea
               name="description"
               value={form.description}
               onChange={handleChange}
-              placeholder="Short description of the cooperative"
+              placeholder={t.register.descPlaceholder}
               className={inputClass}
               rows={2}
             />
@@ -310,11 +311,11 @@ export default function RegisterCooperativePage() {
               className="mt-0.5 w-3.5 h-3.5 accent-emerald-500"
             />
             <span>
-              I agree to AgriConnect&apos;s{" "}
+              {t.register.agreeTextPart1}{" "}
               <Link href="/terms" className="text-amber-500 hover:underline">
-                Terms of Service
+                {t.register.agreeTextTerms}
               </Link>{" "}
-              and confirm this cooperative is registered in Rwanda.
+              {t.register.agreeTextPart2}
             </span>
           </label>
 
@@ -324,24 +325,24 @@ export default function RegisterCooperativePage() {
             disabled={!form.agreed}
             className="w-full bg-amber-600 hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-lg py-3 mt-4 transition"
           >
-            Create Cooperative Account
+            {t.register.submitBtn}
           </button>
 
           {/* Divider */}
           <div className="flex items-center gap-3 py-2">
             <div className="flex-1 h-px bg-gray-200 dark:bg-[#1f3d29]" />
-            <span className="text-[11px] text-gray-400 dark:text-emerald-100/40">OR</span>
+            <span className="text-[11px] text-gray-400 dark:text-emerald-100/40">{t.register.or}</span>
             <div className="flex-1 h-px bg-gray-200 dark:bg-[#1f3d29]" />
           </div>
 
           {/* Login link */}
           <p className="text-center text-sm text-gray-500 dark:text-emerald-100/60">
-            Already registered?{" "}
+            {t.register.alreadyRegistered}{" "}
             <Link
               href="/login"
               className="text-emerald-600 dark:text-white font-semibold hover:underline"
             >
-              Log in to your cooperative
+              {t.register.loginLink}
             </Link>
           </p>
         </form>

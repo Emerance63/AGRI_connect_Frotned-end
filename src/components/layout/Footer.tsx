@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [currency, setCurrency] = useState("RWF");
+  const { t } = useLanguage();
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,18 +37,18 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-sm text-brand-300">
-              Rwanda&apos;s most trusted agricultural cooperative platform. Connecting farmers directly to markets across the country.
+              {t.footer.description}
             </p>
 
             {/* Email Subscription */}
             <div className="space-y-3">
               <h4 className="text-xs font-semibold uppercase tracking-wider text-brand-500">
-                STAY UPDATED WITH HARVEST NEWS
+                {t.footer.stayUpdated}
               </h4>
               <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="email"
-                  placeholder="Your email address"
+                  placeholder={t.footer.emailPlaceholder}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="flex-1 rounded-lg border border-brand-800 bg-brand-900/50 px-3 py-2 text-sm text-brand-400 placeholder:text-brand-700 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20"
@@ -56,7 +58,7 @@ export default function Footer() {
                   type="submit"
                   className="w-full sm:w-auto rounded-lg bg-orange-600 px-4 py-2 text-sm font-semibold text-black transition-colors hover:bg-orange-500"
                 >
-                  Subscribe
+                  {t.footer.subscribe}
                 </button>
               </form>
             </div>
@@ -64,7 +66,7 @@ export default function Footer() {
             {/* Certified By */}
             <div className="space-y-3">
               <h4 className="text-xs font-semibold uppercase tracking-wider text-brand-400">
-                CERTIFIED BY
+                {t.footer.certifiedBy}
               </h4>
               <div className="flex flex-wrap gap-2">
                 <span className="rounded-full bg-brand-900/50 border border-brand-800 px-3 py-1 text-xs font-medium text-brand-300">NAEB</span>
@@ -77,16 +79,16 @@ export default function Footer() {
 
           {/* Section 2: Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold text-white mb-4">Quick Links</h3>
+            <h3 className="text-sm font-semibold text-white mb-4">{t.footer.quickLinks}</h3>
             <ul className="space-y-3">
               <li>
                 <Link href="/dashboard" className="text-sm text-brand-300 hover:text-brand-500 transition-colors">
-                  Cooperative Dashboard
+                  {t.footer.coopDashboard}
                 </Link>
               </li>
               <li>
                 <Link href="/login" className="text-sm text-brand-300 hover:text-brand-500 transition-colors">
-                  Cooperative Login
+                  {t.footer.coopLogin}
                 </Link>
               </li>
             </ul>
@@ -94,21 +96,21 @@ export default function Footer() {
 
           {/* Section 3: Legal/Quality */}
           <div>
-            <h3 className="text-sm font-semibold text-white mb-4">Legal & Quality</h3>
+            <h3 className="text-sm font-semibold text-white mb-4">{t.footer.legalQuality}</h3>
             <ul className="space-y-3">
               <li>
                 <Link href="#" className="text-sm text-brand-400 hover:text-brand-500 transition-colors">
-                  Quality Standards
+                  {t.footer.qualityStandards}
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-sm text-brand-300 hover:text-brand-500 transition-colors">
-                  Terms of Service
+                  {t.footer.termsOfService}
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-sm text-brand-300 hover:text-brand-500 transition-colors">
-                  Privacy Policy
+                  {t.footer.privacyPolicy}
                 </Link>
               </li>
             </ul>
@@ -117,7 +119,7 @@ export default function Footer() {
           {/* Section 4: Contact & Social */}
           <div className="space-y-4">
             <div>
-              <h3 className="text-sm font-semibold tex-white mb-2">Contact</h3>
+              <h3 className="text-sm font-semibold tex-white mb-2">{t.footer.contact}</h3>
               <a href="mailto:info@agriconnect.rw" className="text-sm text-brand-300 hover:text-brand-500 transition-colors">
                 info@agriconnect.rw
               </a>
@@ -125,7 +127,7 @@ export default function Footer() {
 
             <div>
               <h4 className="text-xs font-semibold uppercase tracking-wider text-brand-400 mb-3">
-                FOLLOW US
+                {t.footer.followUs}
               </h4>
               <div className="flex gap-3">
                 <a href="#" className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-gray-400 hover:bg-brand-600 hover:text-white transition-colors">
@@ -157,13 +159,13 @@ export default function Footer() {
         <div className="mt-12 border-t border-brand-800 pt-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-brand-400">
-              © 2025 AgriConnect Rwanda. All rights reserved.
+              {t.footer.rights}
             </p>
             <p className="text-sm text-brand-400">
-              Made with in Rwanda
+              {t.footer.madeWith}
             </p>
             <div className="flex items-center gap-2">
-              <span className="text-sm text-brand-400">Currency:</span>
+              <span className="text-sm text-brand-400">{t.footer.currency}</span>
               <select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value)}

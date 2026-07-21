@@ -89,15 +89,53 @@ const en = {
 
     processBadge: "Process",
     processHeading: "How We Connect Agriculture",
+    processSteps: [
+      {
+        title: "Cooperatives Register",
+        description: "Farmer cooperatives create a verified profile and list their agricultural products on the platform.",
+      },
+      {
+        title: "Products Are Discovered",
+        description: "Buyers browse fresh produce, compare prices, and find cooperatives that match their needs.",
+      },
+      {
+        title: "Direct Matching",
+        description: "We eliminate middlemen so farmers earn more and buyers get fresher produce at better prices.",
+      },
+      {
+        title: "Partnerships Grow",
+        description: "Long-term relationships between cooperatives and buyers power sustainable agricultural trade.",
+      }
+    ],
 
     valueBadge: "Our Value",
     valueHeading: "Why Choose AgriConnect?",
 
     impactBadge: "Our Impact",
     impactHeading: "Growing Together Across Rwanda",
+    stats: [
+      { label: "Cooperatives Connected" },
+      { label: "Agricultural Products" },
+      { label: "Business Buyers" },
+      { label: "Districts Reached" }
+    ],
 
     communityBadge: "Community",
     communityHeading: "Meet The Community",
+    community: [
+      {
+        role: "Farmers",
+        description: "Empowering farmers to grow better and earn more",
+      },
+      {
+        role: "Cooperatives",
+        description: "Helping cooperatives reach national markets",
+      },
+      {
+        role: "Buyers",
+        description: "Bridging buyers with quality Rwandan produce",
+      }
+    ],
 
     ctaBadge: "Get Started",
     ctaHeading: "Join the Future of Agriculture",
@@ -212,6 +250,70 @@ const en = {
     update: "Update",
     selectedStockItem: "Selected Stock Item",
     selectedDescription: "Update shows exactly which item changed and when it was touched.",
+  },
+
+  // Register Page
+  register: {
+    badge: "COOPERATIVE ACCOUNT",
+    title: "Register your cooperative",
+    description: "Join AgriConnect to list produce, reach buyers across Rwanda, and manage orders from one dashboard.",
+    userInfo: "User Information",
+    fullName: "Full Name",
+    fullNamePlaceholder: "e.g. Jean Bosco",
+    nationalId: "National ID",
+    nationalIdPlaceholder: "e.g. 1234567890123456",
+    phoneNumber: "Phone Number",
+    phoneNumberPlaceholder: "+250 788 000 000",
+    email: "Email Address",
+    emailPlaceholder: "cooperative@example.rw",
+    password: "Password",
+    passwordPlaceholder: "At least 8 characters",
+    confirmPassword: "Confirm Password",
+    confirmPasswordPlaceholder: "Re-enter password",
+    coopInfo: "Cooperative Details",
+    coopName: "Cooperative Name",
+    coopNamePlaceholder: "e.g. Musanze Growers Cooperative",
+    regNumber: "Registration Number",
+    regNumberPlaceholder: "e.g. RCA/COOP/2024/...",
+    regNumberHint: "As issued by RCA on your cooperative certificate",
+    province: "Province",
+    provincePlaceholder: "Select province",
+    district: "District",
+    districtPlaceholder: "Select district",
+    sector: "Sector",
+    sectorPlaceholder: "Sector",
+    contactInfo: "Contact Info",
+    contactInfoPlaceholder: "Contact person / additional phone",
+    desc: "Description",
+    descPlaceholder: "Short description of the cooperative",
+    agreeTextPart1: "I agree to AgriConnect's",
+    agreeTextTerms: "Terms of Service",
+    agreeTextPart2: "and confirm this cooperative is registered in Rwanda.",
+    submitBtn: "Create Cooperative Account",
+    or: "OR",
+    alreadyRegistered: "Already registered?",
+    loginLink: "Log in to your cooperative",
+  },
+
+  // Footer
+  footer: {
+    description: "Rwanda's most trusted agricultural cooperative platform. Connecting farmers directly to markets across the country.",
+    stayUpdated: "STAY UPDATED WITH HARVEST NEWS",
+    emailPlaceholder: "Your email address",
+    subscribe: "Subscribe",
+    certifiedBy: "CERTIFIED BY",
+    quickLinks: "Quick Links",
+    coopDashboard: "Cooperative Dashboard",
+    coopLogin: "Cooperative Login",
+    legalQuality: "Legal & Quality",
+    qualityStandards: "Quality Standards",
+    termsOfService: "Terms of Service",
+    privacyPolicy: "Privacy Policy",
+    contact: "Contact",
+    followUs: "FOLLOW US",
+    rights: "© 2025 AgriConnect Rwanda. All rights reserved.",
+    madeWith: "Made with in Rwanda",
+    currency: "Currency:",
   },
 };
 

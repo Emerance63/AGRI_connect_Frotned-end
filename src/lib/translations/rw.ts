@@ -16,7 +16,7 @@ const rw: Translations = {
   hero: {
     badge: "Isoko Nkuru y'Ubuhinzi mu Rwanda #1",
     headline1: "Guhuza Abahinzi",
-    headline2: "Directly na Masoko",
+    headline2: "Ako kanya n'amasoko",
     description:
       "Urubuga rukomeye rwo guhuza amakoperative y'abahinzi n'abashoramari mu Rwanda. Gura imboga nshya uvuye mu makoperative yemejwe hirya no hino mu gihugu.",
     exploreProducts: "Reba Ibicuruzwa",
@@ -91,15 +91,53 @@ const rw: Translations = {
 
     processBadge: "Inzira",
     processHeading: "Uburyo Duhuza Ubuhinzi",
+    processSteps: [
+      {
+        title: "Kwiyandikisha k'Amakoperative",
+        description: "Amakoperative y'abahinzi akora umwirondoro wemejwe kandi ashyira ibicuruzwa byabo by'ubuhinzi ku rubuga.",
+      },
+      {
+        title: "Ibicuruzwa Biraboneka",
+        description: "Abaguzi bashakisha umusaruro mwiza, bagereranya ibiciro, kandi bagashaka amakoperative ahuye n'ibyo bakeneye.",
+      },
+      {
+        title: "Guhuza Ako Kanya",
+        description: "Dukuraho abamamyi kugira ngo abahinzi binjize menshi kandi abaguzi babone umusaruro mwiza ku giciro cyiza.",
+      },
+      {
+        title: "Ubufatanye Burakura",
+        description: "Umubano w'igihe kirekire hagati y'amakoperative n'abaguzi uteza imbere ubucuruzi bw'ubuhinzi burambye.",
+      }
+    ],
 
     valueBadge: "Agaciro Kacu",
     valueHeading: "Kuki Wihitiramo AgriConnect?",
 
     impactBadge: "Ingaruka Zacu",
     impactHeading: "Twiyongera Hamwe mu Rwanda Rwose",
+    stats: [
+      { label: "Amakoperative Yahujwe" },
+      { label: "Ibicuruzwa by'Ubuhinzi" },
+      { label: "Abaguzi" },
+      { label: "Uturere Twagezweho" }
+    ],
 
     communityBadge: "Umuryango",
     communityHeading: "Sobanukirwa n'Umuryango",
+    community: [
+      {
+        role: "Abahinzi",
+        description: "Gufasha abahinzi kongera umusaruro no kwinjiza menshi",
+      },
+      {
+        role: "Amakoperative",
+        description: "Gufasha amakoperative kugera ku masoko y'igihugu",
+      },
+      {
+        role: "Abaguzi",
+        description: "Guhuza abaguzi n'umusaruro mwiza w'u Rwanda",
+      }
+    ],
 
     ctaBadge: "Tangira",
     ctaHeading: "Injira mu Iterambere ry'Ubuhinzi",
@@ -214,6 +252,70 @@ const rw: Translations = {
     update: "Hindura",
     selectedStockItem: "Igicuruzwa Cyahiswemo",
     selectedDescription: "Guhindura kwerekana neza igicuruzwa cyahindutse n'igihe cyakoreshejwe.",
+  },
+
+  // Register Page
+  register: {
+    badge: "KONTI YA KOPERATIVE",
+    title: "Andikisha koperative yawe",
+    description: "Injira muri AgriConnect kugira ngo ushyireho umusaruro, ugere ku baguzi mu Rwanda hose, kandi ucunge komande ku kibaho kimwe.",
+    userInfo: "Umwirondoro",
+    fullName: "Amazina Yombi",
+    fullNamePlaceholder: "Urug: Jean Bosco",
+    nationalId: "Indangamuntu",
+    nationalIdPlaceholder: "Urug: 119...",
+    phoneNumber: "Nomero ya Terefone",
+    phoneNumberPlaceholder: "+250 788 000 000",
+    email: "Imeri",
+    emailPlaceholder: "koperative@urugero.rw",
+    password: "Ijambo ry'Ibanga",
+    passwordPlaceholder: "Nibura inyuguti 8",
+    confirmPassword: "Emeza Ijambo ry'Ibanga",
+    confirmPasswordPlaceholder: "Ongera wandike ijambo ry'ibanga",
+    coopInfo: "Amakuru ya Koperative",
+    coopName: "Izina rya Koperative",
+    coopNamePlaceholder: "Urug: Koperative y'Abahinzi...",
+    regNumber: "Nomero y'Ikwiyandikisha",
+    regNumberPlaceholder: "Urug: RCA/COOP/2024/...",
+    regNumberHint: "Nk'uko yatanzwe na RCA ku cyemezo",
+    province: "Intara",
+    provincePlaceholder: "Hitamo intara",
+    district: "Akarere",
+    districtPlaceholder: "Hitamo akarere",
+    sector: "Umurenge",
+    sectorPlaceholder: "Umurenge",
+    contactInfo: "Amakuru y'Itumanaho",
+    contactInfoPlaceholder: "Uwo twavugisha / indi terefone",
+    desc: "Ibisobanuro",
+    descPlaceholder: "Ibisobanuro bigufi bya koperative",
+    agreeTextPart1: "Nemeye",
+    agreeTextTerms: "Amategeko n'amabwiriza",
+    agreeTextPart2: "ya AgriConnect kandi nemeje ko iyi koperative yanditse mu Rwanda.",
+    submitBtn: "Fungura Konti ya Koperative",
+    or: "CYANGWA",
+    alreadyRegistered: "Urasanzwe wiyandikishije?",
+    loginLink: "Injira muri koperative yawe",
+  },
+
+  // Footer
+  footer: {
+    description: "Urubuga rwizewe rwo guhuza amakoperative y'abahinzi n'amasoko mu Rwanda.",
+    stayUpdated: "MENYA AMAKURU MASHYA Y'UMUSARURO",
+    emailPlaceholder: "Imeri yawe",
+    subscribe: "Iyandikishe",
+    certifiedBy: "BYEMEWE NA",
+    quickLinks: "Aho Wakanda Vuba",
+    coopDashboard: "Ikibaho cya Koperative",
+    coopLogin: "Kwinjira kwa Koperative",
+    legalQuality: "Amategeko n'Ubuziranenge",
+    qualityStandards: "Ubuziranenge bw'Ibicuruzwa",
+    termsOfService: "Amategeko y'Imikoreshereze",
+    privacyPolicy: "Ibijyanye n'Ibanga",
+    contact: "Twandikire",
+    followUs: "DUKURIKIRE",
+    rights: "© 2025 AgriConnect Rwanda. Uburenganzira bwose burabitswe.",
+    madeWith: "Byakorewe mu Rwanda",
+    currency: "Ifaranga:",
   },
 };
 
