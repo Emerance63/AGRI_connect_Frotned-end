@@ -1,89 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { useCooperativeData, type ProductItemType } from "@/lib/cooperative-data";
 import AddProductModal from "@/components/products/AddProductModal";
 import ProductItem from "@/components/products/ProductItem";
 import ProductPreview from "@/components/products/ProductPreview";
 
-export type ProductItemType = {
-  id: number;
-  name: string;
-  tag: string;
-  price: string;
-  weight: string;
-  description: string;
-  status: "Healthy" | "Low" | "Out";
-  published: boolean;
-};
-
-const initialProducts: ProductItemType[] = [
-  {
-    id: 1,
-    name: "Premium Beans",
-    tag: "1 kg/pack",
-    price: "RWF 1,990/kg",
-    weight: "850 kg",
-    description: "Fresh premium beans harvested this season.",
-    status: "Healthy",
-    published: true,
-  },
-  {
-    id: 2,
-    name: "White Rice",
-    tag: "Grains",
-    price: "RWF 10,830/kg",
-    weight: "420 kg",
-    description: "High quality white rice.",
-    status: "Healthy",
-    published: true,
-  },
-  {
-    id: 3,
-    name: "Sweet Potatoes",
-    tag: "Root Veg",
-    price: "RWF 9,700/kg",
-    weight: "95 kg",
-    description: "Fresh sweet potatoes.",
-    status: "Low",
-    published: true,
-  },
-  {
-    id: 4,
-    name: "Green Cabbage",
-    tag: "Vegetables",
-    price: "RWF 1,960/kg",
-    weight: "218 kg",
-    description: "Organic green cabbage.",
-    status: "Healthy",
-    published: true,
-  },
-  {
-    id: 5,
-    name: "Maize Flour",
-    tag: "Grains",
-    price: "RWF 4,150/kg",
-    weight: "18 kg",
-    description: "Fine maize flour.",
-    status: "Low",
-    published: false,
-  },
-  {
-    id: 6,
-    name: "Tomatoes",
-    tag: "Vegetables",
-    price: "RWF 4,880/kg",
-    weight: "8 kg",
-    description: "Fresh tomatoes.",
-    status: "Out",
-    published: true,
-  },
-];
-
 export default function ProductsBoard() {
-  const [products, setProducts] = useState<ProductItemType[]>(initialProducts);
+  const { products, addProduct, toggleProductPublish } = useCooperativeData();
 
   const [selectedProduct, setSelectedProduct] =
-    useState<ProductItemType | null>(initialProducts[0]);
+    useState<ProductItemType | null>(products[0] ?? null);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -97,28 +24,22 @@ export default function ProductsBoard() {
   }
 
   function handlePublish(id: number) {
-    const updated = products.map((product) =>
-      product.id === id
-        ? { ...product, published: !product.published }
-        : product
-    );
-
-    setProducts(updated);
-
-    const current = updated.find((item) => item.id === id);
+    const current = products.find((item) => item.id === id);
+    toggleProductPublish(id);
 
     if (current) {
-      setSelectedProduct(current);
+      const next = { ...current, published: !current.published };
+      setSelectedProduct(next);
       setMessage(
         `${current.name} is now ${
-          current.published ? "Published" : "Draft"
+          next.published ? "Published" : "Draft"
         }.`
       );
     }
   }
 
   function handleAddProduct(product: ProductItemType) {
-    setProducts((prev) => [...prev, product]);
+    addProduct(product);
     setSelectedProduct(product);
     setMessage(`${product.name} added successfully.`);
   }

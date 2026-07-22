@@ -13,14 +13,12 @@ type Buyer = {
 interface BuyerCardProps {
   buyer: Buyer;
   onViewHistory?: () => void;
-  onMessage?: () => void;
   onEdit?: () => void;
   onDelete?: () => void;
 }
 export default function BuyerCard({
   buyer,
   onViewHistory,
-  onMessage,
   onEdit,
   onDelete,
 }: BuyerCardProps)  {
@@ -122,13 +120,6 @@ export default function BuyerCard({
       {/* Actions */}
      {/* Actions */}
 <div className="mt-5 flex gap-2 border-t border-gray-100 pt-4 dark:border-white/10">
-
-  <button
-    onClick={onMessage}
-    className="flex-1 rounded-lg border border-green-600 py-2 text-xs font-medium text-green-600 transition hover:bg-green-600 hover:text-white dark:text-green-400"
-  >
-    Message
-  </button>
 
   <button
     onClick={onViewHistory}

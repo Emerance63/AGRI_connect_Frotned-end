@@ -14,6 +14,7 @@ const BREADCRUMB_MAP: Record<string, string> = {
   "/cooperative/products": "My Products",
   "/orders":             "Orders",
   "/buyers":             "Buyers",
+  "/members":            "Members & SMS",
   "/reports":            "Reports",
 };
 

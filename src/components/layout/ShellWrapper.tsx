@@ -9,6 +9,7 @@ const COOPERATIVE_ROUTES = [
   "/inventory",
   "/orders",
   "/buyers",
+  "/members",
   "/reports",
   "/cooperative",
   "/login",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { ProductItemType } from "@/components/cooperative/ProductsBoard";
+import type { ProductItemType } from "@/lib/cooperative-data";
 
 interface AddProductModalProps {
   open: boolean;

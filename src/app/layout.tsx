@@ -5,6 +5,7 @@ import "./globals.css";
 import ThemeProvider from "@/components/layout/ThemeProvider";
 import ShellWrapper from "@/components/layout/ShellWrapper";
 import { LanguageProvider } from "@/lib/LanguageContext";
+import { CooperativeDataProvider } from "@/lib/cooperative-data";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -42,7 +43,9 @@ export default function RootLayout({
       <body className="min-h-screen font-sans flex flex-col">
         <ThemeProvider>
           <LanguageProvider>
-            <ShellWrapper>{children}</ShellWrapper>
+            <CooperativeDataProvider>
+              <ShellWrapper>{children}</ShellWrapper>
+            </CooperativeDataProvider>
           </LanguageProvider>
         </ThemeProvider>
       </body>

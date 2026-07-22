@@ -47,6 +47,13 @@ const icons = {
       <path d="M16 3.13a4 4 0 0 1 0 7.75" />
     </svg>
   ),
+  members: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M17 8h4m-2-2v4M15 17h5l2 2v-6a3 3 0 0 0-3-3h-1" />
+    </svg>
+  ),
   reports: (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M3 3v18h18" />
@@ -67,6 +74,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
     { name: t.dashboard.sidebarProducts, href: "/cooperative/products", icon: icons.products },
     { name: t.dashboard.sidebarOrders, href: "/orders", icon: icons.orders },
     { name: t.dashboard.sidebarBuyers, href: "/buyers", icon: icons.buyers },
+    { name: "Members & SMS", href: "/members", icon: icons.members },
     { name: t.dashboard.sidebarReports, href: "/reports", icon: icons.reports },
   ];
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useCooperativeData } from "@/lib/cooperative-data";
 
 type OrderStatus =
   | "Delivered"
@@ -19,60 +20,6 @@ type OrderItem = {
 };
 
 
-const initialOrders: OrderItem[] = [
-  {
-    id: "ORD-001",
-    buyer: "St. Joseph School",
-    product: "Maize Flour · 1 kg",
-    amount: "RWF 15,200",
-    date: "Jul 1",
-    status: "Delivered",
-    steps:[
-      "Pending",
-      "Accepted",
-      "Preparing",
-      "Dispatched",
-      "Delivered"
-    ],
-    current:4
-  },
-
-  {
-    id:"ORD-002",
-    buyer:"Kigali Serena Hotel",
-    product:"Mixed Vegetables · 500 kg",
-    amount:"RWF 420,000",
-    date:"Jul 29",
-    status:"Dispatched",
-    steps:[
-      "Pending",
-      "Accepted",
-      "Preparing",
-      "Dispatched",
-      "Delivered"
-    ],
-    current:3
-  },
-
-  {
-    id:"ORD-003",
-    buyer:"Rwanda Green Mart",
-    product:"White Rice · 200 kg",
-    amount:"RWF 360,000",
-    date:"Aug 1",
-    status:"Preparing",
-    steps:[
-      "Pending",
-      "Accepted",
-      "Preparing",
-      "Dispatched",
-      "Delivered"
-    ],
-    current:2
-  }
-];
-
-
 const statusColor = {
  Delivered:
  "bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400",
@@ -87,11 +34,10 @@ const statusColor = {
 
 
 export default function OrdersBoard(){
-
-const [orders,setOrders]=useState(initialOrders);
+const { orders } = useCooperativeData();
 
 const [selectedOrder,setSelectedOrder]=
-useState<OrderItem>(initialOrders[0]);
+useState<OrderItem>(orders[0]!);
 
 const [panel,setPanel]=useState<
 "invoice"|"track"
@@ -382,6 +328,11 @@ index < order.current
 
 ))}
 
+{filteredOrders.length === 0 && (
+<div className="rounded-xl bg-white p-8 text-center text-sm text-gray-500 shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:text-green-100/60 dark:ring-white/10">
+No orders match the current search and status filter.
+</div>
+)}
 
 </div>
 
@@ -484,6 +435,15 @@ Amount
 
 
 
+{panel === "invoice" ? (
+<div className="mt-5 rounded-lg bg-gray-50 p-4 text-sm dark:bg-white/5">
+
+<div className="flex justify-between"><span className="text-gray-400">Order total</span><span className="font-semibold text-gray-900 dark:text-white">{selectedOrder.amount}</span></div>
+<div className="mt-2 flex justify-between"><span className="text-gray-400">Item</span><span className="font-semibold text-gray-900 dark:text-white">{selectedOrder.product}</span></div>
+<div className="mt-2 flex justify-between"><span className="text-gray-400">Invoice status</span><span className="font-semibold text-gray-900 dark:text-white">{selectedOrder.status}</span></div>
+
+</div>
+) : (
 <div className="mt-5 rounded-lg bg-gray-50 p-4 dark:bg-white/5">
 
 <p className="text-xs text-gray-400">
@@ -497,6 +457,8 @@ CURRENT STAGE
 </p>
 
 </div>
+
+)}
 
 
 </div>
