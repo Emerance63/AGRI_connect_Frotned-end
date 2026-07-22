@@ -66,6 +66,7 @@ export default function RegisterCooperativePage() {
   const [form, setForm] = useState({
     // Step 1 – President
     fullName: "",
+    gender: "",
     nationalId: "",
     phoneNumber: "",
     email: "",
@@ -85,6 +86,7 @@ export default function RegisterCooperativePage() {
   /* ── Validation for Step 1 ── */
   const step1Valid =
     form.fullName.trim() !== "" &&
+    form.gender !== "" &&
     /^\d{16}$/.test(form.nationalId) &&
     /^\d+$/.test(form.phoneNumber) &&
     form.email.trim() !== "" &&
@@ -239,6 +241,22 @@ export default function RegisterCooperativePage() {
             className={inputClass}
             required
           />
+        </div>
+
+        {/* Gender */}
+        <div>
+          <label className={labelClass}>{t.register.gender} <span className="text-red-500">*</span></label>
+          <select
+            name="gender"
+            value={form.gender}
+            onChange={handleChange}
+            className={inputClass + " appearance-none"}
+            required
+          >
+            <option value="">{t.register.genderPlaceholder}</option>
+            <option value="male">{t.register.male}</option>
+            <option value="female">{t.register.female}</option>
+          </select>
         </div>
 
         {/* National ID */}
@@ -538,10 +556,10 @@ export default function RegisterCooperativePage() {
     >
       <div className="absolute right-4 top-4 z-10 flex items-center gap-2 sm:right-6 sm:top-6">
         <Link href="/" className="rounded-lg border border-white/50 bg-emerald-950/70 px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-black/10 transition hover:bg-emerald-900">
-          ← Home
+          ← {t.nav.home}
         </Link>
         <Link href="/login" className="rounded-lg bg-white/95 px-3 py-2 text-xs font-semibold text-emerald-700 shadow-lg shadow-black/10 transition hover:bg-emerald-50">
-          Log in
+          {t.login.signIn}
         </Link>
       </div>
       {/* Card */}
