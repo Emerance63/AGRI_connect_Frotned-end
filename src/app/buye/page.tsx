@@ -7,9 +7,5 @@ export const metadata = {
 
 
 export default function BuyersPage() {
-
-  return (
-    <BuyersBoard />
-  );
-
+  return <BuyersBoard />;
 }
