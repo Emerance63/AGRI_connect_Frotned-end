@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import jsPDF from "jspdf";
+import { useBuyers } from "@/lib/buyers";
+import { useCooperativeData } from "@/lib/cooperative-data";
 
 import {
   LineChart,
@@ -36,41 +38,6 @@ const topProducts = [
 ];
 
 
-const buyers = [
-  {
-    name: "ABC Restaurant",
-    location: "Kigali",
-    orders: 12,
-    spend: "RWF 1,148,000",
-    reliability: 96,
-  },
-
-  {
-    name: "Kigali Serena Hotel",
-    location: "Kigali",
-    orders: 8,
-    spend: "RWF 960,000",
-    reliability: 88,
-  },
-
-  {
-    name: "St. Joseph School",
-    location: "Musanze",
-    orders: 5,
-    spend: "RWF 400,000",
-    reliability: 91,
-  },
-
-  {
-    name: "Rwanda Green Mart",
-    location: "Huye",
-    orders: 21,
-    spend: "RWF 2,120,000",
-    reliability: 76,
-  },
-];
-
-
 type Action =
   | "preview"
   | "export"
@@ -79,10 +46,13 @@ type Action =
 
 
 export default function ReportsBoard() {
+const { buyers } = useBuyers();
+const { products, inventory, orders } = useCooperativeData();
 
 
 const [action,setAction] =
 useState<Action>("preview");
+const [notice, setNotice] = useState("");
 
 
 
@@ -94,21 +64,37 @@ const reportData = {
   generated:
   new Date().toLocaleDateString(),
 
-  totalProducts:25,
+  totalProducts:products.length,
 
-  totalStock:"5000 kg",
+  totalStock:`${inventory.reduce((sum, item) => sum + Number(item.available.replace(" kg", "")), 0)} kg`,
 
-  totalOrders:30,
+  totalOrders:orders.length,
 
-  revenue:"RWF 11.2M",
+  revenue:`RWF ${buyers.reduce((sum, buyer) => sum + Number(buyer.spend.replace(/[^0-9]/g, "")), 0).toLocaleString()}`,
 
 };
+
+const activeBuyers = buyers.filter((buyer) => buyer.active);
+const bestBuyer = buyers.reduce<
+  (typeof buyers)[number] | null
+>(
+  (top, buyer) => {
+    if (!top || buyer.reliability > top.reliability) {
+      return buyer;
+    }
+
+    return top;
+  },
+  buyers[0] ?? null
+);
 
 
 
 
 
 function downloadPDF(){
+
+setAction("preview");
 
 
 const doc =
@@ -174,6 +160,8 @@ doc.save(
 "agri-report.pdf"
 );
 
+setNotice("PDF report downloaded.");
+
 
 }
 
@@ -181,6 +169,8 @@ doc.save(
 
 
 function downloadCSV(){
+
+setAction("export");
 
 
 const rows = [
@@ -267,11 +257,27 @@ link.click();
 
 URL.revokeObjectURL(url);
 
+setNotice("CSV report downloaded.");
 
 }
 
-
-
+async function shareReport() {
+const shareData = { title: "AGRI Connect Cooperative Report", text: `Cooperative report generated ${reportData.generated}. Revenue: ${reportData.revenue}.` };
+setAction("share");
+try {
+  if (navigator.share) {
+    await navigator.share(shareData);
+    setNotice("Report share sheet opened.");
+  } else if (navigator.clipboard) {
+    await navigator.clipboard.writeText(shareData.text);
+    setNotice("Report summary copied to your clipboard.");
+  } else {
+    setNotice("Sharing is unavailable in this browser.");
+  }
+} catch (error) {
+  if ((error as DOMException).name !== "AbortError") setNotice("Unable to share the report. Please try again.");
+}
+}
 
 
 const actionCopy: Record<
@@ -375,7 +381,7 @@ Download CSV
 
 <button
 
-onClick={()=>setAction("share")}
+onClick={shareReport}
 
 className="rounded-lg bg-green-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-green-700"
 
@@ -392,7 +398,7 @@ className="rounded-lg bg-green-600 px-3 py-1.5 text-xs font-semibold text-white 
 </div>
       <div className="rounded-xl border border-green-100 bg-green-50/80 px-4 py-3 text-sm text-green-900 dark:border-green-500/20 dark:bg-green-500/10 dark:text-green-100">
 
-        {actionCopy[action].title} is active. Your report can now be downloaded as PDF or CSV.
+        {notice || `${actionCopy[action].title} is ready. Your report can now be downloaded as PDF or CSV.`}
 
       </div>
 
@@ -650,7 +656,7 @@ className="rounded-lg bg-green-600 px-3 py-1.5 text-xs font-semibold text-white 
 
             <p className="font-semibold text-gray-900 dark:text-white">
 
-              ABC Restaurant
+              {bestBuyer?.name ?? "No buyers yet"}
 
             </p>
 
@@ -691,7 +697,7 @@ className="rounded-lg bg-green-600 px-3 py-1.5 text-xs font-semibold text-white 
 
             <p className="font-semibold text-gray-900 dark:text-white">
 
-              4
+              {activeBuyers.length}
 
             </p>
 

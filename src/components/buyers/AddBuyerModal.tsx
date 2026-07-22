@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Buyer } from "./BuyersBoard";
 
 
 interface AddBuyerModalProps {
   isOpen: boolean;
+  buyer?: Buyer | null;
   onClose: () => void;
   onAdd: (buyer: Buyer) => void;
 }
@@ -13,6 +14,7 @@ interface AddBuyerModalProps {
 
 export default function AddBuyerModal({
   isOpen,
+  buyer,
   onClose,
   onAdd,
 }: AddBuyerModalProps) {
@@ -26,6 +28,10 @@ export default function AddBuyerModal({
     reliability: 100,
     active: true,
   });
+
+  useEffect(() => {
+    setFormData(buyer ? { name: buyer.name, location: buyer.location, orders: buyer.orders, spend: buyer.spend, reliability: buyer.reliability, active: buyer.active } : { name: "", location: "", orders: 0, spend: "RWF 0", reliability: 100, active: true });
+  }, [buyer, isOpen]);
 
 
 
@@ -90,7 +96,7 @@ export default function AddBuyerModal({
 
 
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-            Add New Buyer
+            {buyer ? "Edit Buyer" : "Add New Buyer"}
           </h2>
 
 
@@ -163,6 +169,8 @@ export default function AddBuyerModal({
           <input
 
             type="number"
+
+            min="0"
 
             value={formData.orders}
 
@@ -239,7 +247,7 @@ export default function AddBuyerModal({
 
           >
 
-            Add Buyer
+            {buyer ? "Save Changes" : "Add Buyer"}
 
           </button>
 

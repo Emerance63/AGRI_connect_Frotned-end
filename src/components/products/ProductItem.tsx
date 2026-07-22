@@ -1,6 +1,6 @@
 "use client";
 
-import type { ProductItemType } from "@/components/cooperative/ProductsBoard";
+import type { ProductItemType } from "@/lib/cooperative-data";
 
 interface ProductItemProps {
   product: ProductItemType;

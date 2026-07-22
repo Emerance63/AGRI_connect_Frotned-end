@@ -42,8 +42,8 @@ export default function UpdateStockModal({
     const stockValue = Number(stock);
     const availableValue = Number(available);
 
-    if (Number.isNaN(stockValue) || Number.isNaN(availableValue)) {
-      setError("Please enter valid numbers.");
+    if (!stock.trim() || !available.trim() || !Number.isFinite(stockValue) || !Number.isFinite(availableValue)) {
+      setError("Please enter valid numbers for both stock fields.");
       return;
     }
 
@@ -59,9 +59,9 @@ export default function UpdateStockModal({
 
     let status: "Healthy" | "Low" | "Out";
 
-    if (stockValue === 0) {
+    if (availableValue === 0) {
       status = "Out";
-    } else if (stockValue <= 100) {
+    } else if (availableValue <= 100) {
       status = "Low";
     } else {
       status = "Healthy";

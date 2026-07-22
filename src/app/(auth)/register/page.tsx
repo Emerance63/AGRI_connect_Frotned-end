@@ -2,24 +2,54 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useLanguage } from "@/lib/LanguageContext";
+import { registerAccount } from "@/lib/auth";
 
-/* ── Static data ── */
-const provinces = [
-  "Northern Province",
-  "Southern Province",
-  "Eastern Province",
-  "Western Province",
-  "Kigali City",
-];
+const locations: Record<string, Record<string, string[]>> = {
+  "Kigali City": {
+    Gasabo: ["Bumbogo", "Gatsata", "Gikomero", "Gisozi", "Jabana", "Jali", "Kacyiru", "Kimihurura", "Kimironko", "Kinyinya", "Ndera", "Nduba", "Remera", "Rusororo", "Rutunga"],
+    Kicukiro: ["Gahanga", "Gatenga", "Gikondo", "Kagarama", "Kanombe", "Kicukiro", "Kigarama", "Masaka", "Niboye", "Nyarugunga"],
+    Nyarugenge: ["Gitega", "Kanyinya", "Kigali", "Kimisagara", "Mageregere", "Muhima", "Nyakabanda", "Nyamirambo", "Nyarugenge", "Rwezamenyo"],
+  },
+  "Eastern Province": {
+    Bugesera: ["Gashora", "Juru", "Kamabuye", "Ntarama", "Mareba", "Mayange", "Musenyi", "Mwogo", "Ngeruka", "Nyamata", "Nyarugenge", "Rilima", "Ruhuha", "Rweru", "Shyara"],
+    Gatsibo: ["Gasange", "Gatsibo", "Gitoki", "Kabarore", "Kageyo", "Kiramuruzi", "Kiziguro", "Muhura", "Murambi", "Ngarama", "Nyagihanga", "Remera", "Rugarama", "Rwimbogo"],
+    Kayonza: ["Gahini", "Kabarondo", "Murama", "Murundi", "Mwiri", "Mukarange", "Ndego", "Nyamirama", "Rukara", "Ruramira", "Rwinkwavu", "Nyabwishongwezi"],
+    Kirehe: ["Gahara", "Gatore", "Kigarama", "Kigina", "Kirehe", "Mahama", "Mpanga", "Musaza", "Mushikiri", "Nasho", "Nyamugari", "Nyarubuye"],
+    Ngoma: ["Gashanda", "Jarama", "Karembo", "Kazo", "Kibungo", "Mugesera", "Murama", "Mutenderi", "Remera", "Rukira", "Rukumberi", "Rurenge", "Sake", "Zaza"],
+    Nyagatare: ["Gatunda", "Karama", "Karangazi", "Katabagemu", "Kiyombe", "Matimba", "Mimuri", "Mukama", "Musheli", "Nyagatare", "Rukomo", "Rwempasha", "Rwimiyaga", "Tabagwe"],
+    Rwamagana: ["Fumbwe", "Gahengeri", "Gishali", "Karenge", "Kigabiro", "Muhazi", "Munyaga", "Munyiginya", "Musha", "Muyumbu", "Mwulire", "Nyakariro", "Nzige", "Rubona"],
+  },
+  "Western Province": {
+    Karongi: ["Bwishyura", "Gashari", "Gishyita", "Gitesi", "Murambi", "Mubuga", "Mutuntu", "Rugabano", "Ruganda", "Rubengera", "Rwankuba", "Twumba", "Murundi"],
+    Ngororero: ["Bwira", "Gatumba", "Hindiro", "Kabaya", "Kageyo", "Kavumu", "Matyazo", "Muhanda", "Muhororo", "Ndaro", "Ngororero", "Nyange", "Sovu"],
+    Nyabihu: ["Bigogwe", "Jenda", "Jomba", "Kabatwa", "Karago", "Kintobo", "Mukamira", "Muringa", "Rambura", "Rugera", "Rurembo", "Shyira"],
+    Nyamasheke: ["Bushekeri", "Bushenge", "Cyato", "Gihombo", "Kagano", "Karambi", "Karengera", "Kilimbi", "Kirimbi", "Macuba", "Mahembe", "Nyabitekeri", "Rangiro", "Ruharambuga", "Shangi"],
+    Rubavu: ["Bugeshi", "Busasamana", "Cyanzarwe", "Gisenyi", "Kanama", "Kanzenze", "Mudende", "Nyakiriba", "Nyamyumba", "Nyundo", "Rubavu", "Rugerero"],
+    Rusizi: ["Bugarama", "Butare", "Bweyeye", "Gashonga", "Giheke", "Gihundwe", "Gikundamvura", "Gitambi", "Kamembe", "Muganza", "Mururu", "Nkanka", "Nkombo", "Nkungu", "Nyakabuye", "Nyakarenzo", "Nzahaha", "Rwimbogo"],
+    Rutsiro: ["Boneza", "Gihango", "Kigeyo", "Kivumu", "Manihira", "Mukura", "Murunda", "Musasa", "Mushonyi", "Mushubati", "Nyabirasi", "Ruhango", "Rusebeya"],
+  },
+  "Northern Province": {
+    Burera: ["Bungwe", "Butaro", "Cyanika", "Cyeru", "Gahunga", "Gatebe", "Gitovu", "Kagogo", "Kinoni", "Kinyababa", "Kivuye", "Nemba", "Rugarama", "Rugengabari", "Ruhunde", "Rusarabuye", "Rwerere"],
+    Gakenke: ["Busengo", "Coko", "Cyabingo", "Gakenke", "Gashenyi", "Janja", "Kamubuga", "Karambo", "Kivuruga", "Mataba", "Minazi", "Mugunga", "Muhondo", "Muyongwe", "Nemba", "Ruli", "Rusasa", "Rushashi", "Rwamiko"],
+    Gicumbi: ["Bukure", "Bwisige", "Byumba", "Cyumba", "Giti", "Kaniga", "Kanzenze", "Kageyo", "Karambo", "Karama", "Kazo", "Kigogo", "Manyagiro", "Miyove", "Mukarange", "Muko", "Mutete", "Nyamiyaga", "Rubaya", "Rukomo", "Rushaki"],
+    Musanze: ["Busogo", "Cyuve", "Gacaca", "Gashaki", "Gataraga", "Kimonyi", "Kinigi", "Muhoza", "Musanze", "Nkotsi", "Nyange", "Remera", "Rugarama", "Shingiro"],
+    Rulindo: ["Base", "Burega", "Bushoki", "Cyinzuzi", "Cyungo", "Kinihira", "Kisaro", "Masoro", "Mbogo", "Murambi", "Ntarabana", "Rukozo", "Rusiga", "Shyorongi", "Tumba", "Ruli", "Ngoma"],
+  },
+  "Southern Province": {
+    Gisagara: ["Gikonko", "Gishubi", "Kansi", "Kibirizi", "Kibilizi", "Kigembe", "Mamba", "Muganza", "Mugombwa", "Mukindo", "Musha", "Ndora", "Save"],
+    Huye: ["Gishamvu", "Huye", "Karama", "Kigoma", "Kinazi", "Maraba", "Mbazi", "Mukura", "Ngoma", "Ruhashya", "Rusatira", "Rwaniro", "Simbi", "Tumba"],
+    Kamonyi: ["Gacurabwenge", "Karama", "Kayenzi", "Kayumbu", "Mugina", "Musambira", "Ngamba", "Nyamiyaga", "Nyarubaka", "Rugalika", "Rukoma", "Runda"],
+    Muhanga: ["Cyeza", "Kabacuzi", "Kiyumba", "Muhanga", "Mushishiro", "Nyabinoni", "Nyamabuye", "Nyarusange", "Rongi", "Rugendabari", "Shyogwe", "Tambwe"],
+    Nyamagabe: ["Buruhukiro", "Busanze", "Gasaka", "Gatare", "Kaduha", "Kamegeri", "Kibirizi", "Kibumbwe", "Kitabi", "Mbazi", "Mugano", "Musange", "Musebeya", "Mushubi", "Nkomane", "Tare", "Uwinkingi"],
+    Nyanza: ["Busasamana", "Busoro", "Cyabakamyi", "Kibilizi", "Kigoma", "Mukingo", "Muyira", "Ntyazo", "Nyagisozi", "Rwabicuma"],
+    Nyaruguru: ["Busanze", "Cyahinda", "Kibeho", "Kivu", "Mata", "Muganza", "Munini", "Ngera", "Ngoma", "Nyabimata", "Nyagisozi", "Ruramba", "Rusenge", "Ruheru"],
+    Ruhango: ["Bweramana", "Byimana", "Kinazi", "Kinihira", "Mbuye", "Mwendo", "Ntongwe", "Ruhango", "Shyogwe"],
+  },
+};
 
-const districts = [
-  "Bugesera","Burera","Gakenke","Gasabo","Gatsibo","Gicumbi","Gisagara",
-  "Huye","Kamonyi","Karongi","Kayonza","Kicukiro","Kirehe","Muhanga",
-  "Musanze","Ngoma","Ngororero","Nyabihu","Nyagatare","Nyamagabe",
-  "Nyamasheke","Nyanza","Nyarugenge","Nyaruguru","Rubavu","Ruhando",
-  "Rulindo","Rusizi","Rutsiro","Rwamagana",
-];
+const provinces = Object.keys(locations) as Array<keyof typeof locations>;
 
 /* ── Shared styles ── */
 const inputClass =
@@ -30,10 +60,13 @@ const labelClass =
 export default function RegisterCooperativePage() {
   const { t } = useLanguage();
   const [step, setStep] = useState<1 | 2>(1);
+  const [submitError, setSubmitError] = useState("");
+  const router = useRouter();
 
   const [form, setForm] = useState({
     // Step 1 – President
     fullName: "",
+    gender: "",
     nationalId: "",
     phoneNumber: "",
     email: "",
@@ -53,8 +86,9 @@ export default function RegisterCooperativePage() {
   /* ── Validation for Step 1 ── */
   const step1Valid =
     form.fullName.trim() !== "" &&
-    form.nationalId.trim() !== "" &&
-    form.phoneNumber.trim() !== "" &&
+    form.gender !== "" &&
+    /^\d{16}$/.test(form.nationalId) &&
+    /^\d+$/.test(form.phoneNumber) &&
     form.email.trim() !== "" &&
     form.password.length >= 8 &&
     form.password === form.confirmPassword;
@@ -64,17 +98,57 @@ export default function RegisterCooperativePage() {
   ) => {
     const { name, value, type } = e.target as HTMLInputElement;
     const checked = (e.target as HTMLInputElement).checked;
+
+    if (name === "province") {
+      setForm((prev) => ({ ...prev, province: value, district: "", sector: "" }));
+      return;
+    }
+
+    if (name === "district") {
+      setForm((prev) => ({ ...prev, district: value, sector: "" }));
+      return;
+    }
+
+    const nextValue = name === "nationalId"
+      ? value.replace(/\D/g, "").slice(0, 16)
+      : name === "phoneNumber"
+        ? value.replace(/\D/g, "")
+        : value;
+
     setForm((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === "checkbox" ? checked : nextValue,
     }));
   };
 
+  const availableDistricts = form.province
+    ? Object.keys(locations[form.province])
+    : [];
+  const availableSectors = form.province && form.district
+    ? locations[form.province][form.district] ?? []
+    : [];
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.agreed) return;
-    console.log("Registration submitted:", form);
-    // TODO: wire up to API
+    if (!step1Valid) {
+      setSubmitError("Please complete all required personal information, including a valid 16-digit National ID.");
+      setStep(1);
+      return;
+    }
+    if (!form.agreed) {
+      setSubmitError("Please agree to the terms and conditions before registering.");
+      return;
+    }
+    const result = registerAccount({
+      cooperativeName: form.cooperativeName,
+      email: form.email,
+      password: form.password,
+    });
+    if (!result.ok) {
+      setSubmitError(result.message ?? "Unable to create your account.");
+      return;
+    }
+    router.replace("/login?registered=1");
   };
 
   /* ─────────────────────────────────────────
@@ -146,7 +220,7 @@ export default function RegisterCooperativePage() {
   /* ─────────────────────────────────────────
      STEP 1 — President / User Information
   ───────────────────────────────────────── */
-  const Step1 = () => (
+  const renderStep1 = () => (
     <div className="space-y-4 animate-[fadeInUp_0.4s_ease-out_both]">
       <div>
         <h2 className="text-base font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2 uppercase tracking-wider mb-4">
@@ -169,17 +243,43 @@ export default function RegisterCooperativePage() {
           />
         </div>
 
+        {/* Gender */}
+        <div>
+          <label className={labelClass}>{t.register.gender} <span className="text-red-500">*</span></label>
+          <select
+            name="gender"
+            value={form.gender}
+            onChange={handleChange}
+            className={inputClass + " appearance-none"}
+            required
+          >
+            <option value="">{t.register.genderPlaceholder}</option>
+            <option value="male">{t.register.male}</option>
+            <option value="female">{t.register.female}</option>
+          </select>
+        </div>
+
         {/* National ID */}
         <div>
           <label className={labelClass}>{t.register.nationalId} <span className="text-red-500">*</span></label>
           <input
             name="nationalId"
+            type="text"
             value={form.nationalId}
             onChange={handleChange}
             placeholder={t.register.nationalIdPlaceholder}
             className={inputClass}
+            inputMode="numeric"
+            autoComplete="off"
+            minLength={16}
+            maxLength={16}
+            pattern="[0-9]{16}"
+            title="National ID must contain exactly 16 numbers"
             required
           />
+          {form.nationalId.length > 0 && form.nationalId.length !== 16 && (
+            <p className="mt-1 text-[11px] text-red-400">National ID must contain exactly 16 numbers</p>
+          )}
         </div>
 
         {/* Phone */}
@@ -187,11 +287,15 @@ export default function RegisterCooperativePage() {
           <label className={labelClass}>{t.register.phoneNumber} <span className="text-red-500">*</span></label>
           <input
             name="phoneNumber"
-            type="tel"
+            type="text"
             value={form.phoneNumber}
             onChange={handleChange}
             placeholder={t.register.phoneNumberPlaceholder}
             className={inputClass}
+            inputMode="numeric"
+            autoComplete="tel"
+            pattern="[0-9]+"
+            title="Phone number must contain numbers only"
             required
           />
         </div>
@@ -263,7 +367,7 @@ export default function RegisterCooperativePage() {
   /* ─────────────────────────────────────────
      STEP 2 — Cooperative Information
   ───────────────────────────────────────── */
-  const Step2 = () => (
+  const renderStep2 = () => (
     <form onSubmit={handleSubmit} className="space-y-4 animate-[fadeInUp_0.4s_ease-out_both]">
       <div>
         <h2 className="text-base font-bold text-amber-500 dark:text-amber-400 flex items-center gap-2 uppercase tracking-wider mb-4">
@@ -317,33 +421,43 @@ export default function RegisterCooperativePage() {
           </select>
         </div>
 
-        {/* District */}
+        {/* District — cascades from province */}
         <div>
           <label className={labelClass}>{t.register.district} <span className="text-red-500">*</span></label>
           <select
             name="district"
             value={form.district}
             onChange={handleChange}
-            className={inputClass + " appearance-none"}
+            disabled={!form.province}
+            className={inputClass + " appearance-none disabled:cursor-not-allowed disabled:opacity-60"}
             required
           >
-            <option value="">{t.register.districtPlaceholder}</option>
-            {districts.map((d) => (
+            <option value="">
+              {form.province ? t.register.districtPlaceholder : "Select a province first"}
+            </option>
+            {availableDistricts.map((d) => (
               <option key={d} value={d}>{d}</option>
             ))}
           </select>
         </div>
 
-        {/* Sector */}
+        {/* Sector — cascades from district */}
         <div>
           <label className={labelClass}>{t.register.sector}</label>
-          <input
+          <select
             name="sector"
             value={form.sector}
             onChange={handleChange}
-            placeholder={t.register.sectorPlaceholder}
-            className={inputClass}
-          />
+            disabled={!form.district}
+            className={inputClass + " appearance-none disabled:cursor-not-allowed disabled:opacity-60"}
+          >
+            <option value="">
+              {form.district ? t.register.sectorPlaceholder : "Select a district first"}
+            </option>
+            {availableSectors.map((sector) => (
+              <option key={sector} value={sector}>{sector}</option>
+            ))}
+          </select>
         </div>
 
         {/* Contact Info */}
@@ -387,6 +501,8 @@ export default function RegisterCooperativePage() {
           {t.register.agreeTextPart2}
         </span>
       </label>
+
+      {submitError && <p role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-700 dark:text-red-200">{submitError}</p>}
 
       {/* Action buttons */}
       <div className="flex gap-3 pt-1">
@@ -432,14 +548,22 @@ export default function RegisterCooperativePage() {
   ───────────────────────────────────────── */
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center bg-fixed px-4 py-8 sm:px-6"
+      className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center bg-fixed px-4 py-20 sm:px-6 sm:py-8"
       style={{
         backgroundImage:
           "linear-gradient(rgba(6, 23, 13, 0.88), rgba(6, 23, 13, 0.92)), url('/images/products/reg.jpg')",
       }}
     >
+      <div className="absolute right-4 top-4 z-10 flex items-center gap-2 sm:right-6 sm:top-6">
+        <Link href="/" className="rounded-lg border border-white/50 bg-emerald-950/70 px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-black/10 transition hover:bg-emerald-900">
+          ← {t.nav.home}
+        </Link>
+        <Link href="/login" className="rounded-lg bg-white/95 px-3 py-2 text-xs font-semibold text-emerald-700 shadow-lg shadow-black/10 transition hover:bg-emerald-50">
+          {t.login.signIn}
+        </Link>
+      </div>
       {/* Card */}
-      <div className="w-full max-w-xl bg-white dark:bg-[#0f2417]/95 border border-gray-200 dark:border-[#1f3d29] rounded-2xl shadow-2xl p-6 sm:p-8 relative overflow-hidden">
+      <div className="w-full max-w-xl bg-white dark:bg-[#0f2417]/95 border border-gray-200 dark:border-[#1f3d29] rounded-2xl shadow-2xl p-5 sm:p-8 relative overflow-hidden">
         {/* Top accent bar */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-amber-500 to-emerald-500" />
 
@@ -460,7 +584,7 @@ export default function RegisterCooperativePage() {
         <StepIndicator />
 
         {/* Step content */}
-        {step === 1 ? <Step1 /> : <Step2 />}
+        {step === 1 ? renderStep1() : renderStep2()}
       </div>
     </div>
   );

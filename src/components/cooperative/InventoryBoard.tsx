@@ -2,24 +2,7 @@
 
 import { useState } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
-
-type InventoryItem = {
-  name: string;
-  category: string;
-  stock: string;
-  available: string;
-  status: "Healthy" | "Low" | "Out";
-  updated: string;
-};
-
-const initialItems: InventoryItem[] = [
-  { name: "Premium Beans", category: "Legumes", stock: "850 kg", available: "680 kg", status: "Healthy", updated: "2 hrs ago" },
-  { name: "White Rice", category: "Grains", stock: "428 kg", available: "350 kg", status: "Healthy", updated: "1 hrs ago" },
-  { name: "Sweet Potatoes", category: "Root Veg", stock: "95 kg", available: "50 kg", status: "Low", updated: "1 hrs ago" },
-  { name: "Green Cabbage", category: "Vegetables", stock: "218 kg", available: "190 kg", status: "Healthy", updated: "1 hrs ago" },
-  { name: "Maize Flour", category: "Grains", stock: "18 kg", available: "18 kg", status: "Low", updated: "1 hrs ago" },
-  { name: "Tomatoes", category: "Vegetables", stock: "8 kg", available: "8 kg", status: "Out", updated: "1 hrs ago" },
-];
+import { useCooperativeData, type InventoryItem } from "@/lib/cooperative-data";
 
 const statusColor: Record<InventoryItem["status"], string> = {
   Healthy: "bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400",
@@ -28,7 +11,7 @@ const statusColor: Record<InventoryItem["status"], string> = {
 };
 
 export default function InventoryBoard() {
-  const [items, setItems] = useState(initialItems);
+  const { inventory: items, refreshInventoryItem } = useCooperativeData();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const selectedItem = items[selectedIndex];
   const { t } = useLanguage();
@@ -42,13 +25,7 @@ export default function InventoryBoard() {
 
   function handleUpdate(index: number) {
     setSelectedIndex(index);
-    setItems((current) =>
-      current.map((item, itemIndex) =>
-        itemIndex === index
-          ? { ...item, updated: "just now" }
-          : item
-      )
-    );
+    refreshInventoryItem(items[index]?.name ?? "");
   }
 
   return (

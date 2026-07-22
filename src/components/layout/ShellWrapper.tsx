@@ -9,10 +9,12 @@ const COOPERATIVE_ROUTES = [
   "/inventory",
   "/orders",
   "/buyers",
+  "/members",
   "/reports",
   "/cooperative",
   "/login",
   "/register",
+  "/forgot-password",
 ];
 
 export default function ShellWrapper({ children }: { children: React.ReactNode }) {

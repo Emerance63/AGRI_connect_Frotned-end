@@ -1,16 +1,41 @@
 "use client";
 
+import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
+import { useCooperativeData } from "@/lib/cooperative-data";
+
+function formatRwf(value: number) {
+  if (value >= 1_000_000) {
+    return `RWF ${(value / 1_000_000).toFixed(1)}M`;
+  }
+
+  return `RWF ${new Intl.NumberFormat("en-US").format(value)}`;
+}
 
 export default function StatsCards() {
   const { t } = useLanguage();
+  const { products, inventory, buyers, orders } = useCooperativeData();
+
+  const totalInventory = inventory.reduce((sum, item) => {
+    const value = Number(item.available.replace(" kg", ""));
+    return sum + (Number.isFinite(value) ? value : 0);
+  }, 0);
+
+  const totalRevenue = buyers.reduce((sum, buyer) => {
+    const value = Number(buyer.spend.replace(/[^0-9]/g, ""));
+    return sum + (Number.isFinite(value) ? value : 0);
+  }, 0);
+
+  const pendingRequests = orders.filter((order) => order.status !== "Delivered").length;
+  const scheduledDeliveries = orders.filter((order) => order.status === "Dispatched").length;
 
   const stats = [
     {
       label: t.dashboard.totalProducts,
-      value: "24",
+      value: String(products.length),
       trend: t.dashboard.trendUp, // "+3 this week"
       trendUp: true,
+      href: "/cooperative/products",
       icon: (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M20 7 12 3 4 7v10l8 4 8-4V7z" />
@@ -21,9 +46,10 @@ export default function StatsCards() {
     },
     {
       label: t.dashboard.inventoryAvailable,
-      value: "18.4 t",
+      value: `${totalInventory} kg`,
       trend: "In stock",
       trendUp: true,
+      href: "/inventory",
       icon: (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M21 8v13H3V8" />
@@ -34,9 +60,10 @@ export default function StatsCards() {
     },
     {
       label: t.dashboard.newRequests,
-      value: "7",
-      trend: "3 pending",
+      value: String(pendingRequests),
+      trend: `${pendingRequests} pending`,
       trendUp: false,
+      href: "/orders",
       icon: (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
@@ -47,9 +74,10 @@ export default function StatsCards() {
     },
     {
       label: t.dashboard.monthlyRevenueStat,
-      value: "RWF 11.2M",
-      trend: "+8% vs last month",
+      value: formatRwf(totalRevenue),
+      trend: "Updated from buyers",
       trendUp: true,
+      href: "/reports",
       icon: (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M3 3v18h18" />
@@ -61,9 +89,10 @@ export default function StatsCards() {
     },
     {
       label: t.dashboard.pendingDeliveries,
-      value: "3",
-      trend: "+1 scheduled",
+      value: String(scheduledDeliveries),
+      trend: `${scheduledDeliveries} scheduled`,
       trendUp: true,
+      href: "/orders",
       icon: (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <rect x="1" y="3" width="15" height="13" rx="1" />
@@ -78,9 +107,10 @@ export default function StatsCards() {
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
       {stats.map((s) => (
-        <div
+        <Link
           key={s.label}
-          className="rounded-xl bg-white p-3 shadow-sm ring-1 ring-gray-100 sm:p-4 dark:bg-[#112d1a] dark:ring-white/10"
+          href={s.href}
+          className="rounded-xl bg-white p-3 shadow-sm ring-1 ring-gray-100 transition duration-150 hover:-translate-y-0.5 hover:shadow-md hover:ring-green-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-600 sm:p-4 dark:bg-[#112d1a] dark:ring-white/10 dark:hover:ring-green-500/60"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-gray-500 dark:text-green-100/60">{s.label}</span>
@@ -99,7 +129,7 @@ export default function StatsCards() {
             )}
             {s.trend}
           </p>
-        </div>
+        </Link>
       ))}
     </div>
   );

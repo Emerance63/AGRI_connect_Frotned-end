@@ -1,65 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useCooperativeData, type InventoryItem } from "@/lib/cooperative-data";
 
 import InventoryCard from "./InventoryCard";
 import InventoryStats from "./InventoryStats";
 import SearchInventory from "./SearchInventory";
-import AddProductModal from "../AddProductModal";
-import UpdateStockModal, {
-  InventoryItem,
-} from "./UpdateStockModal";
-
-const initialItems: InventoryItem[] = [
-  {
-    name: "Premium Beans",
-    category: "Legumes",
-    stock: "850 kg",
-    available: "680 kg",
-    status: "Healthy",
-    updated: "2 hrs ago",
-  },
-  {
-    name: "White Rice",
-    category: "Grains",
-    stock: "428 kg",
-    available: "350 kg",
-    status: "Healthy",
-    updated: "1 hr ago",
-  },
-  {
-    name: "Sweet Potatoes",
-    category: "Root Veg",
-    stock: "95 kg",
-    available: "50 kg",
-    status: "Low",
-    updated: "1 hr ago",
-  },
-  {
-    name: "Green Cabbage",
-    category: "Vegetables",
-    stock: "218 kg",
-    available: "190 kg",
-    status: "Healthy",
-    updated: "1 hr ago",
-  },
-  {
-    name: "Maize Flour",
-    category: "Grains",
-    stock: "18 kg",
-    available: "18 kg",
-    status: "Low",
-    updated: "40 mins ago",
-  },
-  {
-    name: "Tomatoes",
-    category: "Vegetables",
-    stock: "0 kg",
-    available: "0 kg",
-    status: "Out",
-    updated: "20 mins ago",
-  },
-];
+import AddInventoryModal from "./AddInventoryModal";
+import UpdateStockModal from "./UpdateStockModal";
 
 const statusColor = {
   Healthy:
@@ -71,18 +19,19 @@ const statusColor = {
 };
 
 export default function InventoryBoard() {
-  const [items, setItems] = useState(initialItems);
+  const { inventory: items, addInventoryItem, updateInventoryItem, deleteInventoryItem, refreshInventoryItem } = useCooperativeData();
 
   const [search, setSearch] = useState("");
 
   const [filter, setFilter] = useState("All");
 
   const [selectedItem, setSelectedItem] =
-    useState<InventoryItem | null>(null);
+    useState<InventoryItem | null>(items[0] ?? null);
 
   const [openModal, setOpenModal] = useState(false);
   const [openAddModal, setOpenAddModal] = useState(false);
   const [category, setCategory] = useState("All");
+  const [feedback, setFeedback] = useState("");
 
  const filteredItems = useMemo(() => {
   return items.filter((item) => {
@@ -113,7 +62,13 @@ const out = items.filter(
 ).length;
 
 function handleAdd(item: InventoryItem) {
-  setItems((current) => [...current, item]);
+  if (!addInventoryItem(item)) {
+    setFeedback(`A product named ${item.name} already exists.`);
+    return false;
+  }
+  setSelectedItem(item);
+  setFeedback(`${item.name} was added to inventory.`);
+  return true;
 }
 
   function handleOpen(item: InventoryItem) {
@@ -123,33 +78,24 @@ function handleAdd(item: InventoryItem) {
   
 
   function handleSave(updated: InventoryItem) {
-    setItems((current) =>
-      current.map((item) =>
-        item.name === updated.name ? updated : item
-      )
-    );
+    updateInventoryItem(updated.name, updated);
 
     setOpenModal(false);
+    setSelectedItem(updated);
+    setFeedback(`${updated.name} stock was updated.`);
   }
 
   function handleDelete(name: string) {
   if (!confirm("Delete this product?")) return;
 
-  setItems((current) =>
-    current.filter((item) => item.name !== name)
-  );
+  deleteInventoryItem(name);
+  setSelectedItem((current) => current?.name === name ? null : current);
+  setFeedback(`${name} was deleted from inventory.`);
 }
   function refreshItem(item: InventoryItem) {
-    setItems((current) =>
-      current.map((i) =>
-        i.name === item.name
-          ? {
-              ...i,
-              updated: "Just now",
-            }
-          : i
-      )
-    );
+    refreshInventoryItem(item.name);
+    setSelectedItem((current) => current?.name === item.name ? { ...current, updated: "Just now" } : current);
+    setFeedback(`${item.name} was refreshed.`);
   }
 
   return (
@@ -177,6 +123,12 @@ function handleAdd(item: InventoryItem) {
   </button>
 
 </div>
+
+      {feedback && (
+        <p role="status" className="rounded-lg border border-green-100 bg-green-50 px-4 py-3 text-sm text-green-800 dark:border-green-500/20 dark:bg-green-500/10 dark:text-green-100">
+          {feedback}
+        </p>
+      )}
 
       <InventoryStats
         healthy={healthy}
@@ -330,6 +282,13 @@ function handleAdd(item: InventoryItem) {
                       Update
                     </button>
 
+                    <button
+                      onClick={() => handleDelete(item.name)}
+                      className="rounded-lg bg-red-600 px-3 py-1 text-sm font-semibold text-white transition hover:bg-red-700"
+                    >
+                      Delete
+                    </button>
+
                   </div>
 
                 </td>
@@ -352,11 +311,11 @@ function handleAdd(item: InventoryItem) {
         }}
         onSave={handleSave}
       />
-      {/* <AddProductModal
-  open={openAddModal}
-  onClose={() => setOpenAddModal(false)}
-  onAdd={handleAdd}
-/> */}
+      <AddInventoryModal
+        open={openAddModal}
+        onClose={() => setOpenAddModal(false)}
+        onSave={handleAdd}
+      />
 
       {selectedItem && (
         <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10">

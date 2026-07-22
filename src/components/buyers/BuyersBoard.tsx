@@ -7,77 +7,14 @@ import SearchBuyers from "./SearchBuyers";
 import BuyerDetailsModal from "./BuyerDetailsModal";
 
 import AddBuyerModal from "./AddBuyerModal";
+import { useBuyers } from "@/lib/buyers";
 
-export type Buyer = {
-  initials: string;
-  name: string;
-  location: string;
-  orders: number;
-  spend: string;
-  reliability: number;
-  active: boolean;
-};
-
-
-const initialBuyers: Buyer[] = [
-  {
-    initials: "AR",
-    name: "ABC Restaurant",
-    location: "Kigali",
-    orders: 12,
-    spend: "RWF 1,148,000",
-    reliability: 96,
-    active: true,
-  },
-
-  {
-    initials: "KS",
-    name: "Kigali Serena Hotel",
-    location: "Kigali",
-    orders: 8,
-    spend: "RWF 960,000",
-    reliability: 88,
-    active: true,
-  },
-
-  {
-    initials: "SJ",
-    name: "St. Joseph School",
-    location: "Musanze",
-    orders: 5,
-    spend: "RWF 400,000",
-    reliability: 91,
-    active: true,
-  },
-
-  {
-    initials: "RG",
-    name: "Rwanda Green Mart",
-    location: "Huye",
-    orders: 21,
-    spend: "RWF 2,120,000",
-    reliability: 76,
-    active: true,
-  },
-
-  {
-    initials: "MH",
-    name: "Horizon Hotel",
-    location: "Rubavu",
-    orders: 3,
-    spend: "RWF 280,000",
-    reliability: 61,
-    active: false,
-  },
-];
+export type { Buyer } from "@/lib/buyers";
 
 
 
 export default function BuyersBoard() {
-
-
-  const [buyers, setBuyers] =
-  useState<Buyer[]>(initialBuyers);
+  const { buyers, addBuyer, updateBuyer, deleteBuyer } = useBuyers();
 
   const [showAddBuyer, setShowAddBuyer] =
   useState(false);
@@ -92,6 +29,8 @@ export default function BuyersBoard() {
 
   const [selectedBuyer, setSelectedBuyer] =
     useState<Buyer | null>(null);
+  const [editingBuyer, setEditingBuyer] = useState<Buyer | null>(null);
+  const [feedback, setFeedback] = useState("");
 
 
 
@@ -122,11 +61,24 @@ export default function BuyersBoard() {
 
   });
   const handleAddBuyer = (buyer: Buyer) => {
-  setBuyers((prev) => [
-    ...prev,
-    buyer,
-  ]);
+  addBuyer(buyer);
+  setFeedback(`${buyer.name} was added.`);
 };
+
+  const handleUpdateBuyer = (updatedBuyer: Buyer) => {
+    if (!editingBuyer) return;
+    updateBuyer(editingBuyer.name, updatedBuyer);
+    setSelectedBuyer((current) => current?.name === editingBuyer.name ? updatedBuyer : current);
+    setEditingBuyer(null);
+    setFeedback(`${updatedBuyer.name} was updated.`);
+  };
+
+  const handleDeleteBuyer = (buyer: Buyer) => {
+    if (!confirm(`Delete ${buyer.name}?`)) return;
+    deleteBuyer(buyer.name);
+    setSelectedBuyer((current) => current?.name === buyer.name ? null : current);
+    setFeedback(`${buyer.name} was deleted.`);
+  };
 
 
 
@@ -166,6 +118,7 @@ export default function BuyersBoard() {
 
       </div>
 
+      {feedback && <p role="status" className="rounded-lg border border-green-100 bg-green-50 px-4 py-3 text-sm text-green-800 dark:border-green-500/20 dark:bg-green-500/10 dark:text-green-100">{feedback}</p>}
 
 
 
@@ -212,16 +165,12 @@ export default function BuyersBoard() {
                   buyer={buyer}
 
 
-                  onMessage={() =>
-                    alert(
-                      `Send message to ${buyer.name}`
-                    )
-                  }
-
-
                   onViewHistory={() =>
                     setSelectedBuyer(buyer)
                   }
+
+                  onEdit={() => setEditingBuyer(buyer)}
+                  onDelete={() => handleDeleteBuyer(buyer)}
 
                 />
 
@@ -264,10 +213,11 @@ export default function BuyersBoard() {
 
       />
       <AddBuyerModal
-  isOpen={showAddBuyer}
-  onClose={() => setShowAddBuyer(false)}
-  onAdd={handleAddBuyer}
-/>
+        isOpen={showAddBuyer || Boolean(editingBuyer)}
+        buyer={editingBuyer}
+        onClose={() => { setShowAddBuyer(false); setEditingBuyer(null); }}
+        onAdd={editingBuyer ? handleUpdateBuyer : handleAddBuyer}
+      />
 
 
 
