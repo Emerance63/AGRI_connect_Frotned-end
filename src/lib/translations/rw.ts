@@ -14,9 +14,9 @@ const rw: Translations = {
 
   // Hero
   hero: {
-    badge: "Isoko Nkuru y'Ubuhinzi mu Rwanda #1",
+    badge: "Isoko rinini ry'Ubuhinzi mu Rwanda #1",
     headline1: "Guhuza Abahinzi",
-    headline2: "Ako kanya n'amasoko",
+    headline2: "n'amasoko",
     description:
       "Urubuga rukomeye rwo guhuza amakoperative y'abahinzi n'abashoramari mu Rwanda. Gura imboga nshya uvuye mu makoperative yemejwe hirya no hino mu gihugu.",
     exploreProducts: "Reba Ibicuruzwa",
@@ -25,7 +25,7 @@ const rw: Translations = {
 
   // Why Choose Us
   whyChoose: {
-    heading: "Kuki Wihitiramo AgriConnect?",
+    heading: "Kuki Wahitamo AgriConnect?",
     subheading: "Yakozwe ku bahinzi n'abashoramari b'Abanyarwanda.",
     features: [
       {
@@ -53,7 +53,7 @@ const rw: Translations = {
 
   // Featured Products
   featuredProducts: {
-    heading: "Nshya Iva ku Mirima",
+    heading: "Ibihingwa bishya",
     subheading: "Ibicuruzwa by'ireme byatoranyijwe mu makoperative yacu yizwi.",
     viewAll: "Reba Ibicuruzwa Byose",
   },
@@ -111,7 +111,7 @@ const rw: Translations = {
     ],
 
     valueBadge: "Agaciro Kacu",
-    valueHeading: "Kuki Wihitiramo AgriConnect?",
+    valueHeading: "Kuki Wahitamo AgriConnect?",
 
     impactBadge: "Ingaruka Zacu",
     impactHeading: "Twiyongera Hamwe mu Rwanda Rwose",
@@ -328,18 +328,17 @@ const rw: Translations = {
   },
   productNames: {
     "Sweet Potatoes": "Ibijumba",
-    "Arabica Coffee Beans": "Ibinyomoro bya Café Arabika",
+    "Arabica Coffee Beans": "Kafe",
     "Fresh Tomatoes": "Inyanya",
     "Banana Bunches": "Ibitoki",
     "Irish Potatoes": "Ibirayi",
-    "Green Beans": "Imbishimbo",
+    "Green Beans": "Ibishimbo",
     "Sorghum": "Soya",
     "Fresh Milk": "Amata Mashya",
     "Mangoes": "Imwembe"
   },
   // UI label for product name
   productDetail: {
-
     productName: "Izina ry'Ibicuruzwa",
     backToProducts: "Subira ku Bicurezwa",
     availableQuantity: "Ingano Ihari",
