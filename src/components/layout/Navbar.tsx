@@ -14,7 +14,6 @@ const NAV_LINK_KEYS: NavLink[] = [
   { href: "/about", labelKey: "about" },
   { href: "/products", labelKey: "products" },
   { href: "/dashboard", labelKey: "dashboard" },
-  { href: "/login", labelKey: "login" },
 ];
 
 export default function Navbar() {
