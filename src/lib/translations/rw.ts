@@ -14,9 +14,9 @@ const rw: Translations = {
 
   // Hero
   hero: {
-    badge: "Isoko Nkuru y'Ubuhinzi mu Rwanda #1",
+    badge: "Isoko rinini ry'Ubuhinzi mu Rwanda #1",
     headline1: "Guhuza Abahinzi",
-    headline2: "Ako kanya n'amasoko",
+    headline2: "n'amasoko",
     description:
       "Urubuga rukomeye rwo guhuza amakoperative y'abahinzi n'abashoramari mu Rwanda. Gura imboga nshya uvuye mu makoperative yemejwe hirya no hino mu gihugu.",
     exploreProducts: "Reba Ibicuruzwa",
@@ -25,7 +25,7 @@ const rw: Translations = {
 
   // Why Choose Us
   whyChoose: {
-    heading: "Kuki Wihitiramo AgriConnect?",
+    heading: "Kuki Wahitamo AgriConnect?",
     subheading: "Yakozwe ku bahinzi n'abashoramari b'Abanyarwanda.",
     features: [
       {
@@ -53,7 +53,7 @@ const rw: Translations = {
 
   // Featured Products
   featuredProducts: {
-    heading: "Nshya Iva ku Mirima",
+    heading: "Ibihingwa bishya",
     subheading: "Ibicuruzwa by'ireme byatoranyijwe mu makoperative yacu yizwi.",
     viewAll: "Reba Ibicuruzwa Byose",
   },
@@ -111,7 +111,7 @@ const rw: Translations = {
     ],
 
     valueBadge: "Agaciro Kacu",
-    valueHeading: "Kuki Wihitiramo AgriConnect?",
+    valueHeading: "Kuki Wahitamo AgriConnect?",
 
     impactBadge: "Ingaruka Zacu",
     impactHeading: "Twiyongera Hamwe mu Rwanda Rwose",
@@ -259,9 +259,13 @@ const rw: Translations = {
     badge: "KONTI YA KOPERATIVE",
     title: "Andikisha koperative yawe",
     description: "Injira muri AgriConnect kugira ngo ushyireho umusaruro, ugere ku baguzi mu Rwanda hose, kandi ucunge komande ku kibaho kimwe.",
-    userInfo: "Umwirondoro",
+    userInfo: "Amakuru ya Perezida",
     fullName: "Amazina Yombi",
     fullNamePlaceholder: "Urug: Jean Bosco",
+    gender: "Igitsina",
+    genderPlaceholder: "Hitamo igitsina",
+    male: "Gabo",
+    female: "Gore",
     nationalId: "Indangamuntu",
     nationalIdPlaceholder: "Urug: 119...",
     phoneNumber: "Nomero ya Terefone",
@@ -297,6 +301,34 @@ const rw: Translations = {
     loginLink: "Injira muri koperative yawe",
   },
 
+  // Forgot Password Page
+  forgotPassword: {
+    home: "← Ahabanza",
+    title: "Hindura ijambo ry'ibanga",
+    description: "Andika imeri yawe kugira ngo ubone kode yo kwemeza, hanyuma ushyireho ijambo ry'ibanga rishya.",
+    getCode: "Shaka kode yo kwemeza",
+    resetStep: "Hindura ijambo ry'ibanga",
+    emailLabel: "Imeri ya koperative",
+    invalidEmail: "Banza wandike imeri yemewe ya koperative.",
+    codeSent: "Kode y'imibare 6 yo kwemeza yoherejwe kuri",
+    changeEmail: "Hindura imeri",
+    verificationCode: "Kode yo kwemeza",
+    resendCode: "Ongera wohereze kode",
+    codePlaceholder: "Andika kode y'imibare 6",
+    newPassword: "Ijambo ry'ibanga rishya",
+    newPasswordPlaceholder: "Nibura inyuguti 8",
+    confirmPassword: "Emeza ijambo ry'ibanga rishya",
+    confirmPasswordPlaceholder: "Ongera wandike ijambo ry'ibanga rishya",
+    passwordsMismatch: "Amagambo mashya y'ibanga ntabwo ahuye.",
+    codeRequired: "Andika kode y'imibare 6 yo kwemeza.",
+    accountNotFound: "Nta konti ibonetse kuri iyo imeri.",
+    resetSuccess: "Ijambo ry'ibanga ryahinduwe. Ugiye koherezwa ku rupapuro rwo kwinjira...",
+    resetButton: "Hindura ijambo ry'ibanga",
+    securityNote: "Koresha nibura inyuguti 8 kandi ugire ibanga kode yawe yo kwemeza.",
+    remembered: "Wibutse ijambo ryawe ry'ibanga?",
+    backToLogin: "Subira ku kwinjira",
+  },
+
   // Footer
   footer: {
     description: "Urubuga rwizewe rwo guhuza amakoperative y'abahinzi n'amasoko mu Rwanda.",
@@ -328,18 +360,17 @@ const rw: Translations = {
   },
   productNames: {
     "Sweet Potatoes": "Ibijumba",
-    "Arabica Coffee Beans": "Ibinyomoro bya Café Arabika",
+    "Arabica Coffee Beans": "Kafe",
     "Fresh Tomatoes": "Inyanya",
     "Banana Bunches": "Ibitoki",
     "Irish Potatoes": "Ibirayi",
-    "Green Beans": "Imbishimbo",
+    "Green Beans": "Ibishimbo",
     "Sorghum": "Soya",
     "Fresh Milk": "Amata Mashya",
     "Mangoes": "Imwembe"
   },
   // UI label for product name
   productDetail: {
-
     productName: "Izina ry'Ibicuruzwa",
     backToProducts: "Subira ku Bicurezwa",
     availableQuantity: "Ingano Ihari",
