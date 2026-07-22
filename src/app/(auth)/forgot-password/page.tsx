@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { resetPassword } from "@/lib/auth";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -10,6 +12,7 @@ export default function ForgotPasswordPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [message, setMessage] = useState("");
+  const router = useRouter();
 
   const handleSendOtp = () => {
     if (!email.trim() || !/^\S+@\S+\.\S+$/.test(email)) {
@@ -29,7 +32,17 @@ export default function ForgotPasswordPage() {
       return;
     }
 
-    setMessage("Your password reset request is ready to be verified.");
+    if (verificationCode.length !== 6) {
+      setMessage("Enter the 6-digit verification code.");
+      return;
+    }
+    const result = resetPassword(email, newPassword);
+    if (!result.ok) {
+      setMessage(result.message ?? "Unable to reset your password.");
+      return;
+    }
+    setMessage("Password reset successfully. Redirecting to login...");
+    window.setTimeout(() => router.replace("/login"), 900);
   };
 
   const inputClass = "w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none placeholder:text-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 dark:border-emerald-900/70 dark:bg-[#0d2a19] dark:text-white dark:placeholder:text-emerald-100/30";
@@ -42,6 +55,9 @@ export default function ForgotPasswordPage() {
     >
       <div className="absolute inset-0 bg-white/80 dark:bg-emerald-950/80" />
       <section className="relative w-full max-w-md rounded-2xl border border-gray-200 dark:border-emerald-400/30 bg-white dark:bg-[#071b0f]/95 p-6 shadow-2xl shadow-black/10 dark:shadow-black/40 sm:p-8">
+        <div className="mb-6">
+          <Link href="/" className="text-xs font-semibold text-emerald-700 hover:underline dark:text-emerald-300">← Home</Link>
+        </div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Reset your password</h1>
         <p className="mt-2 text-sm leading-6 text-gray-500 dark:text-emerald-100/65">
           Enter your email to receive an OTP, then set your new password below.
