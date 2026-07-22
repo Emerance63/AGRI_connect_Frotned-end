@@ -3,8 +3,8 @@ import { Inter, Sora } from "next/font/google";
 // @ts-ignore: allow importing global css without type declarations
 import "./globals.css";
 import ThemeProvider from "@/components/layout/ThemeProvider";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import ShellWrapper from "@/components/layout/ShellWrapper";
+import { LanguageProvider } from "@/lib/LanguageContext";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -41,9 +41,9 @@ export default function RootLayout({
     >
       <body className="min-h-screen font-sans flex flex-col">
         <ThemeProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <LanguageProvider>
+            <ShellWrapper>{children}</ShellWrapper>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
