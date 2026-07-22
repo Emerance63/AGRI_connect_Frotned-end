@@ -3,46 +3,50 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const provinces = [
-  "Northern Province",
-  "Southern Province",
-  "Eastern Province",
-  "Western Province",
-  "Kigali City",
-];
+const locations: Record<string, Record<string, string[]>> = {
+  "Kigali City": {
+    Gasabo: ["Bumbogo", "Gatsata", "Gikomero", "Gisozi", "Jabana", "Jali", "Kacyiru", "Kimihurura", "Kimironko", "Kinyinya", "Ndera", "Nduba", "Remera", "Rusororo", "Rutunga"],
+    Kicukiro: ["Gahanga", "Gatenga", "Gikondo", "Kagarama", "Kanombe", "Kicukiro", "Kigarama", "Masaka", "Niboye", "Nyarugunga"],
+    Nyarugenge: ["Gitega", "Kanyinya", "Kigali", "Kimisagara", "Mageregere", "Muhima", "Nyakabanda", "Nyamirambo", "Nyarugenge", "Rwezamenyo"],
+  },
+  "Eastern Province": {
+    Bugesera: ["Gashora", "Juru", "Kamabuye", "Ntarama", "Mareba", "Mayange", "Musenyi", "Mwogo", "Ngeruka", "Nyamata", "Nyarugenge", "Rilima", "Ruhuha", "Rweru", "Shyara"],
+    Gatsibo: ["Gasange", "Gatsibo", "Gitoki", "Kabarore", "Kageyo", "Kiramuruzi", "Kiziguro", "Muhura", "Murambi", "Ngarama", "Nyagihanga", "Remera", "Rugarama", "Rwimbogo"],
+    Kayonza: ["Gahini", "Kabarondo", "Murama", "Murundi", "Mwiri", "Mukarange", "Ndego", "Nyamirama", "Rukara", "Ruramira", "Rwinkwavu", "Nyabwishongwezi"],
+    Kirehe: ["Gahara", "Gatore", "Kigarama", "Kigina", "Kirehe", "Mahama", "Mpanga", "Musaza", "Mushikiri", "Nasho", "Nyamugari", "Nyarubuye"],
+    Ngoma: ["Gashanda", "Jarama", "Karembo", "Kazo", "Kibungo", "Mugesera", "Murama", "Mutenderi", "Remera", "Rukira", "Rukumberi", "Rurenge", "Sake", "Zaza"],
+    Nyagatare: ["Gatunda", "Karama", "Karangazi", "Katabagemu", "Kiyombe", "Matimba", "Mimuri", "Mukama", "Musheli", "Nyagatare", "Rukomo", "Rwempasha", "Rwimiyaga", "Tabagwe"],
+    Rwamagana: ["Fumbwe", "Gahengeri", "Gishali", "Karenge", "Kigabiro", "Muhazi", "Munyaga", "Munyiginya", "Musha", "Muyumbu", "Mwulire", "Nyakariro", "Nzige", "Rubona"],
+  },
+  "Western Province": {
+    Karongi: ["Bwishyura", "Gashari", "Gishyita", "Gitesi", "Murambi", "Mubuga", "Mutuntu", "Rugabano", "Ruganda", "Rubengera", "Rwankuba", "Twumba", "Murundi"],
+    Ngororero: ["Bwira", "Gatumba", "Hindiro", "Kabaya", "Kageyo", "Kavumu", "Matyazo", "Muhanda", "Muhororo", "Ndaro", "Ngororero", "Nyange", "Sovu"],
+    Nyabihu: ["Bigogwe", "Jenda", "Jomba", "Kabatwa", "Karago", "Kintobo", "Mukamira", "Muringa", "Rambura", "Rugera", "Rurembo", "Shyira"],
+    Nyamasheke: ["Bushekeri", "Bushenge", "Cyato", "Gihombo", "Kagano", "Karambi", "Karengera", "Kilimbi", "Kirimbi", "Macuba", "Mahembe", "Nyabitekeri", "Rangiro", "Ruharambuga", "Shangi"],
+    Rubavu: ["Bugeshi", "Busasamana", "Cyanzarwe", "Gisenyi", "Kanama", "Kanzenze", "Mudende", "Nyakiriba", "Nyamyumba", "Nyundo", "Rubavu", "Rugerero"],
+    Rusizi: ["Bugarama", "Butare", "Bweyeye", "Gashonga", "Giheke", "Gihundwe", "Gikundamvura", "Gitambi", "Kamembe", "Muganza", "Mururu", "Nkanka", "Nkombo", "Nkungu", "Nyakabuye", "Nyakarenzo", "Nzahaha", "Rwimbogo"],
+    Rutsiro: ["Boneza", "Gihango", "Kigeyo", "Kivumu", "Manihira", "Mukura", "Murunda", "Musasa", "Mushonyi", "Mushubati", "Nyabirasi", "Ruhango", "Rusebeya"],
+  },
+  "Northern Province": {
+    Burera: ["Bungwe", "Butaro", "Cyanika", "Cyeru", "Gahunga", "Gatebe", "Gitovu", "Kagogo", "Kinoni", "Kinyababa", "Kivuye", "Nemba", "Rugarama", "Rugengabari", "Ruhunde", "Rusarabuye", "Rwerere"],
+    Gakenke: ["Busengo", "Coko", "Cyabingo", "Gakenke", "Gashenyi", "Janja", "Kamubuga", "Karambo", "Kivuruga", "Mataba", "Minazi", "Mugunga", "Muhondo", "Muyongwe", "Nemba", "Ruli", "Rusasa", "Rushashi", "Rwamiko"],
+    Gicumbi: ["Bukure", "Bwisige", "Byumba", "Cyumba", "Giti", "Kaniga", "Kanzenze", "Kageyo", "Karambo", "Karama", "Kazo", "Kigogo", "Manyagiro", "Miyove", "Mukarange", "Muko", "Mutete", "Nyamiyaga", "Rubaya", "Rukomo", "Rushaki"],
+    Musanze: ["Busogo", "Cyuve", "Gacaca", "Gashaki", "Gataraga", "Kimonyi", "Kinigi", "Muhoza", "Musanze", "Nkotsi", "Nyange", "Remera", "Rugarama", "Shingiro"],
+    Rulindo: ["Base", "Burega", "Bushoki", "Cyinzuzi", "Cyungo", "Kinihira", "Kisaro", "Masoro", "Mbogo", "Murambi", "Ntarabana", "Rukozo", "Rusiga", "Shyorongi", "Tumba", "Ruli", "Ngoma"],
+  },
+  "Southern Province": {
+    Gisagara: ["Gikonko", "Gishubi", "Kansi", "Kibirizi", "Kibilizi", "Kigembe", "Mamba", "Muganza", "Mugombwa", "Mukindo", "Musha", "Ndora", "Save"],
+    Huye: ["Gishamvu", "Huye", "Karama", "Kigoma", "Kinazi", "Maraba", "Mbazi", "Mukura", "Ngoma", "Ruhashya", "Rusatira", "Rwaniro", "Simbi", "Tumba"],
+    Kamonyi: ["Gacurabwenge", "Karama", "Kayenzi", "Kayumbu", "Mugina", "Musambira", "Ngamba", "Nyamiyaga", "Nyarubaka", "Rugalika", "Rukoma", "Runda"],
+    Muhanga: ["Cyeza", "Kabacuzi", "Kiyumba", "Muhanga", "Mushishiro", "Nyabinoni", "Nyamabuye", "Nyarusange", "Rongi", "Rugendabari", "Shyogwe", "Tambwe"],
+    Nyamagabe: ["Buruhukiro", "Busanze", "Gasaka", "Gatare", "Kaduha", "Kamegeri", "Kibirizi", "Kibumbwe", "Kitabi", "Mbazi", "Mugano", "Musange", "Musebeya", "Mushubi", "Nkomane", "Tare", "Uwinkingi"],
+    Nyanza: ["Busasamana", "Busoro", "Cyabakamyi", "Kibilizi", "Kigoma", "Mukingo", "Muyira", "Ntyazo", "Nyagisozi", "Rwabicuma"],
+    Nyaruguru: ["Busanze", "Cyahinda", "Kibeho", "Kivu", "Mata", "Muganza", "Munini", "Ngera", "Ngoma", "Nyabimata", "Nyagisozi", "Ruramba", "Rusenge", "Ruheru"],
+    Ruhango: ["Bweramana", "Byimana", "Kinazi", "Kinihira", "Mbuye", "Mwendo", "Ntongwe", "Ruhango", "Shyogwe"],
+  },
+};
 
-const districts = [
-  "Bugesera",
-  "Burera",
-  "Gakenke",
-  "Gasabo",
-  "Gatsibo",
-  "Gicumbi",
-  "Gisagara",
-  "Huye",
-  "Kamonyi",
-  "Karongi",
-  "Kayonza",
-  "Kicukiro",
-  "Kirehe",
-  "Muhanga",
-  "Musanze",
-  "Ngoma",
-  "Ngororero",
-  "Nyabihu",
-  "Nyagatare",
-  "Nyamagabe",
-  "Nyamasheke",
-  "Nyanza",
-  "Nyarugenge",
-  "Nyaruguru",
-  "Rubavu",
-  "Ruhando",
-  "Rulindo",
-  "Rusizi",
-  "Rutsiro",
-  "Rwamagana",
-];
+const provinces = Object.keys(locations) as Array<keyof typeof locations>;
 
 export default function RegisterCooperativePage() {
   const [form, setForm] = useState({
@@ -69,11 +73,29 @@ export default function RegisterCooperativePage() {
   ) => {
     const { name, value, type } = e.target as HTMLInputElement;
     const checked = (e.target as HTMLInputElement).checked;
+
+    if (name === "province") {
+      setForm((prev) => ({ ...prev, province: value, district: "", sector: "" }));
+      return;
+    }
+
+    if (name === "district") {
+      setForm((prev) => ({ ...prev, district: value, sector: "" }));
+      return;
+    }
+
     setForm((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
   };
+
+  const availableDistricts = form.province
+    ? Object.keys(locations[form.province])
+    : [];
+  const availableSectors = form.province && form.district
+    ? locations[form.province][form.district] ?? []
+    : [];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -284,10 +306,13 @@ export default function RegisterCooperativePage() {
                     name="district"
                     value={form.district}
                     onChange={handleChange}
+                    disabled={!form.province}
                     className="w-full appearance-none bg-[#0d1f14] border border-[#1f3d29] rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
                   >
-                    <option value="">Select district</option>
-                    {districts.map((d) => (
+                    <option value="">
+                      {form.province ? "Select district" : "Select a province first"}
+                    </option>
+                    {availableDistricts.map((d) => (
                       <option key={d} value={d}>
                         {d}
                       </option>
@@ -301,13 +326,22 @@ export default function RegisterCooperativePage() {
                 <label className="block text-sm font-medium text-white mb-1.5">
                   Sector
                 </label>
-                <input
+                <select
                   name="sector"
                   value={form.sector}
                   onChange={handleChange}
-                  placeholder="Sector"
-                  className="w-full bg-[#0d1f14] border border-[#1f3d29] rounded-lg px-3 py-2.5 text-sm text-white placeholder:text-emerald-100/30 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                />
+                  disabled={!form.district}
+                  className="w-full appearance-none bg-[#0d1f14] border border-[#1f3d29] rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-emerald-500 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  <option value="">
+                    {form.district ? "Select sector" : "Select a district first"}
+                  </option>
+                  {availableSectors.map((sector) => (
+                    <option key={sector} value={sector}>
+                      {sector}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               {/* Contact Info */}
