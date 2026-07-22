@@ -41,11 +41,11 @@ export default function ProductDetail({
           {/* Right Side */}
           <div>
             <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700 dark:bg-green-900 dark:text-green-300">
-              {product.category}
+              {(t.categories as Record<string, string>)?.[product.category] || product.category}
             </span>
 
             <h1 className="mt-4 text-4xl font-bold text-gray-900 dark:text-white">
-              {product.name}
+              {t.productNames?.[product.name] ?? product.name}
             </h1>
 
             <p className="mt-4 text-gray-600 dark:text-gray-300">

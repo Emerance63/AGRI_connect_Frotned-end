@@ -19,7 +19,7 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="relative h-48 w-full bg-gray-100 dark:bg-gray-800">
         <Image
           src={product.imageUrl}
-          alt={product.name}
+          alt={t.productNames?.[product.name] ?? product.name}
           fill
           sizes="(max-width: 768px) 100vw, 25vw"
           className="object-cover"
@@ -38,7 +38,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </p>
 
         <h3 className="mb-1 text-base font-bold text-gray-900 dark:text-white">
-          {product.name}
+          {t.productNames?.[product.name] ?? product.name}
         </h3>
 
         {/* Price & Action */}
