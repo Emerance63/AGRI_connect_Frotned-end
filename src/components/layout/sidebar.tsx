@@ -77,7 +77,6 @@ export default function Sidebar({ onClose }: SidebarProps) {
   const { t } = useLanguage();
 
   const navItems = [
-<<<<<<< HEAD
     { name: t.dashboard.sidebarDashboard, href: "/dashboard", icon: icons.dashboard },
     { name: t.dashboard.sidebarInventory, href: "/inventory", icon: icons.inventory },
     { name: t.dashboard.sidebarProducts, href: "/cooperative/products", icon: icons.products },
@@ -85,14 +84,6 @@ export default function Sidebar({ onClose }: SidebarProps) {
     { name: t.dashboard.sidebarBuyers, href: "/buyers", icon: icons.buyers },
     { name: "Members & SMS", href: "/members", icon: icons.members },
     { name: t.dashboard.sidebarReports, href: "/reports", icon: icons.reports },
-=======
-    { name: t.dashboard.sidebarDashboard,  href: "/dashboard",          icon: icons.dashboard },
-    { name: t.dashboard.sidebarInventory,  href: "/inventory",          icon: icons.inventory },
-    { name: t.dashboard.sidebarProducts,   href: "/cooperative/products",icon: icons.products  },
-    { name: t.dashboard.sidebarOrders,     href: "/orders",             icon: icons.orders    },
-    { name: t.dashboard.sidebarBuyers,     href: "/buyers",             icon: icons.buyers    },
-    { name: t.dashboard.sidebarReports,    href: "/reports",            icon: icons.reports   },
->>>>>>> b4fcbb591ce12b20d41b7904102d2a2c39d92ae9
   ];
 
   const handleLogout = () => {
