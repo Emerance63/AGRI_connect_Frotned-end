@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useLanguage } from "@/lib/LanguageContext";
+import { registerAccount } from "@/lib/auth";
 
 const locations: Record<string, Record<string, string[]>> = {
   "Kigali City": {
@@ -58,6 +60,8 @@ const labelClass =
 export default function RegisterCooperativePage() {
   const { t } = useLanguage();
   const [step, setStep] = useState<1 | 2>(1);
+  const [submitError, setSubmitError] = useState("");
+  const router = useRouter();
 
   const [form, setForm] = useState({
     // Step 1 – President
@@ -81,8 +85,8 @@ export default function RegisterCooperativePage() {
   /* ── Validation for Step 1 ── */
   const step1Valid =
     form.fullName.trim() !== "" &&
-    form.nationalId.trim() !== "" &&
-    form.phoneNumber.trim() !== "" &&
+    /^\d{16}$/.test(form.nationalId) &&
+    /^\d+$/.test(form.phoneNumber) &&
     form.email.trim() !== "" &&
     form.password.length >= 8 &&
     form.password === form.confirmPassword;
@@ -103,9 +107,15 @@ export default function RegisterCooperativePage() {
       return;
     }
 
+    const nextValue = name === "nationalId"
+      ? value.replace(/\D/g, "").slice(0, 16)
+      : name === "phoneNumber"
+        ? value.replace(/\D/g, "")
+        : value;
+
     setForm((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === "checkbox" ? checked : nextValue,
     }));
   };
 
@@ -118,9 +128,25 @@ export default function RegisterCooperativePage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.agreed) return;
-    console.log("Registration submitted:", form);
-    // TODO: wire up to API
+    if (!step1Valid) {
+      setSubmitError("Please complete all required personal information, including a valid 16-digit National ID.");
+      setStep(1);
+      return;
+    }
+    if (!form.agreed) {
+      setSubmitError("Please agree to the terms and conditions before registering.");
+      return;
+    }
+    const result = registerAccount({
+      cooperativeName: form.cooperativeName,
+      email: form.email,
+      password: form.password,
+    });
+    if (!result.ok) {
+      setSubmitError(result.message ?? "Unable to create your account.");
+      return;
+    }
+    router.replace("/login?registered=1");
   };
 
   /* ─────────────────────────────────────────
@@ -192,7 +218,7 @@ export default function RegisterCooperativePage() {
   /* ─────────────────────────────────────────
      STEP 1 — President / User Information
   ───────────────────────────────────────── */
-  const Step1 = () => (
+  const renderStep1 = () => (
     <div className="space-y-4 animate-[fadeInUp_0.4s_ease-out_both]">
       <div>
         <h2 className="text-base font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2 uppercase tracking-wider mb-4">
@@ -220,12 +246,22 @@ export default function RegisterCooperativePage() {
           <label className={labelClass}>{t.register.nationalId} <span className="text-red-500">*</span></label>
           <input
             name="nationalId"
+            type="text"
             value={form.nationalId}
             onChange={handleChange}
             placeholder={t.register.nationalIdPlaceholder}
             className={inputClass}
+            inputMode="numeric"
+            autoComplete="off"
+            minLength={16}
+            maxLength={16}
+            pattern="[0-9]{16}"
+            title="National ID must contain exactly 16 numbers"
             required
           />
+          {form.nationalId.length > 0 && form.nationalId.length !== 16 && (
+            <p className="mt-1 text-[11px] text-red-400">National ID must contain exactly 16 numbers</p>
+          )}
         </div>
 
         {/* Phone */}
@@ -233,11 +269,15 @@ export default function RegisterCooperativePage() {
           <label className={labelClass}>{t.register.phoneNumber} <span className="text-red-500">*</span></label>
           <input
             name="phoneNumber"
-            type="tel"
+            type="text"
             value={form.phoneNumber}
             onChange={handleChange}
             placeholder={t.register.phoneNumberPlaceholder}
             className={inputClass}
+            inputMode="numeric"
+            autoComplete="tel"
+            pattern="[0-9]+"
+            title="Phone number must contain numbers only"
             required
           />
         </div>
@@ -309,7 +349,7 @@ export default function RegisterCooperativePage() {
   /* ─────────────────────────────────────────
      STEP 2 — Cooperative Information
   ───────────────────────────────────────── */
-  const Step2 = () => (
+  const renderStep2 = () => (
     <form onSubmit={handleSubmit} className="space-y-4 animate-[fadeInUp_0.4s_ease-out_both]">
       <div>
         <h2 className="text-base font-bold text-amber-500 dark:text-amber-400 flex items-center gap-2 uppercase tracking-wider mb-4">
@@ -444,6 +484,8 @@ export default function RegisterCooperativePage() {
         </span>
       </label>
 
+      {submitError && <p role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-700 dark:text-red-200">{submitError}</p>}
+
       {/* Action buttons */}
       <div className="flex gap-3 pt-1">
         {/* Back */}
@@ -488,14 +530,22 @@ export default function RegisterCooperativePage() {
   ───────────────────────────────────────── */
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center bg-fixed px-4 py-8 sm:px-6"
+      className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center bg-fixed px-4 py-20 sm:px-6 sm:py-8"
       style={{
         backgroundImage:
           "linear-gradient(rgba(6, 23, 13, 0.88), rgba(6, 23, 13, 0.92)), url('/images/products/reg.jpg')",
       }}
     >
+      <div className="absolute right-4 top-4 z-10 flex items-center gap-2 sm:right-6 sm:top-6">
+        <Link href="/" className="rounded-lg border border-white/50 bg-emerald-950/70 px-3 py-2 text-xs font-semibold text-white shadow-lg shadow-black/10 transition hover:bg-emerald-900">
+          ← Home
+        </Link>
+        <Link href="/login" className="rounded-lg bg-white/95 px-3 py-2 text-xs font-semibold text-emerald-700 shadow-lg shadow-black/10 transition hover:bg-emerald-50">
+          Log in
+        </Link>
+      </div>
       {/* Card */}
-      <div className="w-full max-w-xl bg-white dark:bg-[#0f2417]/95 border border-gray-200 dark:border-[#1f3d29] rounded-2xl shadow-2xl p-6 sm:p-8 relative overflow-hidden">
+      <div className="w-full max-w-xl bg-white dark:bg-[#0f2417]/95 border border-gray-200 dark:border-[#1f3d29] rounded-2xl shadow-2xl p-5 sm:p-8 relative overflow-hidden">
         {/* Top accent bar */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-amber-500 to-emerald-500" />
 
@@ -516,7 +566,7 @@ export default function RegisterCooperativePage() {
         <StepIndicator />
 
         {/* Step content */}
-        {step === 1 ? <Step1 /> : <Step2 />}
+        {step === 1 ? renderStep1() : renderStep2()}
       </div>
     </div>
   );
