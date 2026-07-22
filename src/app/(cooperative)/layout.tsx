@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Sidebar from "@/components/layout/sidebar";
 import ThemeToggle from "@/components/layout/ThemeToggle";
 import { useLanguage } from "@/lib/LanguageContext";
+import { isAuthenticated, signOut } from "@/lib/auth";
 
 /* ── Map routes → readable breadcrumb names ── */
 const BREADCRUMB_MAP: Record<string, string> = {
@@ -22,11 +23,24 @@ export default function CooperativeLayout({ children }: { children: React.ReactN
   const pathname = usePathname();
   const router = useRouter();
   const { locale, toggleLocale } = useLanguage();
+  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      setAuthenticated(true);
+    } else {
+      router.replace("/login");
+    }
+  }, [router]);
 
   const pageTitle =
     Object.entries(BREADCRUMB_MAP).find(([route]) =>
       pathname?.startsWith(route)
     )?.[1] ?? "Dashboard";
+
+  if (!authenticated) {
+    return <div className="min-h-screen bg-gray-100 dark:bg-[#081F14]" aria-busy="true" />;
+  }
 
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-gray-100 dark:bg-[#081F14]">
@@ -110,8 +124,8 @@ export default function CooperativeLayout({ children }: { children: React.ReactN
           <ThemeToggle />
 
           {/* Exit to public site */}
-          <Link
-            href="/"
+          <button
+            onClick={() => { signOut(); router.replace("/login"); }}
             title="Back to public site"
             className="flex h-8 items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-2.5 text-[11px] font-semibold text-gray-700 transition hover:bg-gray-50 dark:border-white/10 dark:bg-white/5 dark:text-green-100/70 dark:hover:bg-white/10 dark:hover:text-white"
           >
@@ -121,7 +135,7 @@ export default function CooperativeLayout({ children }: { children: React.ReactN
               <line x1="21" y1="12" x2="9" y2="12" />
             </svg>
             <span className="hidden sm:inline">Exit</span>
-          </Link>
+          </button>
         </div>
       </header>
 
