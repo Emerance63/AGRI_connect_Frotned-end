@@ -317,6 +317,37 @@ const rw: Translations = {
     madeWith: "Byakorewe mu Rwanda",
     currency: "Ifaranga:",
   },
+  // Product Names translations
+  categories: {
+    "All Categories": "Ibyiciro Byose",
+    "Vegetables": "Imboga",
+    "Fruits": "Imbuto",
+    "Coffee": "Ikawa",
+    "Grains": "Impeke",
+    "Dairy": "Amata"
+  },
+  productNames: {
+    "Sweet Potatoes": "Ibijumba",
+    "Arabica Coffee Beans": "Ibinyomoro bya Café Arabika",
+    "Fresh Tomatoes": "Inyanya",
+    "Banana Bunches": "Ibitoki",
+    "Irish Potatoes": "Ibirayi",
+    "Green Beans": "Imbishimbo",
+    "Sorghum": "Soya",
+    "Fresh Milk": "Amata Mashya",
+    "Mangoes": "Imwembe"
+  },
+  // UI label for product name
+  productDetail: {
+
+    productName: "Izina ry'Ibicuruzwa",
+    backToProducts: "Subira ku Bicurezwa",
+    availableQuantity: "Ingano Ihari",
+    unitPrice: "Igiciro",
+    district: "Akarere",
+    postedOn: "Byashyizweho",
+    contactCooperative: "Vugana na Koperative"
+  },
 };
 
 export default rw;

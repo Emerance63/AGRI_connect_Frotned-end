@@ -315,6 +315,14 @@ const en = {
     madeWith: "Made with in Rwanda",
     currency: "Currency:",
   },
+  categories: {
+    "All Categories": "All Categories",
+    "Vegetables": "Vegetables",
+    "Fruits": "Fruits",
+    "Coffee": "Coffee",
+    "Grains": "Grains",
+    "Dairy": "Dairy"
+  },
 };
 
 export type Translations = typeof en;
