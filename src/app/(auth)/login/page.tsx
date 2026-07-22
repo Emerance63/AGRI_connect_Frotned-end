@@ -35,7 +35,7 @@ export default function LoginPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/65 via-emerald-900/70 to-emerald-950/90" />
           <div className="relative flex h-full flex-col justify-end p-7 text-white sm:p-10 lg:p-12">
             <Link href="/" className="absolute left-7 top-7 rounded-lg border border-white/40 bg-emerald-950/50 px-3 py-2 text-xs font-semibold text-white transition hover:bg-emerald-900 sm:left-10 sm:top-10 lg:left-12 lg:top-12">
-              ← Back to home
+              ← {t.nav.home}
             </Link>
             <h1 className="text-3xl font-bold leading-none sm:text-4xl">
               {t.login.title}
