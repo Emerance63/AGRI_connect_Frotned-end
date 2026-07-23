@@ -503,6 +503,12 @@ const en = {
     labelItem: "Item",
     labelInvoiceStatus: "Invoice status",
     labelCurrentStage: "CURRENT STAGE",
+    // Order progress step labels
+    stepPending: "Pending",
+    stepAccepted: "Accepted",
+    stepPreparing: "Preparing",
+    stepDispatched: "Dispatched",
+    stepDelivered: "Delivered",
   },
 };
 

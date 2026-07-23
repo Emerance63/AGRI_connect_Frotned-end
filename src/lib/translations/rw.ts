@@ -437,6 +437,12 @@ const rw: Translations = {
     labelItem: "Igicuruzwa",
     labelInvoiceStatus: "Imiterere y'inyemeza",
     labelCurrentStage: "INTAMBWE IRI HAFI",
+    // Order progress step labels
+    stepPending: "Ibitegerejwe",
+    stepAccepted: "Byemewe",
+    stepPreparing: "Byateguwe",
+    stepDispatched: "Byoherejwe",
+    stepDelivered: "Byatanzwe",
   },
 };
 

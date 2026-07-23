@@ -29,6 +29,15 @@ export default function OrdersBoard() {
 
   const [selectedOrder, setSelectedOrder] = useState<OrderItem>(orders[0]!);
   const [panel, setPanel] = useState<"invoice" | "track">("invoice");
+
+  // Map English step names → translated labels
+  const stepTranslations: Record<string, string> = {
+    Pending: t.orders.stepPending,
+    Accepted: t.orders.stepAccepted,
+    Preparing: t.orders.stepPreparing,
+    Dispatched: t.orders.stepDispatched,
+    Delivered: t.orders.stepDelivered,
+  };
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
 
@@ -160,7 +169,7 @@ export default function OrdersBoard() {
                       >
                         {index <= order.current ? "✓" : index + 1}
                       </div>
-                      <p className="mt-1 text-[10px] text-gray-400">{step}</p>
+                      <p className="mt-1 text-[10px] text-gray-400">{stepTranslations[step] ?? step}</p>
                     </div>
                     {index < order.steps.length - 1 && (
                       <div
