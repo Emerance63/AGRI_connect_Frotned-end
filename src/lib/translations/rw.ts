@@ -403,6 +403,41 @@ const rw: Translations = {
     "Root Veg": "Imbuto z'Inzizi",
     "Vegetables": "Imboga",
   },
+
+  // Orders Page
+  orders: {
+    title: "Ibisabwa",
+    subtitle: "Kurikirana gutangwa kw'ibisabwa uhereye kwemera kugeza gutangwa",
+    searchPlaceholder: "Shakisha ibisabwa...",
+    // Stats
+    statTotal: "Byose",
+    statPreparing: "Bitegurwa",
+    statDispatched: "Byoherejwe",
+    statDelivered: "Byatanzwe",
+    // Filter options
+    filterAll: "Byose",
+    filterPreparing: "Bitegurwa",
+    filterDispatched: "Byoherejwe",
+    filterDelivered: "Byatanzwe",
+    // Status badges
+    statusPreparing: "Bitegurwa",
+    statusDispatched: "Byoherejwe",
+    statusDelivered: "Byatanzwe",
+    // Order card actions
+    invoice: "Inyemeza",
+    track: "Kurikirana",
+    noOrders: "Nta bisabwa bihuye n'ushakisha no gusuzuma imiterere.",
+    // Detail panel
+    invoicePreview: "Reba Inyemeza",
+    trackingDetails: "Ibisobanuro byo Kurikirana",
+    labelOrder: "Isabwa",
+    labelBuyer: "Umushoramari",
+    labelAmount: "Amafaranga",
+    labelOrderTotal: "Igiteranyo cy'isabwa",
+    labelItem: "Igicuruzwa",
+    labelInvoiceStatus: "Imiterere y'inyemeza",
+    labelCurrentStage: "INTAMBWE IRI HAFI",
+  },
 };
 
 export default rw;

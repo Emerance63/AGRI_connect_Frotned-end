@@ -469,6 +469,41 @@ const en = {
     "Root Veg": "Root Veg",
     "Vegetables": "Vegetables",
   },
+
+  // Orders Page
+  orders: {
+    title: "Orders",
+    subtitle: "Track your fulfilment from acceptance to delivery",
+    searchPlaceholder: "Search orders...",
+    // Stats
+    statTotal: "Total",
+    statPreparing: "Preparing",
+    statDispatched: "Dispatched",
+    statDelivered: "Delivered",
+    // Filter options
+    filterAll: "All",
+    filterPreparing: "Preparing",
+    filterDispatched: "Dispatched",
+    filterDelivered: "Delivered",
+    // Status badges
+    statusPreparing: "Preparing",
+    statusDispatched: "Dispatched",
+    statusDelivered: "Delivered",
+    // Order card actions
+    invoice: "Invoice",
+    track: "Track",
+    noOrders: "No orders match the current search and status filter.",
+    // Detail panel
+    invoicePreview: "Invoice Preview",
+    trackingDetails: "Tracking Details",
+    labelOrder: "Order",
+    labelBuyer: "Buyer",
+    labelAmount: "Amount",
+    labelOrderTotal: "Order total",
+    labelItem: "Item",
+    labelInvoiceStatus: "Invoice status",
+    labelCurrentStage: "CURRENT STAGE",
+  },
 };
 
 export type Translations = typeof en;
