@@ -21,6 +21,7 @@ export type ProductItemType = {
   description: string;
   status: "Healthy" | "Low" | "Out";
   published: boolean;
+  imageUrl?: string; // base64 data URL from file upload
 };
 
 export type InventoryItem = {
