@@ -7,15 +7,25 @@ export type Account = {
 const ACCOUNTS_KEY = "agriconnect_accounts";
 const SESSION_KEY = "agriconnect_session";
 
+// Demo account — always available, no registration needed
+const DEMO_ACCOUNT: Account = {
+  cooperativeName: "Green Valley Cooperative",
+  email: "demo@coop.rw",
+  password: "demo1234",
+};
+
 const isBrowser = () => typeof window !== "undefined";
 
 function getAccounts(): Account[] {
-  if (!isBrowser()) return [];
+  if (!isBrowser()) return [DEMO_ACCOUNT];
 
   try {
-    return JSON.parse(localStorage.getItem(ACCOUNTS_KEY) ?? "[]") as Account[];
+    const stored = JSON.parse(localStorage.getItem(ACCOUNTS_KEY) ?? "[]") as Account[];
+    // Always include the demo account even if localStorage is empty/cleared
+    const hasDemo = stored.some((a) => a.email === DEMO_ACCOUNT.email);
+    return hasDemo ? stored : [DEMO_ACCOUNT, ...stored];
   } catch {
-    return [];
+    return [DEMO_ACCOUNT];
   }
 }
 

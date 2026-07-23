@@ -23,6 +23,11 @@ export default function LoginPage() {
     router.replace("/dashboard");
   };
 
+  function handleDemoLogin() {
+    const result = signIn("demo@coop.rw", "demo1234");
+    if (result.ok) router.replace("/dashboard");
+  }
+
   const { t } = useLanguage();
 
   return (
@@ -77,6 +82,25 @@ export default function LoginPage() {
               </div>
               {error && <p role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-700 dark:text-red-200">{error}</p>}
               <button type="submit" className="w-full rounded-lg bg-gradient-to-r from-emerald-600 to-emerald-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-950/30 transition hover:from-emerald-500 hover:to-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 dark:focus:ring-offset-[#071b0f]">{t.login.signIn}</button>
+
+              {/* Divider */}
+              <div className="flex items-center gap-3">
+                <span className="h-px flex-1 bg-gray-200 dark:bg-white/10" />
+                <span className="text-xs text-gray-400 dark:text-emerald-100/40">or</span>
+                <span className="h-px flex-1 bg-gray-200 dark:bg-white/10" />
+              </div>
+
+              {/* Demo access */}
+              <button
+                type="button"
+                onClick={handleDemoLogin}
+                className="w-full rounded-lg border border-emerald-500/40 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-300 dark:hover:bg-emerald-500/20"
+              >
+                🚀 Demo Login — Green Valley Cooperative
+              </button>
+              <p className="text-center text-xs text-gray-400 dark:text-emerald-100/40">
+                Use demo@coop.rw / demo1234 to explore the dashboard
+              </p>
             </form>
             <p className="mt-6 text-center text-xs text-gray-500 dark:text-emerald-100/55">
               {t.login.noAccount}{" "}
