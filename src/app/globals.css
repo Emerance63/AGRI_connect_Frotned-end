@@ -20,12 +20,12 @@
 }
 
 .dark {
-  --surface: #0B0F0D;
-  --surface-alt: #101512;
-  --surface-card: #141B17;
-  --ink: #F1F5F1;
-  --ink-muted: #9AAAA1;
-  --border: #22302A;
+  --surface: #081F14;      /* Deep dark green (matches dashboard background) */
+  --surface-alt: #0d2818;  /* Slightly lighter green (matches dashboard sidebar) */
+  --surface-card: #112d1a; /* Lighter green for cards (matches dashboard cards) */
+  --ink: #FFFFFF;
+  --ink-muted: #A7F3D0;    /* emerald-200 */
+  --border: #1f3d29;       /* subtle green border */
 }
 
 body {
@@ -33,7 +33,6 @@ body {
   color: var(--ink);
   transition: background-color 0.2s ease, color 0.2s ease;
 }
-
 :focus-visible {
   outline: 2px solid theme("colors.brand.500");
   outline-offset: 2px;
