@@ -510,6 +510,58 @@ const en = {
     stepDispatched: "Dispatched",
     stepDelivered: "Delivered",
   },
+
+  // Buyers Page
+  buyers: {
+    title: "Buyers",
+    subtitle: "Track your buyer relationships and purchase history",
+    addBuyer: "+ Add Buyer",
+    noBuyers: "No buyers found.",
+    // Stats
+    statTotalBuyers: "Total Buyers",
+    statTotalBuyersDesc: "Registered buyers",
+    statActiveBuyers: "Active Buyers",
+    statActiveBuyersDesc: "Currently active",
+    statTotalOrders: "Total Orders",
+    statTotalOrdersDesc: "Orders completed",
+    statReliability: "Reliability",
+    statReliabilityDesc: "Average score",
+    // Search & filter
+    searchPlaceholder: "Search buyers...",
+    filterAll: "All Buyers",
+    filterActive: "Active",
+    filterInactive: "Inactive",
+    // Card labels
+    orders: "Orders",
+    spending: "Spending",
+    reliability: "Reliability",
+    statusActive: "Active",
+    statusInactive: "Inactive",
+    reliabilityExcellent: "Excellent",
+    reliabilityGood: "Good",
+    reliabilityNeedsAttention: "Needs attention",
+    // Buttons
+    history: "History",
+    edit: "Edit",
+    delete: "Delete",
+    // Add/Edit modal
+    addModalTitle: "Add New Buyer",
+    editModalTitle: "Edit Buyer",
+    placeholderName: "Buyer name",
+    placeholderLocation: "Location",
+    placeholderOrders: "Orders",
+    placeholderSpend: "Total spend",
+    placeholderReliability: "Reliability %",
+    saveChanges: "Save Changes",
+    addBuyerBtn: "Add Buyer",
+    // Details modal
+    detailsTitle: "Buyer Details",
+    detailsStatus: "Status",
+    detailsTotalOrders: "Total Orders",
+    detailsTotalSpending: "Total Spending",
+    detailsReliability: "Reliability",
+    detailsRecentOrders: "Recent Orders",
+  },
 };
 
 export type Translations = typeof en;

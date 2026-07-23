@@ -444,6 +444,58 @@ const rw: Translations = {
     stepDispatched: "Byoherejwe",
     stepDelivered: "Byatanzwe",
   },
+
+  // Buyers Page
+  buyers: {
+    title: "Abashoramari",
+    subtitle: "Kurikirana imishyikirano n'abashoramari n'amateka y'ingurane",
+    addBuyer: "+ Ongeraho Umushoramari",
+    noBuyers: "Nta bashoramari babonetse.",
+    // Stats
+    statTotalBuyers: "Abashoramari Bose",
+    statTotalBuyersDesc: "Biyandikishije",
+    statActiveBuyers: "Abashoramari Bakora",
+    statActiveBuyersDesc: "Bakora ubu",
+    statTotalOrders: "Ibisabwa Byose",
+    statTotalOrdersDesc: "Ibisabwa byarangiye",
+    statReliability: "Icyizere",
+    statReliabilityDesc: "Amanota averaje",
+    // Search & filter
+    searchPlaceholder: "Shakisha abashoramari...",
+    filterAll: "Abashoramari Bose",
+    filterActive: "Bakora",
+    filterInactive: "Ntibakora",
+    // Card labels
+    orders: "Ibisabwa",
+    spending: "Amafaranga",
+    reliability: "Icyizere",
+    statusActive: "Akora",
+    statusInactive: "Ntakora",
+    reliabilityExcellent: "Bidasubirwaho",
+    reliabilityGood: "Byiza",
+    reliabilityNeedsAttention: "Bisaba uburire",
+    // Buttons
+    history: "Amateka",
+    edit: "Hindura",
+    delete: "Siba",
+    // Add/Edit modal
+    addModalTitle: "Ongeraho Umushoramari Mushya",
+    editModalTitle: "Hindura Umushoramari",
+    placeholderName: "Izina ry'umushoramari",
+    placeholderLocation: "Aho atuye",
+    placeholderOrders: "Ibisabwa",
+    placeholderSpend: "Amafaranga yishyuwe",
+    placeholderReliability: "Icyizere %",
+    saveChanges: "Zachika Impinduka",
+    addBuyerBtn: "Ongeraho Umushoramari",
+    // Details modal
+    detailsTitle: "Amakuru y'Umushoramari",
+    detailsStatus: "Imiterere",
+    detailsTotalOrders: "Ibisabwa Byose",
+    detailsTotalSpending: "Amafaranga Yose Yishyuwe",
+    detailsReliability: "Icyizere",
+    detailsRecentOrders: "Ibisabwa Biheruka",
+  },
 };
 
 export default rw;
