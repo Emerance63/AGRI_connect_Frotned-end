@@ -4,19 +4,11 @@ import { Star } from "lucide-react";
 import type { Product } from "@/data/products";
 import { useLanguage } from "@/lib/LanguageContext";
 
-const badgeStyles: Record<string, string> = {
-  Organic: "bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400",
-  Premium: "bg-yellow-100 text-yellow-700 dark:bg-yellow-500/20 dark:text-yellow-400",
-  Fresh: "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400",
-  Seasonal: "bg-orange-100 text-orange-700 dark:bg-orange-500/20 dark:text-orange-400",
-};
-
 export default function ProductCard({ product }: { product: Product }) {
   const { t } = useLanguage();
-  // Default values if data is missing
-  const rating = product.rating || 4.5;
-  const reviewsCount = product.reviewsCount || 100;
-  
+  const rating = product.rating ?? 4.5;
+  const reviewsCount = product.reviewsCount ?? 100;
+
   return (
     <div className="group overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-gray-800 dark:bg-[#111811]">
       {/* Image */}
@@ -28,15 +20,6 @@ export default function ProductCard({ product }: { product: Product }) {
           sizes="(max-width: 768px) 100vw, 25vw"
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
-
-        {/* Badge */}
-        {product.badge && (
-          <span
-            className={`absolute left-3 top-3 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${badgeStyles[product.badge]}`}
-          >
-            {product.badge}
-          </span>
-        )}
       </div>
 
       {/* Info */}
@@ -48,7 +31,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
         {/* Product name */}
         <h3 className="mb-1 text-base font-bold text-gray-900 dark:text-white">
-          {productName}
+          {t.productNames?.[product.name] ?? product.name}
         </h3>
 
         {/* Rating */}
