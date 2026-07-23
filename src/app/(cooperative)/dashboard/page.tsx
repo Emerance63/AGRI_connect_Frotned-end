@@ -1,19 +1,21 @@
+"use client";
+
 import StatsCards from "@/components/dashboard/StatsCards";
 import RevenueChart from "@/components/dashboard/RevenueChart";
 import BuyerMatchCard from "@/components/dashboard/BuyerMatchCard";
-
-export const metadata = { title: "Dashboard" };
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function DashboardPage() {
+  const { t } = useLanguage();
   return (
     <div className="space-y-4 sm:space-y-5">
       {/* Top bar */}
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-xs text-gray-400 dark:text-green-100/50">AgriConnect Cooperative Portal</p>
-          <h1 className="text-lg font-bold text-gray-900 dark:text-white">Dashboard</h1>
+          <p className="text-xs text-gray-400 dark:text-green-100/50">{t.dashboard.portal}</p>
+          <h1 className="text-lg font-bold text-gray-900 dark:text-white">{t.dashboard.title}</h1>
         </div>
-        <span className="text-xs text-gray-400 dark:text-green-100/50">Home</span>
+        <span className="text-xs text-gray-400 dark:text-green-100/50">{t.dashboard.home}</span>
       </div>
 
       {/* Welcome banner */}
@@ -24,17 +26,17 @@ export default function DashboardPage() {
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-green-700/40 px-3 py-1 text-xs font-medium text-green-300">
               <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-              WELCOME BACK
+              {t.dashboard.welcomeBack}
             </div>
             <h2 className="mt-2 text-xl font-bold sm:text-2xl">Green Valley Cooperative</h2>
             <p className="mt-1 text-sm text-green-100/70">
-              You have <span className="font-semibold text-amber-400">4 urgent</span> requests pending review today.
+              You have <span className="font-semibold text-amber-400">4 {t.dashboard.urgentRequests}</span> {t.dashboard.requestsPending}.
             </p>
           </div>
           <div className="shrink-0 text-left sm:text-right">
-            <p className="text-xs text-green-100/60">August 2025</p>
+            <p className="text-xs text-green-100/60">{t.dashboard.august}</p>
             <p className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">RWF 11.2M</p>
-            <p className="mt-0.5 text-xs text-green-300">Monthly Revenue</p>
+            <p className="mt-0.5 text-xs text-green-300">{t.dashboard.monthlyRevenue}</p>
           </div>
         </div>
       </div>

@@ -1,11 +1,13 @@
 import type { Product } from "@/data/products";
 import ProductCard from "./ProductCard";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function ProductGrid({ products }: { products: Product[] }) {
+  const { t } = useLanguage();
   if (products.length === 0) {
     return (
       <div className="rounded-xl border border-dashed border-gray-300 py-16 text-center text-gray-500">
-        No products match your search. Try a different keyword or category.
+        {t.productGrid.noProducts}
       </div>
     );
   }

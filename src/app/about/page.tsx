@@ -1,150 +1,144 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-
-export const metadata: Metadata = {
-  title: "About Us",
-  description:
-    "Learn about AgriConnect Rwanda — our mission, vision, and how we connect farmers and cooperatives to buyers across Rwanda.",
-};
-
-/* ─────────────────────────────────────────────
-   Data
-───────────────────────────────────────────── */
-
-const MISSION_VISION = [
-  {
-    label: "Our Mission",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-400">
-        <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" />
-      </svg>
-    ),
-    text: "To empower Rwandan farmer cooperatives by connecting them with markets, technology, transparency, and sustainable value chains.",
-  },
-  {
-    label: "Our Vision",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-400">
-        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" />
-      </svg>
-    ),
-    text: "A thriving digital agricultural ecosystem where every Rwandan farmer and every buyer can trade fairly, simply, and with confidence.",
-  },
-];
-
-const HOW_WE_CONNECT = [
-  {
-    step: "01",
-    title: "Cooperatives Register",
-    description: "Farmer cooperatives create a verified profile and list their agricultural products on the platform.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
-      </svg>
-    ),
-  },
-  {
-    step: "02",
-    title: "Products Are Discovered",
-    description: "Buyers browse fresh produce, compare prices, and find cooperatives that match their needs.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
-      </svg>
-    ),
-  },
-  {
-    step: "03",
-    title: "Direct Matching",
-    description: "We eliminate middlemen so farmers earn more and buyers get fresher produce at better prices.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-      </svg>
-    ),
-  },
-  {
-    step: "04",
-    title: "Partnerships Grow",
-    description: "Long-term relationships between cooperatives and buyers power sustainable agricultural trade.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M17 11h1a3 3 0 0 1 0 6h-1" /><path d="M9 12H4a3 3 0 0 0 0 6h1" /><line x1="12" x2="12" y1="7" y2="7" /><path d="M12 3a4 4 0 0 1 4 4v10a4 4 0 0 1-8 0V7a4 4 0 0 1 4-4Z" />
-      </svg>
-    ),
-  },
-];
-
-const WHY_CHOOSE = [
-  {
-    title: "Verified Cooperatives",
-    description: "Every cooperative is government registered and quality-audited before listing.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" /><path d="m9 12 2 2 4-4" />
-      </svg>
-    ),
-  },
-  {
-    title: "Transparent Marketplace",
-    description: "No hidden fees. Prices, terms, and cooperative details are always visible to buyers.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" /><path d="M12 18V6" />
-      </svg>
-    ),
-  },
-  {
-    title: "Better Market Access",
-    description: "Small cooperatives reach national and international buyers they could never reach alone.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" />
-      </svg>
-    ),
-  },
-  {
-    title: "Sustainable Agriculture",
-    description: "We promote eco-friendly farming practices that protect Rwanda's land for future generations.",
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-      </svg>
-    ),
-  },
-];
-
-const STATS = [
-  { value: "500+", label: "Cooperatives Connected" },
-  { value: "1,000+", label: "Agricultural Products" },
-  { value: "50+", label: "Business Buyers" },
-  { value: "30+", label: "Districts Reached" },
-];
-
-const COMMUNITY = [
-  {
-    role: "Farmers",
-    description: "Empowering farmers to grow better and earn more",
-    image: "/images/products/famers.jpeg",
-  },
-  {
-    role: "Cooperatives",
-    description: "Helping cooperatives reach national markets",
-    image: "/images/products/ct-farm.jpg",
-  },
-  {
-    role: "Buyers",
-    description: "Bridging buyers with quality Rwandan produce",
-    image: "/images/products/Buyers.jpg",
-  },
-];
+import { useLanguage } from "@/lib/LanguageContext";
 
 /* ─────────────────────────────────────────────
    Page
 ───────────────────────────────────────────── */
 
 export default function AboutPage() {
+  const { t } = useLanguage();
+
+  const MISSION_VISION = [
+    {
+      label: t.about.mission,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-400">
+          <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" />
+        </svg>
+      ),
+      text: t.about.missionText,
+    },
+    {
+      label: t.about.vision,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-400">
+          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" />
+        </svg>
+      ),
+      text: t.about.visionText,
+    },
+  ];
+
+  const HOW_WE_CONNECT = [
+    {
+      step: "01",
+      title: t.about.processSteps[0].title,
+      description: t.about.processSteps[0].description,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+      ),
+    },
+    {
+      step: "02",
+      title: t.about.processSteps[1].title,
+      description: t.about.processSteps[1].description,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+        </svg>
+      ),
+    },
+    {
+      step: "03",
+      title: t.about.processSteps[2].title,
+      description: t.about.processSteps[2].description,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+        </svg>
+      ),
+    },
+    {
+      step: "04",
+      title: t.about.processSteps[3].title,
+      description: t.about.processSteps[3].description,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M17 11h1a3 3 0 0 1 0 6h-1" /><path d="M9 12H4a3 3 0 0 0 0 6h1" /><line x1="12" x2="12" y1="7" y2="7" /><path d="M12 3a4 4 0 0 1 4 4v10a4 4 0 0 1-8 0V7a4 4 0 0 1 4-4Z" />
+        </svg>
+      ),
+    },
+  ];
+
+  const WHY_CHOOSE = [
+    {
+      title: t.whyChoose.features[0].title,
+      description: t.whyChoose.features[0].description,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" /><path d="m9 12 2 2 4-4" />
+        </svg>
+      ),
+    },
+    {
+      title: t.whyChoose.features[1].title,
+      description: t.whyChoose.features[1].description,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" /><path d="M12 18V6" />
+        </svg>
+      ),
+    },
+    {
+      title: t.whyChoose.features[2].title,
+      description: t.whyChoose.features[2].description,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" />
+        </svg>
+      ),
+    },
+    {
+      title: t.whyChoose.features[3].title,
+      description: t.whyChoose.features[3].description,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+        </svg>
+      ),
+    },
+  ];
+
+  const STATS = [
+    { value: "500+", label: t.about.stats[0].label },
+    { value: "1,000+", label: t.about.stats[1].label },
+    { value: "50+", label: t.about.stats[2].label },
+    { value: "30+", label: t.about.stats[3].label },
+  ];
+
+  const COMMUNITY = [
+    {
+      role: t.about.community[0].role,
+      description: t.about.community[0].description,
+      image: "/images/products/famers.jpeg",
+    },
+    {
+      role: t.about.community[1].role,
+      description: t.about.community[1].description,
+      image: "/images/products/ct-farm.jpg",
+    },
+    {
+      role: t.about.community[2].role,
+      description: t.about.community[2].description,
+      image: "/images/products/Buyers.jpg",
+    },
+  ];
+
   return (
     <main className="min-h-screen bg-surface dark:bg-brand-950">
 
@@ -166,16 +160,13 @@ export default function AboutPage() {
           {/* Text */}
           <div>
             <span className="inline-block mb-4 text-xs font-bold uppercase tracking-widest text-brand-500">
-              About Us
+              {t.about.badge}
             </span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-ink leading-tight">
-              Who We Are
+              {t.about.heading}
             </h1>
             <p className="mt-5 text-base sm:text-lg leading-relaxed text-ink-muted">
-              AgriConnect Rwanda is a digital agricultural society / marketplace platform designed to
-              connect farmers with buyers. We help bridge the gap between cooperatives and markets. Our
-              platform enables cooperatives and enterprises to showcase their products and reach
-              all local cooperatives and enterprises that produce and have been all over cooperatives.
+              {t.about.description}
             </p>
 
             <div className="mt-8 space-y-5">
@@ -186,8 +177,8 @@ export default function AboutPage() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-bold text-ink">Empowering Cooperatives</h3>
-                  <p className="text-sm text-ink-muted mt-0.5">We support farmer groups to formalise and access new market opportunities.</p>
+                  <h3 className="font-bold text-ink">{t.about.empoweringTitle}</h3>
+                  <p className="text-sm text-ink-muted mt-0.5">{t.about.empoweringDesc}</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -197,8 +188,8 @@ export default function AboutPage() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-bold text-ink">Building Team</h3>
-                  <p className="text-sm text-ink-muted mt-0.5">Helping farmers and buyers build lasting partnerships and trust in the ecosystem.</p>
+                  <h3 className="font-bold text-ink">{t.about.buildingTitle}</h3>
+                  <p className="text-sm text-ink-muted mt-0.5">{t.about.buildingDesc}</p>
                 </div>
               </div>
             </div>
@@ -211,10 +202,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <span className="inline-block mb-3 text-xs font-bold uppercase tracking-widest text-brand-500">
-              Our Purpose
+              {t.about.missionBadge}
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-ink tracking-tight">
-              Mission &amp; Vision
+              {t.about.missionHeading}
             </h2>
           </div>
 
@@ -240,10 +231,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <span className="inline-block mb-3 text-xs font-bold uppercase tracking-widest text-brand-500">
-              Process
+              {t.about.processBadge}
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-ink tracking-tight">
-              How We Connect Agriculture
+              {t.about.processHeading}
             </h2>
           </div>
 
@@ -272,10 +263,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <span className="inline-block mb-3 text-xs font-bold uppercase tracking-widest text-brand-500">
-              Our Value
+              {t.about.valueBadge}
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-ink tracking-tight">
-              Why Choose AgriConnect?
+              {t.about.valueHeading}
             </h2>
           </div>
 
@@ -301,10 +292,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <span className="inline-block mb-3 text-xs font-bold uppercase tracking-widest text-brand-500">
-              Our Impact
+              {t.about.impactBadge}
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-ink tracking-tight">
-              Growing Together Across Rwanda
+              {t.about.impactHeading}
             </h2>
           </div>
 
@@ -327,10 +318,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <span className="inline-block mb-3 text-xs font-bold uppercase tracking-widest text-brand-500">
-              Community
+              {t.about.communityBadge}
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-ink tracking-tight">
-              Meet The Community
+              {t.about.communityHeading}
             </h2>
           </div>
 
@@ -375,27 +366,26 @@ export default function AboutPage() {
             {/* Content */}
             <div className="relative z-10 flex flex-col items-center text-center px-6 py-20 sm:py-24">
               <span className="inline-block mb-4 text-xs font-bold uppercase tracking-widest text-brand-300">
-                Get Started
+                {t.about.ctaBadge}
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight max-w-2xl">
-                Join the Future of Agriculture
+                {t.about.ctaHeading}
               </h2>
               <p className="mt-5 max-w-xl text-base sm:text-lg text-green-100 leading-relaxed">
-                Whether you are a cooperative looking for new markets or a buyer who wants trusted suppliers,
-                AgriConnect helps you build meaningful agricultural connections.
+                {t.about.ctaDesc}
               </p>
               <div className="mt-10 flex flex-col sm:flex-row gap-4">
                 <Link
                   href="/register"
                   className="inline-flex items-center justify-center rounded-xl bg-brand-500 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-brand-500/25 transition-all duration-300 hover:bg-brand-400 hover:shadow-xl"
                 >
-                  Join AgriConnect
+                  {t.about.ctaJoin}
                 </Link>
                 <Link
                   href="/products"
                   className="inline-flex items-center justify-center rounded-xl border-2 border-white/30 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-white/60 hover:bg-white/10"
                 >
-                  Explore Products
+                  {t.about.ctaExplore}
                 </Link>
               </div>
             </div>
@@ -406,3 +396,4 @@ export default function AboutPage() {
     </main>
   );
 }
+

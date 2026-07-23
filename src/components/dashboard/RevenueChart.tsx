@@ -1,5 +1,6 @@
 "use client";
 
+import { useLanguage } from "@/lib/LanguageContext";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
@@ -14,12 +15,14 @@ const data = [
 ];
 
 export default function RevenueChart() {
+  const { t } = useLanguage();
+
   return (
     <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-gray-100 sm:p-5 dark:bg-[#112d1a] dark:ring-white/10">
       <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="text-sm font-semibold text-gray-800 dark:text-white">Monthly Revenue (RWF)</h2>
+        <h2 className="text-sm font-semibold text-gray-800 dark:text-white">{t.dashboard.revenueChartTitle}</h2>
         <span className="w-fit rounded-md bg-gray-100 px-2.5 py-1 text-xs text-gray-500 dark:bg-white/10 dark:text-green-100/60">
-          Aug 2024 — Jan 2025
+          {t.dashboard.revenueChartPeriod}
         </span>
       </div>
       <ResponsiveContainer width="100%" height={220}>

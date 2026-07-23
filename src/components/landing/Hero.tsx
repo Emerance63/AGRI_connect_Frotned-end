@@ -29,7 +29,7 @@ export default function Hero() {
         {/* Badge */}
         <div className="mb-8 animate-[fadeInUp_0.6s_ease-out_both]">
           <span className="inline-flex items-center gap-2 rounded-full border border-accent-500/30 bg-accent-500/15 px-5 py-2.5 text-sm font-medium text-accent-400 backdrop-blur-sm">
-            <span className="text-base">🌾</span>
+            <span className="text-base"></span>
             {t.hero.badge}
           </span>
         </div>

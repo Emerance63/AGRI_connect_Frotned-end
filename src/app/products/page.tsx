@@ -7,9 +7,12 @@ import CategoryFilter from "@/components/products/CategoryFilter";
 import ProductGrid from "@/components/products/ProductGrid";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+import { useLanguage } from "@/lib/LanguageContext";
+
 const ITEMS_PER_PAGE = 8;
 
 export default function ProductsPage() {
+  const { t } = useLanguage();
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Categories");
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,10 +53,10 @@ export default function ProductsPage() {
       <section className="bg-green-50 border-b border-gray-200 px-6 py-12 dark:bg-gray-900 dark:border-gray-800">
         <div className="mx-auto max-w-7xl">
           <h1 className="mb-2 text-4xl font-extrabold text-gray-900 dark:text-white">
-            All Products
+            {t.productsPage.title}
           </h1>
           <p className="text-gray-600 dark:text-gray-300">
-            Certified produce from cooperatives across Rwanda's 30 districts.
+            {t.productsPage.subtitle}
           </p>
         </div>
       </section>

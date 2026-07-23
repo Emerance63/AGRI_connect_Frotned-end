@@ -4,7 +4,31 @@ import { usePathname } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
+const COOPERATIVE_ROUTES = [
+  "/dashboard",
+  "/inventory",
+  "/orders",
+  "/buyers",
+  "/members",
+  "/reports",
+  "/cooperative",
+  "/login",
+  "/register",
+  "/forgot-password",
+];
+
 export default function ShellWrapper({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
+  // Hide public Navbar & Footer inside the cooperative app shell
+  const isCooperative = COOPERATIVE_ROUTES.some((route) =>
+    pathname?.startsWith(route)
+  );
+
+  if (isCooperative) {
+    return <>{children}</>;
+  }
+
   return (
     <>
       <Navbar />
