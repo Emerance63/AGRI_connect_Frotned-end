@@ -82,7 +82,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
     { name: t.dashboard.sidebarProducts, href: "/cooperative/products", icon: icons.products },
     { name: t.dashboard.sidebarOrders, href: "/orders", icon: icons.orders },
     { name: t.dashboard.sidebarBuyers, href: "/buyers", icon: icons.buyers },
-    { name: "Members & SMS", href: "/members", icon: icons.members },
+    { name: t.members.title, href: "/members", icon: icons.members },
     { name: t.dashboard.sidebarReports, href: "/reports", icon: icons.reports },
   ];
 
@@ -117,7 +117,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
       {/* ── Navigation items ── */}
       <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-3">
         <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-widest text-green-100/30">
-          Main Menu
+          {t.dashboard.mainMenu}
         </p>
         {navItems.map((item) => {
           const isActive = pathname?.startsWith(item.href);
@@ -156,7 +156,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
             <circle cx="12" cy="12" r="3" />
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
           </svg>
-          Settings
+          {t.dashboard.settings}
         </Link>
 
         {/* Logout */}
@@ -165,7 +165,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
           className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-400/80 transition hover:bg-red-500/10 hover:text-red-400"
         >
           {icons.logout}
-          Log Out
+          {t.dashboard.logout}
         </button>
       </div>
     </aside>

@@ -133,7 +133,7 @@ export const products: Product[] = [
   {
     id: "6",
     name: "Green Beans",
-    category: "Vegetables",
+    category: "Grains",
     imageUrl: "/images/beans.webp",
     description: "Crispy and fresh green beans.",
     availableQuantity: 250,
@@ -258,8 +258,8 @@ export const products: Product[] = [
   },
   {
     id: "12",
-    name: "avocado",
-    category: "fruits",
+    name: "Avocado",
+    category: "Fruits",
     imageUrl: "/images/products/avocado.jpeg",
     description: "A mixed assortment of fresh vegetables straight from the farm, harvested daily.",
     availableQuantity: 600,
@@ -279,7 +279,7 @@ export const products: Product[] = [
   },
   {
     id: "13",
-    name: "cabbages",
+    name: "Cabbages",
     category: "Vegetables",
     imageUrl: "/images/products/cabages.jpg",
     description: "Certified organic harvest pack containing a variety of seasonal vegetables.",
@@ -300,7 +300,7 @@ export const products: Product[] = [
   },
   {
     id: "14",
-    name: "Green eggplant",
+    name: "Green Eggplant",
     category: "Vegetables",
     imageUrl: "/images/products/green eggplant.webp",
     description: "A seasonal basket of mixed fruits freshly picked from local orchards.",
