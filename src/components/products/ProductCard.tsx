@@ -9,6 +9,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 
 export default function ProductCard({ product }: { product: Product }) {
   const { t } = useLanguage();
+  const productName = (t as { productNames?: Record<string, string> }).productNames?.[product.name] ?? product.name;
   // Default values if data is missing
   const rating = product.rating || 4.5;
   const reviewsCount = product.reviewsCount || 100;
@@ -19,7 +20,7 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="relative h-48 w-full bg-gray-100 dark:bg-gray-800">
         <Image
           src={product.imageUrl}
-          alt={t.productNames?.[product.name] ?? product.name}
+          alt={product.name}
           fill
           sizes="(max-width: 768px) 100vw, 25vw"
           className="object-cover"
@@ -38,7 +39,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </p>
 
         <h3 className="mb-1 text-base font-bold text-gray-900 dark:text-white">
-          {t.productNames?.[product.name] ?? product.name}
+          {productName}
         </h3>
 
         {/* Price & Action */}

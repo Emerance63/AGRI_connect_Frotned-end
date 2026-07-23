@@ -45,7 +45,7 @@ export default function ProductDetail({
             </span>
 
             <h1 className="mt-4 text-4xl font-bold text-gray-900 dark:text-white">
-              {t.productNames?.[product.name] ?? product.name}
+              {product.name}
             </h1>
 
             <p className="mt-4 text-gray-600 dark:text-gray-300">
