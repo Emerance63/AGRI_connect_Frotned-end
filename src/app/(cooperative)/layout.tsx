@@ -34,6 +34,7 @@ export default function CooperativeLayout({ children }: { children: React.ReactN
     "/buyers":             t.buyers.title,
     "/members":            t.members.title,
     "/reports":            t.dashboard.sidebarReports,
+    "/settings":           t.settings.title,
   };
 
   const pageTitle =

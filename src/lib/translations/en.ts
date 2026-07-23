@@ -802,6 +802,27 @@ const en = {
     voice: "Voice",
   },
 
+  // Settings Page
+  settings: {
+    title: "Settings",
+    subtitle: "Manage your cooperative's preferences and profile",
+    profileSection: "Cooperative Profile",
+    coopName: "Cooperative Name",
+    coopNamePlaceholder: "e.g. Green Valley Coop",
+    location: "Location",
+    locationPlaceholder: "e.g. Musanze District",
+    contactEmail: "Contact Email",
+    contactPhone: "Contact Phone",
+    preferencesSection: "Preferences",
+    language: "Language",
+    languageDesc: "Choose the language for the dashboard.",
+    currency: "Currency",
+    saveChanges: "Save Changes",
+    successMessage: "Settings saved successfully!",
+    english: "English",
+    kinyarwanda: "Kinyarwanda",
+  },
+
   // Reports Page
   reportsBoard: {
     subtitle: "Export and share cooperative performance reports",

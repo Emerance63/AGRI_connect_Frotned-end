@@ -541,7 +541,27 @@ const rw: Translations = {
     voice: "Ijwi",
   },
 
-  // Reports Page
+  // Settings Page
+  settings: {
+    title: "Igenamiterere",
+    subtitle: "Cunga amakuru n'imiterere bya koperative yawe",
+    profileSection: "Umwirondoro wa Koperative",
+    coopName: "Izina rya Koperative",
+    coopNamePlaceholder: "Urugero: Green Valley Coop",
+    location: "Aho Iherereye",
+    locationPlaceholder: "Urugero: Musanze District",
+    contactEmail: "Imeri",
+    contactPhone: "Telefone",
+    preferencesSection: "Ibyifuzo",
+    language: "Ururimi",
+    languageDesc: "Hitamo ururimi ukoresha.",
+    currency: "Ifaranga",
+    saveChanges: "Bika Impinduka",
+    successMessage: "Impinduka zabitswe neza!",
+    english: "Icyongereza",
+    kinyarwanda: "Ikinyarwanda",
+  },
+
   reportsBoard: {
     subtitle: "Ohereza kandi usangire raporo z'imikorere ya koperative",
     title: "Raporo",

@@ -64,6 +64,20 @@ export function signOut() {
   if (isBrowser()) localStorage.removeItem(SESSION_KEY);
 }
 
+export function getCurrentAccount(): Account | null {
+  if (!isBrowser()) return null;
+  const sessionRaw = localStorage.getItem(SESSION_KEY);
+  if (!sessionRaw) return null;
+  
+  try {
+    const session = JSON.parse(sessionRaw);
+    const accounts = getAccounts();
+    return accounts.find(a => a.email === session.email) || null;
+  } catch {
+    return null;
+  }
+}
+
 export function resetPassword(email: string, password: string) {
   const accounts = getAccounts();
   const normalizedEmail = email.trim().toLowerCase();
