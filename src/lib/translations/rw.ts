@@ -365,9 +365,17 @@ const rw: Translations = {
     "Banana Bunches": "Ibitoki",
     "Irish Potatoes": "Ibirayi",
     "Green Beans": "Ibishimbo",
-    "Sorghum": "Soya",
+    "Sorghum": "Amasaka",
     "Fresh Milk": "Amata Mashya",
-    "Mangoes": "Imwembe"
+    "Mangoes": "Imwembe",
+    "Soya Beans": "Soya",
+    "Maize": "Ibigori",
+    "Avocado": "Avoka",
+    "Cabbages": "Amashu",
+    "Green Eggplant": "Intoryi",
+    "Farm Fresh Vegetables": "Imboga Nshya zo ku Murima",
+    "Organic Harvest Pack": "Imyunyu y'Umusaruro Kamere",
+    "Seasonal Fruit Basket": "Agaseke k'Imbuto z'Igihe",
   },
   // UI label for product name
   productDetail: {

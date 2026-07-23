@@ -355,6 +355,25 @@ const en = {
     "Grains": "Grains",
     "Dairy": "Dairy"
   },
+  productNames: {
+    "Sweet Potatoes": "Sweet Potatoes",
+    "Arabica Coffee Beans": "Arabica Coffee Beans",
+    "Fresh Tomatoes": "Fresh Tomatoes",
+    "Banana Bunches": "Banana Bunches",
+    "Irish Potatoes": "Irish Potatoes",
+    "Green Beans": "Green Beans",
+    "Sorghum": "Sorghum",
+    "Fresh Milk": "Fresh Milk",
+    "Mangoes": "Mangoes",
+    "Soya Beans": "Soya Beans",
+    "Maize": "Maize",
+    "Avocado": "Avocado",
+    "Cabbages": "Cabbages",
+    "Green Eggplant": "Green Eggplant",
+    "Farm Fresh Vegetables": "Farm Fresh Vegetables",
+    "Organic Harvest Pack": "Organic Harvest Pack",
+    "Seasonal Fruit Basket": "Seasonal Fruit Basket",
+  },
 };
 
 export type Translations = typeof en;
