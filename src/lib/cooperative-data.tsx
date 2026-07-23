@@ -78,6 +78,9 @@ type CooperativeDataContextValue = CooperativeDataState & {
   refreshInventoryItem: (name: string) => void;
   addMember: (member: Omit<Member, "id" | "color">) => void;
   setOrders: Dispatch<SetStateAction<OrderItem[]>>;
+  addOrder: (order: Omit<OrderItem, "id" | "steps" | "current" | "status">) => void;
+  deleteOrder: (id: string) => void;
+  advanceOrder: (id: string) => void;
 };
 
 const STORAGE_KEY = "agriconnect.cooperativeData";
@@ -234,6 +237,42 @@ export function CooperativeDataProvider({ children }: { children: React.ReactNod
           return [...current, { ...member, id, color: "bg-green-600" }];
         }),
       setOrders,
+      addOrder: ({ buyer, product, amount, date }) =>
+        setOrders((current) => {
+          const id = `ORD-${String(current.length + 1).padStart(3, "0")}`;
+          return [
+            ...current,
+            {
+              id,
+              buyer,
+              product,
+              amount,
+              date,
+              status: "Preparing",
+              steps: ["Pending", "Accepted", "Preparing", "Dispatched", "Delivered"],
+              current: 2, // starts at Preparing
+            },
+          ];
+        }),
+      deleteOrder: (id) =>
+        setOrders((current) => current.filter((o) => o.id !== id)),
+      advanceOrder: (id) =>
+        setOrders((current) =>
+          current.map((o) => {
+            if (o.id !== id) return o;
+            const next = Math.min(o.current + 1, o.steps.length - 1);
+            const statusMap: Record<number, OrderStatus> = {
+              2: "Preparing",
+              3: "Dispatched",
+              4: "Delivered",
+            };
+            return {
+              ...o,
+              current: next,
+              status: (statusMap[next] ?? o.status) as OrderStatus,
+            };
+          })
+        ),
     }),
     [buyers, products, inventory, members, orders]
   );
