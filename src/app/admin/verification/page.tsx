@@ -1,11 +1,11 @@
 import AdminSidebar from "@/components/admin/Adminsidebar";
-import PlatformOverviewBoard from "@/components/admin/PlatformOverviewBoard";
+import VerificationBoard from "@/components/admin/VerificationBoard";
 
-export default function AdminPage() {
+export default function VerificationPage() {
     return (
         <div className="min-h-screen bg-black flex">
             <AdminSidebar />
-            <PlatformOverviewBoard />
+            <VerificationBoard />
         </div>
     );
 }

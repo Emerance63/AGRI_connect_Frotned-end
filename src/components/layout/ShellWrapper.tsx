@@ -15,6 +15,7 @@ const COOPERATIVE_ROUTES = [
   "/login",
   "/register",
   "/forgot-password",
+  "/admin",
 ];
 
 export default function ShellWrapper({ children }: { children: React.ReactNode }) {

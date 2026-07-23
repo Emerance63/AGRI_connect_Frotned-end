@@ -1,11 +1,11 @@
 import AdminSidebar from "@/components/admin/Adminsidebar";
-import PlatformOverviewBoard from "@/components/admin/PlatformOverviewBoard";
+import ReportsBoard from "@/components/admin/ReportsBoard";
 
-export default function AdminPage() {
+export default function ReportsPage() {
     return (
         <div className="min-h-screen bg-black flex">
             <AdminSidebar />
-            <PlatformOverviewBoard />
+            <ReportsBoard />
         </div>
     );
 }
