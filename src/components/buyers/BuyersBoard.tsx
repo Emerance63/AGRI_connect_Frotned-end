@@ -9,7 +9,7 @@ import AddBuyerModal from "./AddBuyerModal";
 import { useBuyers } from "@/lib/buyers";
 import { useLanguage } from "@/lib/LanguageContext";
 
-export type { Buyer } from "@/lib/buyers";
+import type { Buyer } from "@/lib/buyers";
 
 export default function BuyersBoard() {
   const { t } = useLanguage();
