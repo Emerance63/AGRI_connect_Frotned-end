@@ -113,7 +113,7 @@ export const products: Product[] = [
     id: "5",
     name: "Irish Potatoes",
     category: "Vegetables",
-    imageUrl: "/images/products/maize.jpeg",
+    imageUrl: "/images/products/irish potatoes.jpeg",
     description: "Grade A potatoes, freshly harvested and sorted.",
     availableQuantity: 500,
     unit: "kg",

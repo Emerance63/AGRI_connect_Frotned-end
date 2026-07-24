@@ -32,14 +32,28 @@ export default function ProductsPage() {
     return () => window.removeEventListener("storage", onStorage);
   }, []);
 
-  // Merge: cooperative products first (newest at top), then static list
-  // Skip any cooperative product whose name matches a static one
+  // Merge: cooperative products first, then static list.
+  // If a cooperative product is similar to a static product, we keep the cooperative's
+  // dynamic version and remove the static placeholder.
   const allProducts = useMemo<Product[]>(() => {
-    const staticNames = new Set(staticProducts.map((p) => p.name.toLowerCase()));
-    const uniqueCoop = coopProducts.filter(
-      (p) => !staticNames.has(p.name.toLowerCase())
+    const isSimilar = (name1: string, name2: string) => {
+      const n1 = name1.toLowerCase();
+      const n2 = name2.toLowerCase();
+      if (n1 === n2) return true;
+      if (n1.includes("tomato") && n2.includes("tomato")) return true;
+      if (n1.includes("cabbage") && n2.includes("cabbage")) return true;
+      if (n1.includes("potato") && n2.includes("potato")) return true;
+      if (n1.includes("bean") && n2.includes("bean")) return true;
+      if (n1.includes("maize") && n2.includes("maize")) return true;
+      return false;
+    };
+
+    // Filter out static products that have a similar counterpart in coopProducts
+    const filteredStatic = staticProducts.filter(
+      (sp) => !coopProducts.some((cp) => isSimilar(cp.name, sp.name))
     );
-    return [...uniqueCoop, ...staticProducts];
+
+    return [...coopProducts, ...filteredStatic];
   }, [coopProducts]);
 
   const filteredProducts = useMemo(() => {

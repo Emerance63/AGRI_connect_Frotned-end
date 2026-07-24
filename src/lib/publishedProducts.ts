@@ -35,6 +35,20 @@ function normaliseCategory(tag: string): string {
   return "Vegetables";
 }
 
+/** Resolve local product image based on name keywords */
+function resolveProductImage(name: string): string {
+  const lower = name.toLowerCase();
+  if (lower.includes("bean")) return "/images/beans.webp";
+  if (lower.includes("rice")) return "/images/products/rice.png";
+  if (lower.includes("sweet potato")) return "/images/products/sweet potato.jpeg";
+  if (lower.includes("potato")) return "/images/products/irish potatoes.jpeg";
+  if (lower.includes("cabbage")) return "/images/products/cabages.jpg";
+  if (lower.includes("tomato")) return "/images/products/tomato.jpeg";
+  if (lower.includes("maize") || lower.includes("flour")) return "/images/products/maize.jpeg";
+  if (lower.includes("milk") || lower.includes("dairy")) return "/images/products/fresh milk.jpeg";
+  return "/images/products/famers.jpeg";
+}
+
 export function getPublishedCooperativeProducts(): Product[] {
   if (typeof window === "undefined") return [];
 
@@ -55,7 +69,7 @@ export function getPublishedCooperativeProducts(): Product[] {
           id: `coop-${p.id}`,
           name: p.name,
           category: normaliseCategory(p.tag),
-          imageUrl: p.imageUrl ?? "/images/products/famers.jpeg",
+          imageUrl: p.imageUrl ?? resolveProductImage(p.name),
           description: p.description || `${p.name} — available from cooperative.`,
           availableQuantity,
           unit,
