@@ -147,7 +147,7 @@ function AddOrderModal({
 // ─── Main Board ─────────────────────────────────────────────────────────────
 export default function OrdersBoard() {
   const { t } = useLanguage();
-  const { orders, addOrder, deleteOrder, advanceOrder } = useCooperativeData();
+  const { orders, addOrder, deleteOrder, advanceOrder, reverseOrder } = useCooperativeData();
 
   const [selectedOrder, setSelectedOrder] = useState<OrderItem | null>(orders[0] ?? null);
   const [panel, setPanel] = useState<"invoice" | "track">("invoice");
@@ -174,11 +174,15 @@ export default function OrdersBoard() {
   }, [orders, search, filter]);
 
   const total = orders.length;
+  const pending = orders.filter((o) => o.status === "Pending").length;
+  const accepted = orders.filter((o) => o.status === "Accepted").length;
   const preparing = orders.filter((o) => o.status === "Preparing").length;
   const dispatched = orders.filter((o) => o.status === "Dispatched").length;
   const delivered = orders.filter((o) => o.status === "Delivered").length;
 
   const statusLabel: Record<string, string> = {
+    Pending: t.orders?.stepPending ?? "Pending",
+    Accepted: t.orders?.stepAccepted ?? "Accepted",
     Preparing: t.orders.statusPreparing,
     Dispatched: t.orders.statusDispatched,
     Delivered: t.orders.statusDelivered,
@@ -189,7 +193,16 @@ export default function OrdersBoard() {
     // Keep selected order in sync
     if (selectedOrder?.id === order.id) {
       const next = Math.min(order.current + 1, order.steps.length - 1);
-      const statusMap: Record<number, OrderStatus> = { 2: "Preparing", 3: "Dispatched", 4: "Delivered" };
+      const statusMap: Record<number, OrderStatus> = { 0: "Pending", 1: "Accepted", 2: "Preparing", 3: "Dispatched", 4: "Delivered" };
+      setSelectedOrder({ ...order, current: next, status: statusMap[next] ?? order.status });
+    }
+  }
+
+  function handleReverse(order: OrderItem) {
+    reverseOrder(order.id);
+    if (selectedOrder?.id === order.id) {
+      const next = Math.max(order.current - 1, 0);
+      const statusMap: Record<number, OrderStatus> = { 0: "Pending", 1: "Accepted", 2: "Preparing", 3: "Dispatched", 4: "Delivered" };
       setSelectedOrder({ ...order, current: next, status: statusMap[next] ?? order.status });
     }
   }
@@ -222,9 +235,11 @@ export default function OrdersBoard() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-6">
         {([
           [t.orders.statTotal, total],
+          [t.orders?.stepPending ?? "Pending", pending],
+          [t.orders?.stepAccepted ?? "Accepted", accepted],
           [t.orders.statPreparing, preparing],
           [t.orders.statDispatched, dispatched],
           [t.orders.statDelivered, delivered],
@@ -250,6 +265,8 @@ export default function OrdersBoard() {
           className="rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-green-600 dark:border-white/10 dark:bg-[#112d1a] dark:text-white"
         >
           <option value="All">{t.orders.filterAll}</option>
+          <option value="Pending">{t.orders?.stepPending ?? "Pending"}</option>
+          <option value="Accepted">{t.orders?.stepAccepted ?? "Accepted"}</option>
           <option value="Preparing">{t.orders.filterPreparing}</option>
           <option value="Dispatched">{t.orders.filterDispatched}</option>
           <option value="Delivered">{t.orders.filterDelivered}</option>
@@ -265,7 +282,7 @@ export default function OrdersBoard() {
         )}
 
         {filteredOrders.map((order) => {
-          const isDelivered = order.current >= order.steps.length - 1;
+          const isDelivered = order.current === order.steps.length - 1;
           return (
             <div key={order.id} className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-gray-100 dark:bg-[#112d1a] dark:ring-white/10">
 
@@ -295,7 +312,7 @@ export default function OrdersBoard() {
                         <div className={`mx-auto flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold ${
                           index <= order.current ? "bg-green-600 text-white" : "bg-gray-200 text-gray-400 dark:bg-white/10"
                         }`}>
-                          {index <= order.current ? "✓" : index + 1}
+                          {index + 1}
                         </div>
                         <p className="mt-1 text-[10px] text-gray-400">{stepTranslations[step] ?? step}</p>
                       </div>
@@ -318,11 +335,21 @@ export default function OrdersBoard() {
                   {t.orders.track}
                 </button>
 
+                {/* Cancel Advance button */}
+                {order.current > 0 && (
+                  <button
+                    onClick={() => handleReverse(order)}
+                    className="ml-auto rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 transition hover:bg-gray-50 dark:border-white/10 dark:bg-white/5 dark:text-gray-200 dark:hover:bg-white/10"
+                  >
+                    ← Cancel Advance
+                  </button>
+                )}
+
                 {/* Advance status */}
                 {!isDelivered && (
                   <button
                     onClick={() => handleAdvance(order)}
-                    className="ml-auto rounded-lg bg-green-600 px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-green-700"
+                    className={`${order.current > 0 ? "" : "ml-auto"} rounded-lg bg-green-600 px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-green-700`}
                   >
                     {t.orders?.advanceStatus ?? "Advance →"}
                   </button>

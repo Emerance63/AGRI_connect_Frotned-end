@@ -45,7 +45,7 @@ export type Member = {
   color: string;
 };
 
-export type OrderStatus = "Delivered" | "Dispatched" | "Preparing";
+export type OrderStatus = "Delivered" | "Dispatched" | "Preparing" | "Accepted" | "Pending";
 
 export type OrderItem = {
   id: string;
@@ -81,6 +81,7 @@ type CooperativeDataContextValue = CooperativeDataState & {
   addOrder: (order: Omit<OrderItem, "id" | "steps" | "current" | "status">) => void;
   deleteOrder: (id: string) => void;
   advanceOrder: (id: string) => void;
+  reverseOrder: (id: string) => void;
 };
 
 const STORAGE_KEY = "agriconnect.cooperativeData";
@@ -262,6 +263,28 @@ export function CooperativeDataProvider({ children }: { children: React.ReactNod
             if (o.id !== id) return o;
             const next = Math.min(o.current + 1, o.steps.length - 1);
             const statusMap: Record<number, OrderStatus> = {
+              0: "Pending",
+              1: "Accepted",
+              2: "Preparing",
+              3: "Dispatched",
+              4: "Delivered",
+            };
+            return {
+              ...o,
+              current: next,
+              status: (statusMap[next] ?? o.status) as OrderStatus,
+            };
+          })
+        ),
+      reverseOrder: (id) =>
+        setOrders((current) =>
+          current.map((o) => {
+            if (o.id !== id) return o;
+            // Allow reversing down to 'Pending' (index 0)
+            const next = Math.max(o.current - 1, 0);
+            const statusMap: Record<number, OrderStatus> = {
+              0: "Pending",
+              1: "Accepted",
               2: "Preparing",
               3: "Dispatched",
               4: "Delivered",
