@@ -6,10 +6,8 @@ import BuyersStats from "./BuyersStats";
 import SearchBuyers from "./SearchBuyers";
 import BuyerDetailsModal from "./BuyerDetailsModal";
 import AddBuyerModal from "./AddBuyerModal";
-import { useBuyers } from "@/lib/buyers";
+import { useBuyers, type Buyer } from "@/lib/buyers";
 import { useLanguage } from "@/lib/LanguageContext";
-
-import type { Buyer } from "@/lib/buyers";
 
 export default function BuyersBoard() {
   const { t } = useLanguage();
@@ -53,7 +51,6 @@ export default function BuyersBoard() {
 
   return (
     <div className="space-y-5">
-
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
