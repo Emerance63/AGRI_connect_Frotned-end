@@ -447,6 +447,15 @@ const rw: Translations = {
     stepPreparing: "Byateguwe",
     stepDispatched: "Byoherejwe",
     stepDelivered: "Byatanzwe",
+    // Add Order Modal
+    addModalError: "Uzuza imirima yose irakenewe.",
+    addModalTitle: "Isabwa Rishya",
+    addModalCancel: "Reka",
+    addModalSave: "Ongeraho Isabwa",
+    // Order actions
+    advanceStatus: "Komeza →",
+    deleteOrder: "Siba",
+    confirmDelete: "Siba iri sabwa?",
   },
 
   // Buyers Page

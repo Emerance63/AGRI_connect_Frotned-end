@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useCooperativeData } from "@/lib/cooperative-data";
 import { useLanguage } from "@/lib/LanguageContext";
 
-type OrderStatus = "Delivered" | "Dispatched" | "Preparing";
+type OrderStatus = "Delivered" | "Dispatched" | "Preparing" | "Pending" | "Accepted";
 
 type OrderItem = {
   id: string;
@@ -17,10 +17,12 @@ type OrderItem = {
   current: number;
 };
 
-const statusColor = {
+const statusColor: Record<OrderStatus, string> = {
   Delivered: "bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400",
   Dispatched: "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400",
   Preparing: "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400",
+  Pending: "bg-gray-100 text-gray-700 dark:bg-gray-500/20 dark:text-gray-400",
+  Accepted: "bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-400",
 };
 
 // ─── Add Order Modal ────────────────────────────────────────────────────────

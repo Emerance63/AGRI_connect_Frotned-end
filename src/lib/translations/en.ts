@@ -435,6 +435,7 @@ const en = {
     madeWith: "Made with in Rwanda",
     currency: "Currency:",
   },
+
   categories: {
     "All Categories": "All Categories",
     "Vegetables": "Vegetables",
@@ -443,6 +444,7 @@ const en = {
     "Grains": "Grains",
     "Dairy": "Dairy"
   },
+
   productNames: {
     "Sweet Potatoes": "Sweet Potatoes",
     "Arabica Coffee Beans": "Arabica Coffee Beans",
@@ -467,6 +469,7 @@ const en = {
     "Maize Flour": "Maize Flour",
     "Tomatoes": "Tomatoes",
   },
+
   inventoryCategories: {
     "Legumes": "Legumes",
     "Grains": "Grains",
@@ -513,201 +516,15 @@ const en = {
     stepPreparing: "Preparing",
     stepDispatched: "Dispatched",
     stepDelivered: "Delivered",
-  },
-
-  // Buyers Page
-  buyers: {
-    title: "Buyers",
-    subtitle: "Track your buyer relationships and purchase history",
-    addBuyer: "+ Add Buyer",
-    noBuyers: "No buyers found.",
-    // Stats
-    statTotalBuyers: "Total Buyers",
-    statTotalBuyersDesc: "Registered buyers",
-    statActiveBuyers: "Active Buyers",
-    statActiveBuyersDesc: "Currently active",
-    statTotalOrders: "Total Orders",
-    statTotalOrdersDesc: "Orders completed",
-    statReliability: "Reliability",
-    statReliabilityDesc: "Average score",
-    // Search & filter
-    searchPlaceholder: "Search buyers...",
-    filterAll: "All Buyers",
-    filterActive: "Active",
-    filterInactive: "Inactive",
-    // Card labels
-    orders: "Orders",
-    spending: "Spending",
-    reliability: "Reliability",
-    statusActive: "Active",
-    statusInactive: "Inactive",
-    reliabilityExcellent: "Excellent",
-    reliabilityGood: "Good",
-    reliabilityNeedsAttention: "Needs attention",
-    // Buttons
-    history: "History",
-    edit: "Edit",
-    delete: "Delete",
-    // Add/Edit modal
-    addModalTitle: "Add New Buyer",
-    editModalTitle: "Edit Buyer",
-    placeholderName: "Buyer name",
-    placeholderLocation: "Location",
-    placeholderOrders: "Orders",
-    placeholderSpend: "Total spend",
-    placeholderReliability: "Reliability %",
-    saveChanges: "Save Changes",
-    addBuyerBtn: "Add Buyer",
-    // Details modal
-    detailsTitle: "Buyer Details",
-    detailsStatus: "Status",
-    detailsTotalOrders: "Total Orders",
-    detailsTotalSpending: "Total Spending",
-    detailsReliability: "Reliability",
-    detailsRecentOrders: "Recent Orders",
-  },
-
-  // Members & SMS Page
-  members: {
-    title: "Members & SMS",
-    subtitle: "Manage farmers and broadcast messages — works on basic phones",
-    addMember: "+ Add Member",
-    noMembers: "No members match your search.",
-    searchPlaceholder: "Search members, village, crop...",
-    sendSms: "Send SMS",
-    // Status
-    statusActive: "Active",
-    statusPending: "Pending",
-    statusInactive: "Inactive",
-    // Add modal
-    addModalTitle: "Add New Member",
-    placeholderName: "Member name",
-    placeholderPhone: "Phone number (+250...)",
-    placeholderVillage: "Village",
-    placeholderCrop: "Crop or produce",
+    // Add Order Modal
+    addModalError: "Please fill in all required fields.",
+    addModalTitle: "New Order",
     addModalCancel: "Cancel",
-    addModalSave: "Add Member",
-    // Broadcast panel
-    broadcastTitle: "Broadcast",
-    broadcastAudience: "AUDIENCE",
-    broadcastAudienceAll: "All members",
-    broadcastAudienceActive: "Active members",
-    broadcastAudiencePending: "Pending members",
-    broadcastAudienceInactive: "Inactive members",
-    broadcastChannel: "CHANNEL",
-    broadcastMessage: "MESSAGE",
-    broadcastPlaceholder: "Type your broadcast message...",
-    broadcastChars: "chars · reaches",
-    broadcastMember: "member",
-    confirmPasswordPlaceholder: "Re-enter your new password",
-    passwordsMismatch: "Your new passwords do not match.",
-    codeRequired: "Enter the 6-digit verification code.",
-    accountNotFound: "No account was found for that email address.",
-    resetSuccess: "Password reset successfully. Redirecting to login...",
-    resetButton: "Reset Password",
-    securityNote: "Use at least 8 characters and keep your verification code private.",
-    remembered: "Remembered your password?",
-    backToLogin: "Back to login",
-  },
-
-  // Footer
-  footer: {
-    description: "Rwanda's most trusted agricultural cooperative platform. Connecting farmers directly to markets across the country.",
-    stayUpdated: "STAY UPDATED WITH HARVEST NEWS",
-    emailPlaceholder: "Your email address",
-    subscribe: "Subscribe",
-    certifiedBy: "CERTIFIED BY",
-    quickLinks: "Quick Links",
-    coopDashboard: "Cooperative Dashboard",
-    coopLogin: "Cooperative Login",
-    legalQuality: "Legal & Quality",
-    qualityStandards: "Quality Standards",
-    termsOfService: "Terms of Service",
-    privacyPolicy: "Privacy Policy",
-    contact: "Contact",
-    followUs: "FOLLOW US",
-    rights: "© 2025 AgriConnect Rwanda. All rights reserved.",
-    madeWith: "Made with in Rwanda",
-    currency: "Currency:",
-  },
-  categories: {
-    "All Categories": "All Categories",
-    "Vegetables": "Vegetables",
-    "Fruits": "Fruits",
-    "Coffee": "Coffee",
-    "Grains": "Grains",
-    "Dairy": "Dairy"
-  },
-  productNames: {
-    "Sweet Potatoes": "Sweet Potatoes",
-    "Arabica Coffee Beans": "Arabica Coffee Beans",
-    "Fresh Tomatoes": "Fresh Tomatoes",
-    "Banana Bunches": "Banana Bunches",
-    "Irish Potatoes": "Irish Potatoes",
-    "Green Beans": "Green Beans",
-    "Sorghum": "Sorghum",
-    "Fresh Milk": "Fresh Milk",
-    "Mangoes": "Mangoes",
-    "Soya Beans": "Soya Beans",
-    "Maize": "Maize",
-    "Avocado": "Avocado",
-    "Cabbages": "Cabbages",
-    "Green Eggplant": "Green Eggplant",
-    "Farm Fresh Vegetables": "Farm Fresh Vegetables",
-    "Organic Harvest Pack": "Organic Harvest Pack",
-    "Seasonal Fruit Basket": "Seasonal Fruit Basket",
-    "Premium Beans": "Premium Beans",
-    "White Rice": "White Rice",
-    "Green Cabbage": "Green Cabbage",
-    "Maize Flour": "Maize Flour",
-    "Tomatoes": "Tomatoes",
-  },
-  inventoryCategories: {
-    "Legumes": "Legumes",
-    "Grains": "Grains",
-    "Root Veg": "Root Veg",
-    "Vegetables": "Vegetables",
-  },
-
-  // Orders Page
-  orders: {
-    title: "Orders",
-    subtitle: "Track your fulfilment from acceptance to delivery",
-    searchPlaceholder: "Search orders...",
-    // Stats
-    statTotal: "Total",
-    statPreparing: "Preparing",
-    statDispatched: "Dispatched",
-    statDelivered: "Delivered",
-    // Filter options
-    filterAll: "All",
-    filterPreparing: "Preparing",
-    filterDispatched: "Dispatched",
-    filterDelivered: "Delivered",
-    // Status badges
-    statusPreparing: "Preparing",
-    statusDispatched: "Dispatched",
-    statusDelivered: "Delivered",
-    // Order card actions
-    invoice: "Invoice",
-    track: "Track",
-    noOrders: "No orders match the current search and status filter.",
-    // Detail panel
-    invoicePreview: "Invoice Preview",
-    trackingDetails: "Tracking Details",
-    labelOrder: "Order",
-    labelBuyer: "Buyer",
-    labelAmount: "Amount",
-    labelOrderTotal: "Order total",
-    labelItem: "Item",
-    labelInvoiceStatus: "Invoice status",
-    labelCurrentStage: "CURRENT STAGE",
-    // Order progress step labels
-    stepPending: "Pending",
-    stepAccepted: "Accepted",
-    stepPreparing: "Preparing",
-    stepDispatched: "Dispatched",
-    stepDelivered: "Delivered",
+    addModalSave: "Add Order",
+    // Order actions
+    advanceStatus: "Advance →",
+    deleteOrder: "Delete",
+    confirmDelete: "Delete this order?",
   },
 
   // Buyers Page
