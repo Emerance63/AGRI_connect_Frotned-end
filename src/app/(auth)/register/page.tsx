@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/lib/LanguageContext";
 import { registerAccount } from "@/lib/auth";
+import { submitForApproval } from "@/lib/adminData";
 
 const locations: Record<string, Record<string, string[]>> = {
   "Kigali City": {
@@ -148,6 +149,13 @@ export default function RegisterCooperativePage() {
       setSubmitError(result.message ?? "Unable to create your account.");
       return;
     }
+    // Add to admin approval queue
+    submitForApproval({
+      name: form.cooperativeName,
+      email: form.email,
+      type: "Cooperative",
+      district: form.district || form.province || "Rwanda",
+    });
     router.replace("/login?registered=1");
   };
 
