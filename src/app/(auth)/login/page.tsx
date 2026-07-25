@@ -12,12 +12,17 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [errorType, setErrorType] = useState<"error" | "pending" | "rejected" | "suspended">("error");
   const router = useRouter();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const result = signIn(email, password);
     if (!result.ok) {
+      setErrorType(result.status === "pending" ? "pending"
+        : result.status === "rejected" ? "rejected"
+        : result.status === "suspended" ? "suspended"
+        : "error");
       setError(result.message ?? "Unable to sign in.");
       return;
     }
@@ -106,7 +111,25 @@ export default function LoginPage() {
                   </button>
                 </div>
               </div>
-              {error && <p role="alert" className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-700 dark:text-red-200">{error}</p>}
+              {error && (
+                <div role="alert" className={`rounded-lg border px-4 py-3 text-xs ${
+                  errorType === "pending"
+                    ? "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300"
+                    : errorType === "rejected" || errorType === "suspended"
+                    ? "border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-200"
+                    : "border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-200"
+                }`}>
+                  {errorType === "pending" && (
+                    <div className="flex items-start gap-2">
+                      <svg className="mt-0.5 shrink-0 text-amber-500" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/>
+                      </svg>
+                      <span>{error}</span>
+                    </div>
+                  )}
+                  {errorType !== "pending" && error}
+                </div>
+              )}
               <button type="submit" className="w-full rounded-lg bg-gradient-to-r from-emerald-600 to-emerald-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-950/30 transition hover:from-emerald-500 hover:to-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 dark:focus:ring-offset-[#071b0f]">{t.login.signIn}</button>
             </form>
             <p className="mt-6 text-center text-xs text-gray-500 dark:text-emerald-100/55">

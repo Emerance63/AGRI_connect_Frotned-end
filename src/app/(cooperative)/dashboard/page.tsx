@@ -1,12 +1,22 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import StatsCards from "@/components/dashboard/StatsCards";
 import RevenueChart from "@/components/dashboard/RevenueChart";
 import BuyerMatchCard from "@/components/dashboard/BuyerMatchCard";
 import { useLanguage } from "@/lib/LanguageContext";
+import { getCurrentAccount, type Account } from "@/lib/auth";
 
 export default function DashboardPage() {
   const { t } = useLanguage();
+  const [account, setAccount] = useState<Account | null>(null);
+
+  useEffect(() => {
+    setAccount(getCurrentAccount());
+  }, []);
+
+  const coopName = account?.cooperativeName ?? "Green Valley Cooperative";
+
   return (
     <div className="space-y-4 sm:space-y-5">
       {/* Top bar */}
@@ -28,7 +38,7 @@ export default function DashboardPage() {
               <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
               {t.dashboard.welcomeBack}
             </div>
-            <h2 className="mt-2 text-xl font-bold sm:text-2xl">Green Valley Cooperative</h2>
+            <h2 className="mt-2 text-xl font-bold sm:text-2xl">{coopName}</h2>
             <p className="mt-1 text-sm text-green-100/70">
               {t.dashboard.youHave} <span className="font-semibold text-amber-400">4 {t.dashboard.urgentRequests}</span> {t.dashboard.requestsPending}.
             </p>

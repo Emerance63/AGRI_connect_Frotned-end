@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useLanguage } from "@/lib/LanguageContext";
-import { getCurrentAccount, Account } from "@/lib/auth";
+import { getCurrentAccount, signOut, Account } from "@/lib/auth";
 
 type SidebarProps = {
   onClose?: () => void;
@@ -94,7 +94,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
   ];
 
   const handleLogout = () => {
-    // TODO: clear auth token / session here
+    signOut();
     router.push("/login");
   };
 
@@ -126,7 +126,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
         {/* Online status badge */}
         <div className="mt-3 flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-          <span className="text-[11px] text-green-300/80">Active · Musanze District</span>
+          <span className="text-[11px] text-green-300/80">Active · {account?.email ?? "demo@coop.rw"}</span>
         </div>
       </div>
 

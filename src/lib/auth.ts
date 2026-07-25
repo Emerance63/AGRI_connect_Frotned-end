@@ -1,3 +1,5 @@
+import { getStatus } from "@/lib/adminData";
+
 export type Account = {
   cooperativeName: string;
   email: string;
@@ -7,21 +9,21 @@ export type Account = {
 const ACCOUNTS_KEY = "agriconnect_accounts";
 const SESSION_KEY = "agriconnect_session";
 
-// Demo account — always available, no registration needed
+// Demo account — always pre-approved, no registration needed
 const DEMO_ACCOUNT: Account = {
   cooperativeName: "Green Valley Cooperative",
   email: "demo@coop.rw",
   password: "demo1234",
 };
 
+const DEMO_EMAILS = new Set([DEMO_ACCOUNT.email]);
+
 const isBrowser = () => typeof window !== "undefined";
 
 function getAccounts(): Account[] {
   if (!isBrowser()) return [DEMO_ACCOUNT];
-
   try {
     const stored = JSON.parse(localStorage.getItem(ACCOUNTS_KEY) ?? "[]") as Account[];
-    // Always include the demo account even if localStorage is empty/cleared
     const hasDemo = stored.some((a) => a.email === DEMO_ACCOUNT.email);
     return hasDemo ? stored : [DEMO_ACCOUNT, ...stored];
   } catch {
@@ -41,17 +43,64 @@ export function registerAccount(account: Account): { ok: boolean; message?: stri
     return { ok: false, message: "An account already exists for this email address." };
   }
 
-  saveAccounts([...accounts, { ...account, cooperativeName: account.cooperativeName.trim(), email }]);
+  saveAccounts([
+    ...accounts,
+    { ...account, cooperativeName: account.cooperativeName.trim(), email },
+  ]);
   return { ok: true };
 }
 
-export function signIn(email: string, password: string) {
+export function signIn(
+  email: string,
+  password: string
+): { ok: boolean; message?: string; status?: "pending" | "rejected" | "suspended" } {
+  const normalizedEmail = email.trim().toLowerCase();
+
+  // Find the account
   const account = getAccounts().find(
-    (item) => item.email === email.trim().toLowerCase() && item.password === password
+    (item) => item.email === normalizedEmail && item.password === password
   );
 
   if (!account) return { ok: false, message: "Incorrect email or password." };
-  localStorage.setItem(SESSION_KEY, JSON.stringify({ email: account.email }));
+
+  // Demo accounts skip the approval check
+  if (DEMO_EMAILS.has(normalizedEmail)) {
+    localStorage.setItem(SESSION_KEY, JSON.stringify({ email: normalizedEmail }));
+    return { ok: true };
+  }
+
+  // Check admin approval status
+  const approvalStatus = getStatus(normalizedEmail);
+
+  if (approvalStatus === "Pending" || approvalStatus === null) {
+    // null means not in queue yet — treat same as pending
+    return {
+      ok: false,
+      status: "pending",
+      message:
+        "Your account is awaiting admin approval. You will be able to log in once approved.",
+    };
+  }
+
+  if (approvalStatus === "Rejected") {
+    return {
+      ok: false,
+      status: "rejected",
+      message:
+        "Your registration was not approved. Please contact support for more information.",
+    };
+  }
+
+  if (approvalStatus === "Suspended") {
+    return {
+      ok: false,
+      status: "suspended",
+      message: "Your account has been suspended. Please contact the administrator.",
+    };
+  }
+
+  // Approved — create session
+  localStorage.setItem(SESSION_KEY, JSON.stringify({ email: normalizedEmail }));
   return { ok: true };
 }
 
@@ -68,11 +117,9 @@ export function getCurrentAccount(): Account | null {
   if (!isBrowser()) return null;
   const sessionRaw = localStorage.getItem(SESSION_KEY);
   if (!sessionRaw) return null;
-  
   try {
     const session = JSON.parse(sessionRaw);
-    const accounts = getAccounts();
-    return accounts.find(a => a.email === session.email) || null;
+    return getAccounts().find((a) => a.email === session.email) ?? null;
   } catch {
     return null;
   }
@@ -81,8 +128,7 @@ export function getCurrentAccount(): Account | null {
 export function resetPassword(email: string, password: string) {
   const accounts = getAccounts();
   const normalizedEmail = email.trim().toLowerCase();
-  const index = accounts.findIndex((account) => account.email === normalizedEmail);
-
+  const index = accounts.findIndex((a) => a.email === normalizedEmail);
   if (index === -1) return { ok: false, message: "No account was found for that email address." };
   accounts[index] = { ...accounts[index], password };
   saveAccounts(accounts);
