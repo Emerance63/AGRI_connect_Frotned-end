@@ -1,1 +1,3 @@
-export { type Buyer, useCooperativeData as useBuyers } from "./cooperative-data";
+import { useCooperativeData } from "./cooperative-data";
+export type { Buyer } from "./cooperative-data";
+export { useCooperativeData as useBuyers };
