@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { Buyer } from "./BuyersBoard";
+import type { Buyer } from "@/lib/buyers";
 import { useLanguage } from "@/lib/LanguageContext";
 
 interface AddBuyerModalProps {
