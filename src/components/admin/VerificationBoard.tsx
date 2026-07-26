@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ShieldCheck, FileText, MapPin, Clock, Eye, X } from "lucide-react";
+import { ShieldCheck, FileText, MapPin, Clock, Eye, X, RefreshCw } from "lucide-react";
 import {
+  getQueue,
   getByStatus,
   approveEntry,
   rejectEntry,
   submitForApproval,
   type PendingEntry,
+  type ApprovalStatus,
 } from "@/lib/adminData";
 
 function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -18,7 +20,7 @@ function Card({ children, className = "" }: { children: React.ReactNode; classNa
   );
 }
 
-const stageStyles: Record<string, string> = {
+const stageStyles: Record<ApprovalStatus, string> = {
   Pending: "bg-orange-500/15 text-orange-500",
   Approved: "bg-green-500/15 text-green-500",
   Rejected: "bg-red-500/15 text-red-400",
@@ -28,20 +30,28 @@ const stageStyles: Record<string, string> = {
 function timeAgo(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
   const mins = Math.floor(diff / 60000);
+  if (mins < 2) return "Just now";
   if (mins < 60) return `${mins}m ago`;
   const hrs = Math.floor(mins / 60);
   if (hrs < 24) return `${hrs}h ago`;
   return `${Math.floor(hrs / 24)}d ago`;
 }
 
+const DEMO_ENTRIES = [
+  { name: "Rulindo Coffee Coop", email: "rulindo@coop.rw", type: "Cooperative" as const, district: "Rulindo" },
+  { name: "Bugesera Dairy Union", email: "bugesera@coop.rw", type: "Cooperative" as const, district: "Bugesera" },
+  { name: "Kigali Fresh Ltd", email: "kigalifresh@buyer.rw", type: "Buyer" as const, district: "Kigali" },
+  { name: "Nyaruguru Grain Coop", email: "nyaruguru@coop.rw", type: "Cooperative" as const, district: "Nyaruguru" },
+];
+
 export default function VerificationBoard() {
-  const [queue, setQueue] = useState<PendingEntry[]>([]);
+  const [allEntries, setAllEntries] = useState<PendingEntry[]>([]);
+  const [filterStatus, setFilterStatus] = useState<"All" | ApprovalStatus>("All");
   const [reviewing, setReviewing] = useState<PendingEntry | null>(null);
   const [feedback, setFeedback] = useState("");
 
   function load() {
-    // Show all pending entries (not yet approved/rejected)
-    setQueue(getByStatus("Pending"));
+    setAllEntries(getQueue());
   }
 
   useEffect(() => {
@@ -50,36 +60,42 @@ export default function VerificationBoard() {
     return () => window.removeEventListener("storage", load);
   }, []);
 
+  // Seed demo data if the queue is completely empty
+  useEffect(() => {
+    if (getQueue().length === 0) {
+      DEMO_ENTRIES.forEach(submitForApproval);
+      load();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   function handleApprove(email: string) {
     approveEntry(email);
-    setFeedback(`✓ Approved successfully.`);
+    setFeedback(`✓ ${email} approved. They can now log in.`);
     load();
     setReviewing(null);
   }
 
   function handleReject(email: string) {
     rejectEntry(email);
-    setFeedback(`✗ Entry rejected.`);
+    setFeedback(`✗ ${email} rejected.`);
     load();
     setReviewing(null);
   }
 
-  // Seed demo data on first load if queue is empty — so the board isn't blank
-  useEffect(() => {
-    if (getByStatus("Pending").length === 0 && getByStatus("Approved").length === 0) {
-      const demos = [
-        { name: "Rulindo Coffee Coop", email: "rulindo@coop.rw", type: "Cooperative" as const, district: "Rulindo" },
-        { name: "Bugesera Dairy Union", email: "bugesera@coop.rw", type: "Cooperative" as const, district: "Bugesera" },
-        { name: "Kigali Fresh Ltd", email: "kigalifresh@buyer.rw", type: "Buyer" as const, district: "Kigali" },
-        { name: "Nyaruguru Grain Coop", email: "nyaruguru@coop.rw", type: "Cooperative" as const, district: "Nyaruguru" },
-      ];
-      demos.forEach(submitForApproval);
-      load();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  function handleReseed() {
+    DEMO_ENTRIES.forEach(submitForApproval);
+    load();
+    setFeedback("Demo entries added to queue.");
+  }
 
-  const approvedCount = getByStatus("Approved").length;
+  const displayed = filterStatus === "All"
+    ? allEntries
+    : allEntries.filter((e) => e.status === filterStatus);
+
+  const pendingCount = allEntries.filter((e) => e.status === "Pending").length;
+  const approvedCount = allEntries.filter((e) => e.status === "Approved").length;
+  const rejectedCount = allEntries.filter((e) => e.status === "Rejected").length;
 
   return (
     <div className="flex-1 min-w-0 p-8 text-zinc-100 text-sm">
@@ -89,9 +105,15 @@ export default function VerificationBoard() {
         <div>
           <h1 className="text-2xl font-bold m-0">Verification (RCA)</h1>
           <p className="text-zinc-400 text-[13.5px] m-0 mt-1">
-            Review cooperative and buyer identity documents before approval
+            Review cooperative and buyer registrations before granting access
           </p>
         </div>
+        <button
+          onClick={handleReseed}
+          className="flex items-center gap-2 rounded-lg border border-zinc-700 px-4 py-2 text-xs font-semibold text-zinc-300 hover:bg-zinc-800"
+        >
+          <RefreshCw size={13} /> Add demo entries
+        </button>
       </div>
 
       {feedback && (
@@ -104,117 +126,196 @@ export default function VerificationBoard() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
         <Card>
           <div className="flex items-start justify-between">
-            <span className="text-[11.5px] uppercase tracking-wide text-zinc-500">Awaiting Review</span>
+            <span className="text-[11.5px] uppercase tracking-wide text-zinc-500">Pending Review</span>
             <div className="w-8 h-8 rounded-lg bg-orange-500/15 text-orange-500 flex items-center justify-center">
               <ShieldCheck size={16} />
             </div>
           </div>
-          <div className="text-[26px] font-bold mt-2.5">{queue.length}</div>
+          <div className="text-[26px] font-bold mt-2.5 text-orange-400">{pendingCount}</div>
         </Card>
         <Card>
           <div className="flex items-start justify-between">
-            <span className="text-[11.5px] uppercase tracking-wide text-zinc-500">Approved total</span>
+            <span className="text-[11.5px] uppercase tracking-wide text-zinc-500">Approved</span>
             <div className="w-8 h-8 rounded-lg bg-green-500/15 text-green-500 flex items-center justify-center">
               <ShieldCheck size={16} />
             </div>
           </div>
-          <div className="text-[26px] font-bold mt-2.5">{approvedCount}</div>
+          <div className="text-[26px] font-bold mt-2.5 text-green-400">{approvedCount}</div>
         </Card>
         <Card>
           <div className="flex items-start justify-between">
-            <span className="text-[11.5px] uppercase tracking-wide text-zinc-500">Avg. review time</span>
-            <div className="w-8 h-8 rounded-lg bg-green-500/15 text-green-500 flex items-center justify-center">
+            <span className="text-[11.5px] uppercase tracking-wide text-zinc-500">Rejected</span>
+            <div className="w-8 h-8 rounded-lg bg-red-500/15 text-red-400 flex items-center justify-center">
               <Clock size={16} />
             </div>
           </div>
-          <div className="text-[26px] font-bold mt-2.5">~6h</div>
+          <div className="text-[26px] font-bold mt-2.5 text-red-400">{rejectedCount}</div>
         </Card>
       </div>
 
-      {/* Queue */}
-      <Card>
-        <p className="text-[15.5px] font-bold m-0 mb-4">Verification Queue</p>
+      {/* Filter tabs */}
+      <div className="flex gap-2 mb-4">
+        {(["All", "Pending", "Approved", "Rejected"] as const).map((s) => (
+          <button
+            key={s}
+            onClick={() => setFilterStatus(s)}
+            className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition ${
+              filterStatus === s
+                ? "bg-green-600 text-white"
+                : "border border-zinc-700 text-zinc-400 hover:bg-zinc-800"
+            }`}
+          >
+            {s} {s !== "All" && `(${allEntries.filter((e) => e.status === s).length})`}
+          </button>
+        ))}
+      </div>
 
-        {queue.length === 0 && (
-          <p className="text-zinc-500 text-sm py-4 text-center">
-            No pending entries. All registrations have been reviewed.
-          </p>
+      {/* Queue table */}
+      <Card>
+        <p className="text-[15.5px] font-bold m-0 mb-4">
+          {filterStatus === "All" ? "All Registrations" : `${filterStatus} Registrations`}
+          <span className="ml-2 text-zinc-500 text-sm font-normal">({displayed.length})</span>
+        </p>
+
+        {displayed.length === 0 && (
+          <div className="py-8 text-center">
+            <p className="text-zinc-500 text-sm">
+              {allEntries.length === 0
+                ? 'No registrations yet. Click "Add demo entries" to populate the queue.'
+                : `No ${filterStatus.toLowerCase()} entries.`}
+            </p>
+          </div>
         )}
 
-        {queue.map((q) => (
+        {displayed.map((q) => (
           <div
             key={q.id}
-            className="flex items-center justify-between py-3.5 border-b border-zinc-800 last:border-b-0 gap-3"
+            className="flex flex-col gap-3 py-4 border-b border-zinc-800 last:border-b-0 sm:flex-row sm:items-center sm:justify-between"
           >
             <div className="min-w-0">
-              <div className="font-semibold text-[13.5px] mb-1 truncate">{q.name}</div>
-              <div className="flex items-center gap-2 text-[11.5px] text-zinc-500 flex-wrap">
+              <div className="font-semibold text-[13.5px] mb-1">{q.name}</div>
+              <div className="flex flex-wrap items-center gap-2 text-[11.5px] text-zinc-500">
                 <span className="bg-zinc-800 border border-zinc-700 px-2 py-0.5 rounded">{q.type}</span>
                 <span className="flex items-center gap-1"><MapPin size={11} /> {q.district}</span>
                 <span className="flex items-center gap-1"><Clock size={11} /> {timeAgo(q.submittedAt)}</span>
-                <span className="flex items-center gap-1"><FileText size={11} /> {q.docs} documents</span>
+                <span className="flex items-center gap-1"><FileText size={11} /> {q.docs} docs</span>
+                <span className="text-[11px] text-zinc-600">{q.email}</span>
               </div>
             </div>
-            <div className="flex items-center gap-2 shrink-0">
+
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
               <span className={`text-[11.5px] font-semibold px-2.5 py-1 rounded-md whitespace-nowrap ${stageStyles[q.status]}`}>
                 {q.status}
               </span>
               <button
                 onClick={() => setReviewing(q)}
-                className="flex items-center gap-1.5 border border-zinc-700 text-zinc-300 text-xs px-3.5 py-1.5 rounded-md whitespace-nowrap hover:bg-zinc-800"
+                className="flex items-center gap-1.5 border border-zinc-700 text-zinc-300 text-xs px-3 py-1.5 rounded-md hover:bg-zinc-800"
               >
-                <Eye size={13} /> Review
+                <Eye size={12} /> Details
               </button>
-              <button
-                onClick={() => handleApprove(q.email)}
-                className="bg-green-500 text-black font-bold text-xs px-3.5 py-1.5 rounded-md whitespace-nowrap hover:bg-green-400"
-              >
-                Approve
-              </button>
-              <button
-                onClick={() => handleReject(q.email)}
-                className="bg-red-600 text-white font-bold text-xs px-3.5 py-1.5 rounded-md whitespace-nowrap hover:bg-red-500"
-              >
-                Reject
-              </button>
+              {q.status === "Pending" && (
+                <>
+                  <button
+                    onClick={() => handleApprove(q.email)}
+                    className="bg-green-500 text-black font-bold text-xs px-3.5 py-1.5 rounded-md hover:bg-green-400 transition"
+                  >
+                    ✓ Approve
+                  </button>
+                  <button
+                    onClick={() => handleReject(q.email)}
+                    className="bg-red-600 text-white font-bold text-xs px-3.5 py-1.5 rounded-md hover:bg-red-500 transition"
+                  >
+                    ✗ Reject
+                  </button>
+                </>
+              )}
+              {q.status === "Approved" && (
+                <button
+                  onClick={() => handleReject(q.email)}
+                  className="border border-red-600 text-red-400 text-xs px-3.5 py-1.5 rounded-md hover:bg-red-600 hover:text-white transition"
+                >
+                  Revoke
+                </button>
+              )}
+              {q.status === "Rejected" && (
+                <button
+                  onClick={() => handleApprove(q.email)}
+                  className="border border-green-500 text-green-400 text-xs px-3.5 py-1.5 rounded-md hover:bg-green-500 hover:text-black transition"
+                >
+                  Re-approve
+                </button>
+              )}
             </div>
           </div>
         ))}
       </Card>
 
-      {/* Review modal */}
+      {/* Detail modal */}
       {reviewing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
           <div className="w-full max-w-md rounded-2xl border border-zinc-700 bg-zinc-900 p-6 shadow-2xl">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-white">Review: {reviewing.name}</h2>
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-lg font-bold text-white">{reviewing.name}</h2>
               <button onClick={() => setReviewing(null)} className="text-zinc-400 hover:text-white">
                 <X size={20} />
               </button>
             </div>
-            <div className="space-y-2 text-sm text-zinc-300 mb-6">
-              <p><span className="text-zinc-500">Type:</span> {reviewing.type}</p>
-              <p><span className="text-zinc-500">Email:</span> {reviewing.email}</p>
-              <p><span className="text-zinc-500">District:</span> {reviewing.district}</p>
-              <p><span className="text-zinc-500">Submitted:</span> {timeAgo(reviewing.submittedAt)}</p>
-              <p><span className="text-zinc-500">Status:</span>{" "}
+
+            <div className="space-y-3 text-sm text-zinc-300 mb-6">
+              <div className="flex justify-between">
+                <span className="text-zinc-500">Type</span>
+                <span>{reviewing.type}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-zinc-500">Email</span>
+                <span className="text-green-400">{reviewing.email}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-zinc-500">District</span>
+                <span>{reviewing.district}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-zinc-500">Submitted</span>
+                <span>{timeAgo(reviewing.submittedAt)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-zinc-500">Status</span>
                 <span className={`font-semibold ${stageStyles[reviewing.status]}`}>{reviewing.status}</span>
-              </p>
+              </div>
             </div>
-            <div className="flex gap-3">
+
+            {reviewing.status === "Pending" && (
+              <div className="flex gap-3">
+                <button
+                  onClick={() => handleReject(reviewing.email)}
+                  className="flex-1 rounded-lg border border-red-600 py-2.5 text-sm font-semibold text-red-400 hover:bg-red-600 hover:text-white transition"
+                >
+                  ✗ Reject
+                </button>
+                <button
+                  onClick={() => handleApprove(reviewing.email)}
+                  className="flex-1 rounded-lg bg-green-500 py-2.5 text-sm font-bold text-black hover:bg-green-400 transition"
+                >
+                  ✓ Approve
+                </button>
+              </div>
+            )}
+            {reviewing.status === "Approved" && (
               <button
                 onClick={() => handleReject(reviewing.email)}
-                className="flex-1 rounded-lg border border-red-600 py-2 text-sm font-semibold text-red-400 hover:bg-red-600 hover:text-white transition"
+                className="w-full rounded-lg border border-red-600 py-2.5 text-sm font-semibold text-red-400 hover:bg-red-600 hover:text-white transition"
               >
-                Reject
+                Revoke Access
               </button>
+            )}
+            {reviewing.status === "Rejected" && (
               <button
                 onClick={() => handleApprove(reviewing.email)}
-                className="flex-1 rounded-lg bg-green-500 py-2 text-sm font-bold text-black hover:bg-green-400 transition"
+                className="w-full rounded-lg bg-green-500 py-2.5 text-sm font-bold text-black hover:bg-green-400 transition"
               >
-                Approve
+                Re-approve
               </button>
-            </div>
+            )}
           </div>
         </div>
       )}
