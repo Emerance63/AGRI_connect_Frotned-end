@@ -1,7 +1,7 @@
 "use client";
 
 import { use, useEffect, useState } from "react";
-import { notFound } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, MapPin, Calendar, Phone, Mail, Package } from "lucide-react";
@@ -13,24 +13,25 @@ import type { Product } from "@/data/products";
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const { t } = useLanguage();
+  const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
-  const [notFoundFlag, setNotFoundFlag] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // First check static products
+    // Check static products first
     const staticMatch = staticProducts.find((p) => p.id === id);
-    if (staticMatch) { setProduct(staticMatch); return; }
+    if (staticMatch) { setProduct(staticMatch); setLoading(false); return; }
 
     // Then check published cooperative products from localStorage
     const coopProducts = getPublishedCooperativeProducts();
     const coopMatch = coopProducts.find((p) => p.id === id);
-    if (coopMatch) { setProduct(coopMatch); return; }
+    if (coopMatch) { setProduct(coopMatch); setLoading(false); return; }
 
-    setNotFoundFlag(true);
-  }, [id]);
+    // Not found — redirect back to products list
+    router.replace("/products");
+  }, [id, router]);
 
-  if (notFoundFlag) notFound();
-  if (!product) {
+  if (loading || !product) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-green-500 border-t-transparent" />
