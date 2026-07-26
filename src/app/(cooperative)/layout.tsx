@@ -7,6 +7,7 @@ import Sidebar from "@/components/layout/sidebar";
 import ThemeToggle from "@/components/layout/ThemeToggle";
 import { useLanguage } from "@/lib/LanguageContext";
 import { isAuthenticated, signOut } from "@/lib/auth";
+import { getByStatus } from "@/lib/adminData";
 
 
 
@@ -16,6 +17,7 @@ export default function CooperativeLayout({ children }: { children: React.ReactN
   const router = useRouter();
   const { locale, t, toggleLocale } = useLanguage();
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+  const [pendingCount, setPendingCount] = useState(0);
 
   useEffect(() => {
     if (isAuthenticated()) {
@@ -24,6 +26,14 @@ export default function CooperativeLayout({ children }: { children: React.ReactN
       router.replace("/login");
     }
   }, [router]);
+
+  // Poll pending approvals count
+  useEffect(() => {
+    function update() { setPendingCount(getByStatus("Pending").length); }
+    update();
+    window.addEventListener("storage", update);
+    return () => window.removeEventListener("storage", update);
+  }, []);
 
   /* ── Map routes → readable breadcrumb names ── */
   const BREADCRUMB_MAP: Record<string, string> = {
@@ -115,6 +125,23 @@ export default function CooperativeLayout({ children }: { children: React.ReactN
             </svg>
           </button>
 
+          {/* Pending approval notification bell */}
+          {pendingCount > 0 && (
+            <Link
+              href="/admin/verification"
+              title={`${pendingCount} cooperative${pendingCount > 1 ? "s" : ""} pending approval`}
+              className="relative flex h-8 w-8 items-center justify-center rounded-lg border border-amber-500/40 bg-amber-500/10 text-amber-400 transition hover:bg-amber-500/20"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+              </svg>
+              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-amber-500 text-[9px] font-bold text-black">
+                {pendingCount}
+              </span>
+            </Link>
+          )}
+
           {/* Language toggle */}
           <button
             onClick={toggleLocale}
@@ -125,9 +152,7 @@ export default function CooperativeLayout({ children }: { children: React.ReactN
           </button>
 
           {/* Theme toggle */}
-          <ThemeToggle />
-
-          {/* Exit to public site */}
+          <ThemeToggle />          {/* Exit to public site */}
           <button
             onClick={() => { signOut(); router.replace("/login"); }}
             title="Back to public site"

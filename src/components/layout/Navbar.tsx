@@ -92,6 +92,13 @@ export default function Navbar() {
 
           {/* ── Language switcher + theme toggle ── */}
           <div className="ml-5 flex items-center gap-3">
+            {/* Admin link */}
+            <Link
+              href="/admin"
+              className="inline-flex items-center gap-1.5 rounded-md border border-black/10 bg-black/5 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-black transition-all duration-200 hover:bg-brand-500 hover:text-white hover:border-brand-500 dark:bg-white/[.07] dark:border-white/[.08] dark:text-brand-200 dark:hover:bg-brand-500 dark:hover:text-white dark:hover:border-brand-500"
+            >
+              🛡 Admin
+            </Link>
             {/* Language toggle button */}
             <button
               onClick={toggleLocale}
@@ -174,6 +181,16 @@ export default function Navbar() {
               </li>
             );
           })}
+
+          {/* Mobile: Admin link */}
+          <li className="border-t border-border px-4 pt-4 dark:border-brand-700/30">
+            <Link
+              href="/admin"
+              className="flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-gray-700 hover:bg-black/5 hover:text-black dark:text-brand-200 dark:hover:bg-white/[.06] dark:hover:text-white"
+            >
+              🛡 Admin Dashboard
+            </Link>
+          </li>
 
           {/* Mobile: Language switcher */}
           <li className="mt-2 flex items-center justify-between border-t border-border px-4 pt-4 dark:border-brand-700/30">
