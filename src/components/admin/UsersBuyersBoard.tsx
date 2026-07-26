@@ -12,14 +12,14 @@ import {
 } from "@/lib/adminData";
 
 function Card({ children }: { children: React.ReactNode }) {
-  return <div className="rounded-3xl border border-zinc-800 bg-zinc-950 p-4">{children}</div>;
+  return <div className="rounded-2xl border border-[#1f3d29] bg-[#112d1a] p-4">{children}</div>;
 }
 
 const statusStyles: Record<ApprovalStatus, string> = {
-  Approved: "bg-green-500/15 text-green-500",
-  Pending: "bg-orange-500/15 text-orange-500",
-  Rejected: "bg-red-500/15 text-red-500",
-  Suspended: "bg-zinc-500/15 text-zinc-400",
+  Approved: "bg-green-500/20 text-green-400",
+  Pending: "bg-amber-500/20 text-amber-400",
+  Rejected: "bg-red-500/20 text-red-400",
+  Suspended: "bg-white/10 text-green-100/50",
 };
 
 function timeAgo(iso: string): string {
@@ -74,13 +74,13 @@ export default function UsersBuyersBoard() {
   }
 
   return (
-    <div className="flex-1 min-w-0 p-8 text-zinc-100 text-sm">
+    <div className="flex-1 min-w-0 p-8 text-white text-sm">
 
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-bold m-0">Users &amp; Buyers</h1>
-          <p className="text-zinc-400 text-[13.5px] m-0 mt-1">
+          <p className="text-green-100/50 text-[13.5px] m-0 mt-1">
             Manage cooperatives, farmers, and buyer accounts
           </p>
         </div>
@@ -97,8 +97,8 @@ export default function UsersBuyersBoard() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
         <Card>
           <div className="flex items-start justify-between">
-            <span className="text-[11.5px] uppercase tracking-wide text-zinc-500">Cooperatives</span>
-            <div className="w-8 h-8 rounded-lg bg-green-500/15 text-green-500 flex items-center justify-center">
+            <span className="text-[11.5px] uppercase tracking-wide text-green-100/50">Cooperatives</span>
+            <div className="w-8 h-8 rounded-lg bg-green-500/20 text-green-400 flex items-center justify-center">
               <Users size={16} />
             </div>
           </div>
@@ -106,8 +106,8 @@ export default function UsersBuyersBoard() {
         </Card>
         <Card>
           <div className="flex items-start justify-between">
-            <span className="text-[11.5px] uppercase tracking-wide text-zinc-500">Buyers</span>
-            <div className="w-8 h-8 rounded-lg bg-green-500/15 text-green-500 flex items-center justify-center">
+            <span className="text-[11.5px] uppercase tracking-wide text-green-100/50">Buyers</span>
+            <div className="w-8 h-8 rounded-lg bg-green-500/20 text-green-400 flex items-center justify-center">
               <ShoppingBag size={16} />
             </div>
           </div>
@@ -115,8 +115,8 @@ export default function UsersBuyersBoard() {
         </Card>
         <Card>
           <div className="flex items-start justify-between">
-            <span className="text-[11.5px] uppercase tracking-wide text-zinc-500">Pending Verification</span>
-            <div className="w-8 h-8 rounded-lg bg-orange-500/15 text-orange-500 flex items-center justify-center">
+            <span className="text-[11.5px] uppercase tracking-wide text-green-100/50">Pending Verification</span>
+            <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center">
               <UserCheck size={16} />
             </div>
           </div>
@@ -125,21 +125,21 @@ export default function UsersBuyersBoard() {
       </div>
 
       {/* Search */}
-      <div className="flex items-center gap-2 mb-4 px-3 py-2 rounded-lg border border-zinc-800 bg-zinc-950 max-w-sm">
-        <Search size={15} className="text-zinc-500 shrink-0" />
+      <div className="flex items-center gap-2 mb-4 px-3 py-2 rounded-lg border border-[#1f3d29] bg-[#112d1a] max-w-sm">
+        <Search size={15} className="text-green-100/50 shrink-0" />
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by name, email, or district"
-          className="bg-transparent outline-none text-[13px] text-zinc-200 placeholder:text-zinc-600 w-full"
+          className="bg-transparent outline-none text-[13px] text-white placeholder:text-green-100/40 w-full"
         />
       </div>
 
-      {/* Cards list — replaces cramped table for better readability */}
+      {/* Cards list */}
       <div className="space-y-3">
         {entries.length === 0 && (
           <Card>
-            <p className="py-4 text-center text-zinc-500 text-sm">
+            <p className="py-4 text-center text-green-100/50 text-sm">
               No registrations yet. Accounts appear here when cooperatives register.
             </p>
           </Card>
@@ -148,7 +148,7 @@ export default function UsersBuyersBoard() {
         {filtered.map((e) => (
           <div
             key={e.id}
-            className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+            className="rounded-2xl border border-[#1f3d29] bg-[#112d1a] p-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
           >
             {/* Info */}
             <div className="min-w-0">
@@ -158,15 +158,15 @@ export default function UsersBuyersBoard() {
                   {e.status}
                 </span>
               </div>
-              <div className="text-[12px] text-zinc-500 mt-0.5">{e.email}</div>
-              <div className="flex flex-wrap items-center gap-3 mt-1.5 text-[11.5px] text-zinc-500">
-                <span className="bg-zinc-800 border border-zinc-700 px-2 py-0.5 rounded">{e.type}</span>
+              <div className="text-[12px] text-green-100/50 mt-0.5">{e.email}</div>
+              <div className="flex flex-wrap items-center gap-3 mt-1.5 text-[11.5px] text-green-100/50">
+                <span className="bg-white/10 border border-white/10 px-2 py-0.5 rounded">{e.type}</span>
                 <span>📍 {e.district}</span>
                 <span>🕐 {timeAgo(e.submittedAt)}</span>
               </div>
             </div>
 
-            {/* Action buttons — always visible */}
+            {/* Action buttons */}
             <div className="flex flex-wrap gap-2 shrink-0">
               {e.status === "Pending" && (
                 <>
@@ -206,7 +206,7 @@ export default function UsersBuyersBoard() {
 
         {filtered.length === 0 && query && (
           <Card>
-            <p className="py-4 text-center text-zinc-500 text-sm">No matches for &quot;{query}&quot;.</p>
+            <p className="py-4 text-center text-green-100/50 text-sm">No matches for &quot;{query}&quot;.</p>
           </Card>
         )}
       </div>

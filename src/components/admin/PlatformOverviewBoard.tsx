@@ -24,7 +24,7 @@ const districts = [
 
 function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`bg-zinc-900 border border-zinc-800 rounded-xl p-5 ${className}`}>
+    <div className={`bg-[#112d1a] border border-[#1f3d29] rounded-xl p-5 ${className}`}>
       {children}
     </div>
   );
@@ -39,7 +39,7 @@ function timeAgo(iso: string): string {
   return `${Math.floor(hrs / 24)}d ago`;
 }
 
-const stageStyle = "bg-orange-500/15 text-orange-500";
+const stageStyle = "bg-amber-500/20 text-amber-400";
 
 export default function AgriConnectDashboard() {
   const [allEntries, setAllEntries] = useState<PendingEntry[]>([]);
@@ -73,22 +73,22 @@ export default function AgriConnectDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100 text-sm">
+    <div className="min-h-screen bg-[#081F14] text-white text-sm">
       <div className="flex">
         <div className="flex-1 min-w-0 p-8">
 
           <div className="flex flex-wrap items-start justify-between gap-3 mb-6">
             <div>
               <h1 className="text-2xl font-bold m-0">Platform Overview</h1>
-              <p className="text-zinc-400 text-[13.5px] m-0 mt-1">Cross-cooperative health, growth and operations</p>
+              <p className="text-green-100/50 text-[13.5px] m-0 mt-1">Cross-cooperative health, growth and operations</p>
             </div>
-            <div className="flex items-center gap-3.5 text-[13px] text-zinc-400">
+            <div className="flex items-center gap-3.5 text-[13px] text-green-100/50">
               <span>Today, {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</span>
               <Bell size={16} />
-              <div className="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full border border-[#1f3d29] flex items-center justify-center">
                 <Moon size={15} />
               </div>
-              <span className="bg-orange-500 text-black font-semibold px-3.5 py-1.5 rounded-lg text-xs">Super Admin</span>
+              <span className="bg-green-600 text-white font-semibold px-3.5 py-1.5 rounded-lg text-xs">Super Admin</span>
             </div>
           </div>
 
@@ -96,13 +96,13 @@ export default function AgriConnectDashboard() {
             {stats.map(({ label, value, delta, icon: Icon, tone }) => (
               <Card key={label}>
                 <div className="flex items-start justify-between">
-                  <span className="text-[11.5px] uppercase tracking-wide text-zinc-500">{label}</span>
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${tone === "orange" ? "bg-orange-500/15 text-orange-500" : "bg-green-500/15 text-green-500"}`}>
+                  <span className="text-[11.5px] uppercase tracking-wide text-green-100/50">{label}</span>
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${tone === "orange" ? "bg-amber-500/20 text-amber-400" : "bg-green-500/20 text-green-400"}`}>
                     <Icon size={16} />
                   </div>
                 </div>
                 <div className="text-[26px] font-bold mt-2.5 mb-1.5">{value}</div>
-                <div className="text-[12.5px] text-green-500 flex items-center gap-1">
+                <div className="text-[12.5px] text-green-400 flex items-center gap-1">
                   <TrendingUp size={13} /> {delta}
                 </div>
               </Card>
@@ -114,18 +114,18 @@ export default function AgriConnectDashboard() {
               <div className="flex items-start justify-between mb-5">
                 <div>
                   <p className="text-[15.5px] font-bold m-0 mb-1">Gross Merchandise Volume</p>
-                  <p className="text-xs text-zinc-500 m-0">All cooperatives · 2025 (RWF, millions)</p>
+                  <p className="text-xs text-green-100/50 m-0">All cooperatives · 2025 (RWF, millions)</p>
                 </div>
                 <div className="text-right">
-                  <div className="text-xl font-bold text-green-500">182.4M</div>
-                  <div className="text-xs text-green-500">+18.2% YoY</div>
+                  <div className="text-xl font-bold text-green-400">182.4M</div>
+                  <div className="text-xs text-green-400">+18.2% YoY</div>
                 </div>
               </div>
               <div className="flex items-end gap-2.5 h-56">
                 {monthlyGMV.map(({ m, v }) => (
                   <div key={m} className="flex-1 flex flex-col items-center justify-end h-full">
                     <div className="w-full max-w-[34px] rounded-t-[5px] bg-gradient-to-b from-green-400 to-green-600" style={{ height: `${v}%` }} />
-                    <div className="mt-2 text-[11.5px] text-zinc-500">{m}</div>
+                    <div className="mt-2 text-[11.5px] text-green-100/50">{m}</div>
                   </div>
                 ))}
               </div>
@@ -139,18 +139,18 @@ export default function AgriConnectDashboard() {
                 { label: "MoMo settlement lag", value: "42 min", ok: true },
                 { label: "Failed payouts (24h)", value: "3", ok: false },
               ].map(({ label, value, ok }) => (
-                <div key={label} className="flex items-center justify-between py-2.5 border-b border-zinc-800 last:border-b-0 text-[13px]">
-                  <span className="flex items-center gap-2 text-zinc-400">
-                    {ok ? <CheckCircle2 size={14} className="text-green-500" /> : <AlertTriangle size={14} className="text-yellow-500" />}
+                <div key={label} className="flex items-center justify-between py-2.5 border-b border-[#1f3d29] last:border-b-0 text-[13px]">
+                  <span className="flex items-center gap-2 text-green-100/60">
+                    {ok ? <CheckCircle2 size={14} className="text-green-400" /> : <AlertTriangle size={14} className="text-amber-400" />}
                     {label}
                   </span>
-                  <span className={`font-semibold ${ok ? "" : "text-orange-500"}`}>{value}</span>
+                  <span className={`font-semibold ${ok ? "" : "text-amber-400"}`}>{value}</span>
                 </div>
               ))}
-              <div className="text-[11px] uppercase tracking-wide text-zinc-500 mt-4 mb-2.5">Live Activity</div>
-              <div className="flex items-center gap-2 text-[12.5px] text-zinc-400 py-1"><span className="w-1.5 h-1.5 rounded-full bg-green-500" />14 orders placed in the last hour</div>
-              <div className="flex items-center gap-2 text-[12.5px] text-zinc-400 py-1"><span className="w-1.5 h-1.5 rounded-full bg-blue-500" />6 new farmer signups (SMS)</div>
-              <div className="flex items-center gap-2 text-[12.5px] text-zinc-400 py-1"><span className="w-1.5 h-1.5 rounded-full bg-orange-500" />2 MoMo callbacks retrying</div>
+              <div className="text-[11px] uppercase tracking-wide text-green-100/50 mt-4 mb-2.5">Live Activity</div>
+              <div className="flex items-center gap-2 text-[12.5px] text-green-100/60 py-1"><span className="w-1.5 h-1.5 rounded-full bg-green-500" />14 orders placed in the last hour</div>
+              <div className="flex items-center gap-2 text-[12.5px] text-green-100/60 py-1"><span className="w-1.5 h-1.5 rounded-full bg-blue-500" />6 new farmer signups (SMS)</div>
+              <div className="flex items-center gap-2 text-[12.5px] text-green-100/60 py-1"><span className="w-1.5 h-1.5 rounded-full bg-amber-500" />2 MoMo callbacks retrying</div>
             </Card>
           </div>
 
@@ -159,19 +159,19 @@ export default function AgriConnectDashboard() {
               <div className="flex items-baseline justify-between mb-3.5">
                 <div>
                   <p className="text-[15.5px] font-bold m-0 mb-1">Pending Approvals</p>
-                  <p className="text-xs text-zinc-500 m-0">Cooperatives &amp; buyers awaiting review</p>
+                  <p className="text-xs text-green-100/50 m-0">Cooperatives &amp; buyers awaiting review</p>
                 </div>
-                <a className="text-green-500 text-xs font-semibold" href="/admin/verification">Review queue</a>
+                <a className="text-green-400 text-xs font-semibold" href="/admin/verification">Review queue</a>
               </div>
               {pendingApprovals.length === 0 ? (
-                <p className="text-zinc-500 text-sm py-3">No pending approvals — all caught up.</p>
+                <p className="text-green-100/50 text-sm py-3">No pending approvals — all caught up.</p>
               ) : (
                 pendingApprovals.slice(0, 4).map((a) => (
-                  <div key={a.id} className="flex items-center justify-between py-3 border-b border-zinc-800 last:border-b-0 gap-3">
+                  <div key={a.id} className="flex items-center justify-between py-3 border-b border-[#1f3d29] last:border-b-0 gap-3">
                     <div className="min-w-0">
                       <div className="font-semibold text-[13.5px] mb-1 truncate">{a.name}</div>
-                      <div className="flex items-center gap-2 text-[11.5px] text-zinc-500 flex-wrap">
-                        <span className="bg-zinc-800 border border-zinc-700 px-2 py-0.5 rounded">{a.type}</span>
+                      <div className="flex items-center gap-2 text-[11.5px] text-green-100/50 flex-wrap">
+                        <span className="bg-white/10 border border-white/10 px-2 py-0.5 rounded">{a.type}</span>
                         <span className="flex items-center gap-1"><MapPin size={11} /> {a.district}</span>
                         <span className="flex items-center gap-1"><Clock size={11} /> {timeAgo(a.submittedAt)}</span>
                       </div>
@@ -188,24 +188,24 @@ export default function AgriConnectDashboard() {
               <div className="flex items-baseline justify-between mb-3.5">
                 <div>
                   <p className="text-[15.5px] font-bold m-0 mb-1 flex items-center gap-1.5">
-                    <TrendingUp size={16} className="text-green-500" /> Top Districts by GMV
+                    <TrendingUp size={16} className="text-green-400" /> Top Districts by GMV
                   </p>
-                  <p className="text-xs text-zinc-500 m-0">Where the platform is growing fastest</p>
+                  <p className="text-xs text-green-100/50 m-0">Where the platform is growing fastest</p>
                 </div>
               </div>
-              <div className="grid grid-cols-4 gap-2 text-[11px] uppercase tracking-wide text-zinc-500 pb-2.5 border-b border-zinc-800">
+              <div className="grid grid-cols-4 gap-2 text-[11px] uppercase tracking-wide text-green-100/50 pb-2.5 border-b border-[#1f3d29]">
                 <span>District</span><span>Coops</span><span>GMV</span><span>Share</span>
               </div>
               {districts.map((d) => (
-                <div key={d.name} className="grid grid-cols-4 gap-2 items-center py-3 border-b border-zinc-800 last:border-b-0 text-[13px]">
+                <div key={d.name} className="grid grid-cols-4 gap-2 items-center py-3 border-b border-[#1f3d29] last:border-b-0 text-[13px]">
                   <span className="font-semibold">{d.rank}. {d.name}</span>
                   <span>{d.coops}</span>
                   <span>{d.gmv}</span>
                   <span className="flex items-center gap-2">
-                    <span className="bg-zinc-800 rounded h-1.5 w-full max-w-[80px]">
+                    <span className="bg-white/10 rounded h-1.5 w-full max-w-[80px]">
                       <span className="block bg-green-500 h-1.5 rounded" style={{ width: `${d.share * 3}%` }} />
                     </span>
-                    <span className="text-zinc-400 text-xs">{d.share}%</span>
+                    <span className="text-green-100/50 text-xs">{d.share}%</span>
                   </span>
                 </div>
               ))}

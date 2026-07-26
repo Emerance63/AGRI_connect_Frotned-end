@@ -14,17 +14,17 @@ import {
 
 function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`rounded-3xl border border-zinc-800 bg-zinc-950/75 p-6 ${className}`}>
+    <div className={`rounded-2xl border border-[#1f3d29] bg-[#112d1a] p-6 ${className}`}>
       {children}
     </div>
   );
 }
 
 const stageStyles: Record<ApprovalStatus, string> = {
-  Pending: "bg-orange-500/15 text-orange-500",
-  Approved: "bg-green-500/15 text-green-500",
-  Rejected: "bg-red-500/15 text-red-400",
-  Suspended: "bg-zinc-500/15 text-zinc-400",
+  Pending: "bg-amber-500/20 text-amber-400",
+  Approved: "bg-green-500/20 text-green-400",
+  Rejected: "bg-red-500/20 text-red-400",
+  Suspended: "bg-white/10 text-green-100/50",
 };
 
 function timeAgo(iso: string): string {
@@ -98,19 +98,19 @@ export default function VerificationBoard() {
   const rejectedCount = allEntries.filter((e) => e.status === "Rejected").length;
 
   return (
-    <div className="flex-1 min-w-0 p-8 text-zinc-100 text-sm">
+    <div className="flex-1 min-w-0 p-8 text-white text-sm">
 
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-bold m-0">Verification (RCA)</h1>
-          <p className="text-zinc-400 text-[13.5px] m-0 mt-1">
+          <p className="text-green-100/50 text-[13.5px] m-0 mt-1">
             Review cooperative and buyer registrations before granting access
           </p>
         </div>
         <button
           onClick={handleReseed}
-          className="flex items-center gap-2 rounded-lg border border-zinc-700 px-4 py-2 text-xs font-semibold text-zinc-300 hover:bg-zinc-800"
+          className="flex items-center gap-2 rounded-lg border border-[#1f3d29] px-4 py-2 text-xs font-semibold text-green-100/70 hover:bg-white/5"
         >
           <RefreshCw size={13} /> Add demo entries
         </button>
@@ -126,17 +126,17 @@ export default function VerificationBoard() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
         <Card>
           <div className="flex items-start justify-between">
-            <span className="text-[11.5px] uppercase tracking-wide text-zinc-500">Pending Review</span>
-            <div className="w-8 h-8 rounded-lg bg-orange-500/15 text-orange-500 flex items-center justify-center">
+            <span className="text-[11.5px] uppercase tracking-wide text-green-100/50">Pending Review</span>
+            <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center">
               <ShieldCheck size={16} />
             </div>
           </div>
-          <div className="text-[26px] font-bold mt-2.5 text-orange-400">{pendingCount}</div>
+          <div className="text-[26px] font-bold mt-2.5 text-amber-400">{pendingCount}</div>
         </Card>
         <Card>
           <div className="flex items-start justify-between">
-            <span className="text-[11.5px] uppercase tracking-wide text-zinc-500">Approved</span>
-            <div className="w-8 h-8 rounded-lg bg-green-500/15 text-green-500 flex items-center justify-center">
+            <span className="text-[11.5px] uppercase tracking-wide text-green-100/50">Approved</span>
+            <div className="w-8 h-8 rounded-lg bg-green-500/20 text-green-400 flex items-center justify-center">
               <ShieldCheck size={16} />
             </div>
           </div>
@@ -144,8 +144,8 @@ export default function VerificationBoard() {
         </Card>
         <Card>
           <div className="flex items-start justify-between">
-            <span className="text-[11.5px] uppercase tracking-wide text-zinc-500">Rejected</span>
-            <div className="w-8 h-8 rounded-lg bg-red-500/15 text-red-400 flex items-center justify-center">
+            <span className="text-[11.5px] uppercase tracking-wide text-green-100/50">Rejected</span>
+            <div className="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center">
               <Clock size={16} />
             </div>
           </div>
@@ -162,7 +162,7 @@ export default function VerificationBoard() {
             className={`rounded-lg px-4 py-1.5 text-xs font-semibold transition ${
               filterStatus === s
                 ? "bg-green-600 text-white"
-                : "border border-zinc-700 text-zinc-400 hover:bg-zinc-800"
+                : "border border-[#1f3d29] text-green-100/50 hover:bg-white/5"
             }`}
           >
             {s} {s !== "All" && `(${allEntries.filter((e) => e.status === s).length})`}
@@ -174,12 +174,12 @@ export default function VerificationBoard() {
       <Card>
         <p className="text-[15.5px] font-bold m-0 mb-4">
           {filterStatus === "All" ? "All Registrations" : `${filterStatus} Registrations`}
-          <span className="ml-2 text-zinc-500 text-sm font-normal">({displayed.length})</span>
+          <span className="ml-2 text-green-100/50 text-sm font-normal">({displayed.length})</span>
         </p>
 
         {displayed.length === 0 && (
           <div className="py-8 text-center">
-            <p className="text-zinc-500 text-sm">
+            <p className="text-green-100/50 text-sm">
               {allEntries.length === 0
                 ? 'No registrations yet. Click "Add demo entries" to populate the queue.'
                 : `No ${filterStatus.toLowerCase()} entries.`}
@@ -190,16 +190,16 @@ export default function VerificationBoard() {
         {displayed.map((q) => (
           <div
             key={q.id}
-            className="flex flex-col gap-3 py-4 border-b border-zinc-800 last:border-b-0 sm:flex-row sm:items-center sm:justify-between"
+            className="flex flex-col gap-3 py-4 border-b border-[#1f3d29] last:border-b-0 sm:flex-row sm:items-center sm:justify-between"
           >
             <div className="min-w-0">
               <div className="font-semibold text-[13.5px] mb-1">{q.name}</div>
-              <div className="flex flex-wrap items-center gap-2 text-[11.5px] text-zinc-500">
-                <span className="bg-zinc-800 border border-zinc-700 px-2 py-0.5 rounded">{q.type}</span>
+              <div className="flex flex-wrap items-center gap-2 text-[11.5px] text-green-100/50">
+                <span className="bg-white/10 border border-white/10 px-2 py-0.5 rounded">{q.type}</span>
                 <span className="flex items-center gap-1"><MapPin size={11} /> {q.district}</span>
                 <span className="flex items-center gap-1"><Clock size={11} /> {timeAgo(q.submittedAt)}</span>
                 <span className="flex items-center gap-1"><FileText size={11} /> {q.docs} docs</span>
-                <span className="text-[11px] text-zinc-600">{q.email}</span>
+                <span className="text-[11px] text-green-100/40">{q.email}</span>
               </div>
             </div>
 
@@ -209,7 +209,7 @@ export default function VerificationBoard() {
               </span>
               <button
                 onClick={() => setReviewing(q)}
-                className="flex items-center gap-1.5 border border-zinc-700 text-zinc-300 text-xs px-3 py-1.5 rounded-md hover:bg-zinc-800"
+                className="flex items-center gap-1.5 border border-[#1f3d29] text-green-100/70 text-xs px-3 py-1.5 rounded-md hover:bg-white/5"
               >
                 <Eye size={12} /> Details
               </button>
@@ -253,33 +253,33 @@ export default function VerificationBoard() {
       {/* Detail modal */}
       {reviewing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-          <div className="w-full max-w-md rounded-2xl border border-zinc-700 bg-zinc-900 p-6 shadow-2xl">
+          <div className="w-full max-w-md rounded-2xl border border-[#1f3d29] bg-[#112d1a] p-6 shadow-2xl">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-lg font-bold text-white">{reviewing.name}</h2>
-              <button onClick={() => setReviewing(null)} className="text-zinc-400 hover:text-white">
+              <button onClick={() => setReviewing(null)} className="text-green-100/50 hover:text-white">
                 <X size={20} />
               </button>
             </div>
 
-            <div className="space-y-3 text-sm text-zinc-300 mb-6">
+            <div className="space-y-3 text-sm text-green-100/70 mb-6">
               <div className="flex justify-between">
-                <span className="text-zinc-500">Type</span>
+                <span className="text-green-100/50">Type</span>
                 <span>{reviewing.type}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-zinc-500">Email</span>
+                <span className="text-green-100/50">Email</span>
                 <span className="text-green-400">{reviewing.email}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-zinc-500">District</span>
+                <span className="text-green-100/50">District</span>
                 <span>{reviewing.district}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-zinc-500">Submitted</span>
+                <span className="text-green-100/50">Submitted</span>
                 <span>{timeAgo(reviewing.submittedAt)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-zinc-500">Status</span>
+                <span className="text-green-100/50">Status</span>
                 <span className={`font-semibold ${stageStyles[reviewing.status]}`}>{reviewing.status}</span>
               </div>
             </div>
