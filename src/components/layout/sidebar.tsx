@@ -126,7 +126,9 @@ export default function Sidebar({ onClose }: SidebarProps) {
         {/* Online status badge */}
         <div className="mt-3 flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-          <span className="text-[11px] text-green-300/80">Active · {account?.email ?? "demo@coop.rw"}</span>
+          <span className="text-[11px] text-green-300/80">
+            Active · {account?.district ? `${account.district} District` : "Rwanda"}
+          </span>
         </div>
       </div>
 

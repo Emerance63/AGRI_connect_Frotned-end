@@ -6,6 +6,7 @@ import {
   getByStatus,
   approveEntry,
   rejectEntry,
+  submitForApproval,
   type PendingEntry,
 } from "@/lib/adminData";
 
@@ -65,8 +66,7 @@ export default function VerificationBoard() {
 
   // Seed demo data on first load if queue is empty — so the board isn't blank
   useEffect(() => {
-    const { submitForApproval, getByStatus: gbs } = require("@/lib/adminData");
-    if (gbs("Pending").length === 0) {
+    if (getByStatus("Pending").length === 0 && getByStatus("Approved").length === 0) {
       const demos = [
         { name: "Rulindo Coffee Coop", email: "rulindo@coop.rw", type: "Cooperative" as const, district: "Rulindo" },
         { name: "Bugesera Dairy Union", email: "bugesera@coop.rw", type: "Cooperative" as const, district: "Bugesera" },

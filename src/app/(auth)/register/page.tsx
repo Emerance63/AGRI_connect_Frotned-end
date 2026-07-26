@@ -144,6 +144,7 @@ export default function RegisterCooperativePage() {
       cooperativeName: form.cooperativeName,
       email: form.email,
       password: form.password,
+      district: form.district || form.province || "Rwanda",
     });
     if (!result.ok) {
       setSubmitError(result.message ?? "Unable to create your account.");

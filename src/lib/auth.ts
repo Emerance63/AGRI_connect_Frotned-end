@@ -4,6 +4,7 @@ export type Account = {
   cooperativeName: string;
   email: string;
   password: string;
+  district?: string;
 };
 
 const ACCOUNTS_KEY = "agriconnect_accounts";
@@ -45,7 +46,12 @@ export function registerAccount(account: Account): { ok: boolean; message?: stri
 
   saveAccounts([
     ...accounts,
-    { ...account, cooperativeName: account.cooperativeName.trim(), email },
+    {
+      ...account,
+      cooperativeName: account.cooperativeName.trim(),
+      email,
+      district: account.district?.trim() || undefined,
+    },
   ]);
   return { ok: true };
 }
