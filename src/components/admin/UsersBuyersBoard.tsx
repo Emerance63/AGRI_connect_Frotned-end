@@ -1,8 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Search, Users, ShoppingBag, UserCheck, MoreVertical, ShieldBan, ShieldCheck } from "lucide-react";
-import { getQueue, suspendEntry, approveEntry, type PendingEntry, type ApprovalStatus } from "@/lib/adminData";
+import { Search, Users, ShoppingBag, UserCheck } from "lucide-react";
+import {
+  getQueue,
+  suspendEntry,
+  approveEntry,
+  rejectEntry,
+  type PendingEntry,
+  type ApprovalStatus,
+} from "@/lib/adminData";
 
 function Card({ children }: { children: React.ReactNode }) {
   return <div className="rounded-3xl border border-zinc-800 bg-zinc-950 p-4">{children}</div>;
@@ -22,15 +29,13 @@ function timeAgo(iso: string): string {
   if (mins < 60) return `${mins}m ago`;
   const hrs = Math.floor(mins / 60);
   if (hrs < 24) return `${hrs}h ago`;
-  const days = Math.floor(hrs / 24);
-  return `${days}d ago`;
+  return `${Math.floor(hrs / 24)}d ago`;
 }
 
 export default function UsersBuyersBoard() {
   const [query, setQuery] = useState("");
   const [entries, setEntries] = useState<PendingEntry[]>([]);
   const [feedback, setFeedback] = useState("");
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
 
   function load() {
     setEntries(getQueue());
@@ -50,17 +55,21 @@ export default function UsersBuyersBoard() {
   const buyers = entries.filter((e) => e.type === "Buyer");
   const pending = entries.filter((e) => e.status === "Pending");
 
-  function handleSuspend(email: string) {
-    suspendEntry(email);
-    setFeedback(`Account suspended.`);
-    setOpenMenu(null);
+  function handleApprove(email: string) {
+    approveEntry(email);
+    setFeedback(`✓ Account approved. User can now log in.`);
     load();
   }
 
-  function handleApprove(email: string) {
-    approveEntry(email);
-    setFeedback(`Account approved.`);
-    setOpenMenu(null);
+  function handleReject(email: string) {
+    rejectEntry(email);
+    setFeedback(`✗ Account rejected.`);
+    load();
+  }
+
+  function handleSuspend(email: string) {
+    suspendEntry(email);
+    setFeedback(`Account suspended.`);
     load();
   }
 
@@ -78,8 +87,9 @@ export default function UsersBuyersBoard() {
       </div>
 
       {feedback && (
-        <div className="mb-4 rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-2.5 text-sm text-green-400">
-          {feedback}
+        <div className="mb-4 rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-2.5 text-sm text-green-400 flex items-center justify-between">
+          <span>{feedback}</span>
+          <button onClick={() => setFeedback("")} className="text-green-400/60 hover:text-green-400 ml-4">✕</button>
         </div>
       )}
 
@@ -114,91 +124,92 @@ export default function UsersBuyersBoard() {
         </Card>
       </div>
 
-      {/* Table */}
-      <Card>
-        <div className="flex items-center gap-2 mb-4 px-3 py-2 rounded-lg border border-zinc-800 bg-zinc-950 max-w-sm">
-          <Search size={15} className="text-zinc-500" />
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by name, email, or district"
-            className="bg-transparent outline-none text-[13px] text-zinc-200 placeholder:text-zinc-600 w-full"
-          />
-        </div>
+      {/* Search */}
+      <div className="flex items-center gap-2 mb-4 px-3 py-2 rounded-lg border border-zinc-800 bg-zinc-950 max-w-sm">
+        <Search size={15} className="text-zinc-500 shrink-0" />
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search by name, email, or district"
+          className="bg-transparent outline-none text-[13px] text-zinc-200 placeholder:text-zinc-600 w-full"
+        />
+      </div>
 
-        {entries.length === 0 ? (
-          <p className="py-8 text-center text-zinc-500 text-sm">
-            No registrations yet. Accounts appear here when cooperatives register.
-          </p>
-        ) : (
-          <>
-            <div className="grid grid-cols-[2fr_1.2fr_1fr_1fr_1fr_auto] gap-2 text-[11px] uppercase tracking-wide text-zinc-500 pb-2.5 border-b border-zinc-800">
-              <span>Name</span>
-              <span>Type</span>
-              <span>District</span>
-              <span>Status</span>
-              <span>Registered</span>
-              <span />
+      {/* Cards list — replaces cramped table for better readability */}
+      <div className="space-y-3">
+        {entries.length === 0 && (
+          <Card>
+            <p className="py-4 text-center text-zinc-500 text-sm">
+              No registrations yet. Accounts appear here when cooperatives register.
+            </p>
+          </Card>
+        )}
+
+        {filtered.map((e) => (
+          <div
+            key={e.id}
+            className="rounded-2xl border border-zinc-800 bg-zinc-950 p-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+          >
+            {/* Info */}
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-semibold text-[14px]">{e.name}</span>
+                <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-md ${statusStyles[e.status]}`}>
+                  {e.status}
+                </span>
+              </div>
+              <div className="text-[12px] text-zinc-500 mt-0.5">{e.email}</div>
+              <div className="flex flex-wrap items-center gap-3 mt-1.5 text-[11.5px] text-zinc-500">
+                <span className="bg-zinc-800 border border-zinc-700 px-2 py-0.5 rounded">{e.type}</span>
+                <span>📍 {e.district}</span>
+                <span>🕐 {timeAgo(e.submittedAt)}</span>
+              </div>
             </div>
 
-            {filtered.map((e) => (
-              <div
-                key={e.id}
-                className="grid grid-cols-[2fr_1.2fr_1fr_1fr_1fr_auto] gap-2 items-center py-3.5 border-b border-zinc-800 last:border-b-0 text-[13.5px] relative"
-              >
-                <div>
-                  <div className="font-semibold">{e.name}</div>
-                  <div className="text-[11.5px] text-zinc-500">{e.email}</div>
-                </div>
-                <span className="text-zinc-400">{e.type}</span>
-                <span className="text-zinc-400">{e.district}</span>
-                <span>
-                  <span className={`text-[11.5px] font-semibold px-2.5 py-1 rounded-md ${statusStyles[e.status]}`}>
-                    {e.status}
-                  </span>
-                </span>
-                <span className="text-zinc-400 text-[12px]">{timeAgo(e.submittedAt)}</span>
-
-                {/* Actions menu */}
-                <div className="relative">
+            {/* Action buttons — always visible */}
+            <div className="flex flex-wrap gap-2 shrink-0">
+              {e.status === "Pending" && (
+                <>
                   <button
-                    onClick={() => setOpenMenu(openMenu === e.id ? null : e.id)}
-                    className="text-zinc-500 hover:text-white"
+                    onClick={() => handleApprove(e.email)}
+                    className="rounded-lg bg-green-500 text-black font-bold text-xs px-4 py-2 hover:bg-green-400 transition"
                   >
-                    <MoreVertical size={16} />
+                    ✓ Approve
                   </button>
-                  {openMenu === e.id && (
-                    <div className="absolute right-0 top-6 z-20 w-36 rounded-xl border border-zinc-700 bg-zinc-900 shadow-xl overflow-hidden">
-                      {e.status !== "Approved" && (
-                        <button
-                          onClick={() => handleApprove(e.email)}
-                          className="flex w-full items-center gap-2 px-4 py-2.5 text-xs text-green-400 hover:bg-zinc-800"
-                        >
-                          <ShieldCheck size={13} /> Approve
-                        </button>
-                      )}
-                      {e.status !== "Suspended" && (
-                        <button
-                          onClick={() => handleSuspend(e.email)}
-                          className="flex w-full items-center gap-2 px-4 py-2.5 text-xs text-red-400 hover:bg-zinc-800"
-                        >
-                          <ShieldBan size={13} /> Suspend
-                        </button>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
+                  <button
+                    onClick={() => handleReject(e.email)}
+                    className="rounded-lg bg-red-600 text-white font-bold text-xs px-4 py-2 hover:bg-red-500 transition"
+                  >
+                    ✗ Reject
+                  </button>
+                </>
+              )}
+              {e.status === "Approved" && (
+                <button
+                  onClick={() => handleSuspend(e.email)}
+                  className="rounded-lg border border-red-600 text-red-400 text-xs px-4 py-2 hover:bg-red-600 hover:text-white transition"
+                >
+                  Suspend
+                </button>
+              )}
+              {(e.status === "Rejected" || e.status === "Suspended") && (
+                <button
+                  onClick={() => handleApprove(e.email)}
+                  className="rounded-lg border border-green-500 text-green-400 text-xs px-4 py-2 hover:bg-green-500 hover:text-black transition"
+                >
+                  Re-approve
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
 
-            {filtered.length === 0 && query && (
-              <div className="py-8 text-center text-zinc-500 text-sm">
-                No matches for &quot;{query}&quot;.
-              </div>
-            )}
-          </>
+        {filtered.length === 0 && query && (
+          <Card>
+            <p className="py-4 text-center text-zinc-500 text-sm">No matches for &quot;{query}&quot;.</p>
+          </Card>
         )}
-      </Card>
+      </div>
 
     </div>
   );
