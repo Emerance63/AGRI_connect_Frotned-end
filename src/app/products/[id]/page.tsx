@@ -1,7 +1,7 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, MapPin, Calendar, Phone, Mail, Package } from "lucide-react";
@@ -10,8 +10,9 @@ import { getPublishedCooperativeProducts } from "@/lib/publishedProducts";
 import { useLanguage } from "@/lib/LanguageContext";
 import type { Product } from "@/data/products";
 
-export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function ProductDetailPage() {
+  const params = useParams();
+  const id = params?.id as string;
   const { t } = useLanguage();
   const router = useRouter();
   const [product, setProduct] = useState<Product | null>(null);
