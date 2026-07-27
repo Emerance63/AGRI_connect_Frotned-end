@@ -1,4 +1,5 @@
-const BASE_URL = "https://agriconnectbackend-production-c9b1.up.railway.app";
+const BASE_URL = ""; // Empty = use local Next.js proxy routes (avoids CORS)
+const BACKEND_URL = "https://agriconnectbackend-production-c9b1.up.railway.app"; // used only for non-proxied public calls
 const TOKEN_KEY = "agriconnect_jwt";
 
 // ─── Token helpers ────────────────────────────────────────────────────────────
@@ -38,7 +39,14 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
   return res.json() as Promise<T>;
 }
 
-// ─── Auth ─────────────────────────────────────────────────────────────────────
+// Direct (non-proxied) for public endpoints
+async function requestDirect<T>(method: string, path: string): Promise<T> {
+  const res = await fetch(`${BACKEND_URL}${path}`, { method });
+  if (!res.ok) throw new Error(`${res.status}: ${res.statusText}`);
+  return res.json() as Promise<T>;
+}
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 export type AuthResponse = { accessToken: string; tokenType: string };
 
@@ -388,7 +396,7 @@ export type PublicProduct = {
 };
 
 export async function apiGetPublicProducts(cooperativeId: string): Promise<PublicProduct[]> {
-  return request<PublicProduct[]>(
+  return requestDirect<PublicProduct[]>(
     "GET",
     `/api/public/cooperatives/${cooperativeId}/products`
   );
