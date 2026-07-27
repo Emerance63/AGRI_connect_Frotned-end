@@ -1,4 +1,5 @@
 import { getStatus } from "@/lib/adminData";
+import { apiLogin, apiRegister, saveToken, clearToken, getToken } from "@/lib/apiClient";
 
 export type Account = {
   cooperativeName: string;
@@ -36,6 +37,11 @@ function saveAccounts(accounts: Account[]) {
   localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts));
 }
 
+/**
+ * Register an account locally (localStorage fallback) and optionally via
+ * the real API. Returns immediately after local registration so the UI
+ * stays responsive; the API call is best-effort.
+ */
 export function registerAccount(account: Account): { ok: boolean; message?: string } {
   const accounts = getAccounts();
   const email = account.email.trim().toLowerCase();
@@ -56,30 +62,77 @@ export function registerAccount(account: Account): { ok: boolean; message?: stri
   return { ok: true };
 }
 
+/**
+ * Register via the real API. Stores JWT on success.
+ * Callers should still call registerAccount() for local fallback.
+ */
+export async function registerAccountApi(payload: {
+  fullName: string;
+  phoneNumber: string;
+  nationalId: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  cooperativeName: string;
+  registrationNumber: string;
+  province: string;
+  district: string;
+  sector: string;
+  contactInfo: string;
+  description?: string;
+}): Promise<{ ok: boolean; message?: string }> {
+  try {
+    const response = await apiRegister(payload);
+    if (response.accessToken) {
+      saveToken(response.accessToken);
+    }
+    return { ok: true };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Registration failed.";
+    return { ok: false, message };
+  }
+}
+
+/**
+ * Sign in synchronously against localStorage (always works for demo/offline).
+ * Also attempts a real API login and stores the JWT on success.
+ */
 export function signIn(
   email: string,
   password: string
 ): { ok: boolean; message?: string; status?: "pending" | "rejected" | "suspended" } {
   const normalizedEmail = email.trim().toLowerCase();
 
-  // Find the account
+  // Attempt real API login in the background — store JWT if it succeeds
+  apiLogin(normalizedEmail, password)
+    .then((res) => {
+      if (res.accessToken) saveToken(res.accessToken);
+    })
+    .catch(() => {
+      // API login failed — continue with localStorage session only
+    });
+
+  // Demo accounts always succeed without approval checks
+  if (DEMO_EMAILS.has(normalizedEmail)) {
+    const account = getAccounts().find(
+      (item) => item.email === normalizedEmail && item.password === password
+    );
+    if (!account) return { ok: false, message: "Incorrect email or password." };
+    localStorage.setItem(SESSION_KEY, JSON.stringify({ email: normalizedEmail }));
+    return { ok: true };
+  }
+
+  // Find the account in localStorage
   const account = getAccounts().find(
     (item) => item.email === normalizedEmail && item.password === password
   );
 
   if (!account) return { ok: false, message: "Incorrect email or password." };
 
-  // Demo accounts skip the approval check
-  if (DEMO_EMAILS.has(normalizedEmail)) {
-    localStorage.setItem(SESSION_KEY, JSON.stringify({ email: normalizedEmail }));
-    return { ok: true };
-  }
-
   // Check admin approval status
   const approvalStatus = getStatus(normalizedEmail);
 
   if (approvalStatus === "Pending" || approvalStatus === null) {
-    // null means not in queue yet — treat same as pending
     return {
       ok: false,
       status: "pending",
@@ -105,7 +158,7 @@ export function signIn(
     };
   }
 
-  // Approved — create session
+  // Approved — create local session
   localStorage.setItem(SESSION_KEY, JSON.stringify({ email: normalizedEmail }));
   return { ok: true };
 }
@@ -116,7 +169,10 @@ export function isAuthenticated() {
 }
 
 export function signOut() {
-  if (isBrowser()) localStorage.removeItem(SESSION_KEY);
+  if (isBrowser()) {
+    localStorage.removeItem(SESSION_KEY);
+    clearToken();
+  }
 }
 
 export function getCurrentAccount(): Account | null {
@@ -139,4 +195,9 @@ export function resetPassword(email: string, password: string) {
   accounts[index] = { ...accounts[index], password };
   saveAccounts(accounts);
   return { ok: true };
+}
+
+/** Returns true when a real JWT token is present (API is usable). */
+export function hasApiToken(): boolean {
+  return Boolean(getToken());
 }
