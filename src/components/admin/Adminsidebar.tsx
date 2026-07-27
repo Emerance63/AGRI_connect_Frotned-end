@@ -8,7 +8,7 @@ import {
 
 const navItems = [
   { icon: LayoutGrid, label: "Platform Overview", href: "/admin" },
-  { icon: Users,      label: "Users & Buyers",    href: "/admin/users" },
+  { icon: Users,      label: "Cooperatives",         href: "/admin/users" },
   { icon: ShieldCheck,label: "Verification (RCA)", href: "/admin/verification" },
   { icon: BarChart3,  label: "Reports",            href: "/admin/reports" },
   { icon: Settings,   label: "Platform Settings",  href: "/admin/settings" },
