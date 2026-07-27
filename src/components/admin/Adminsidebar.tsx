@@ -1,17 +1,19 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutGrid, Users, ShieldCheck, BarChart3, Settings, Shield, LogOut,
 } from "lucide-react";
+import { apiGetPendingCooperatives } from "@/lib/apiClient";
 
 const navItems = [
-  { icon: LayoutGrid, label: "Platform Overview", href: "/admin" },
-  { icon: Users,      label: "Cooperatives",         href: "/admin/users" },
-  { icon: ShieldCheck,label: "Verification (RCA)", href: "/admin/verification" },
-  { icon: BarChart3,  label: "Reports",            href: "/admin/reports" },
-  { icon: Settings,   label: "Platform Settings",  href: "/admin/settings" },
+  { icon: LayoutGrid,  label: "Platform Overview", href: "/admin" },
+  { icon: Users,       label: "Cooperatives",       href: "/admin/users" },
+  { icon: ShieldCheck, label: "Verification (RCA)", href: "/admin/verification" },
+  { icon: BarChart3,   label: "Reports",            href: "/admin/reports" },
+  { icon: Settings,    label: "Platform Settings",  href: "/admin/settings" },
 ];
 
 interface AdminSidebarProps {
@@ -20,6 +22,13 @@ interface AdminSidebarProps {
 
 export default function AdminSidebar({ onClose }: AdminSidebarProps) {
   const pathname = usePathname();
+  const [pendingCount, setPendingCount] = useState(0);
+
+  useEffect(() => {
+    apiGetPendingCooperatives()
+      .then((data) => setPendingCount(data.length))
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="flex h-full w-64 shrink-0 flex-col border-r border-[#1f3d29] bg-[#0d2818] p-3.5 font-sans">
@@ -36,11 +45,8 @@ export default function AdminSidebar({ onClose }: AdminSidebarProps) {
       </div>
 
       {/* Switch to Home */}
-      <Link
-        href="/"
-        onClick={onClose}
-        className="mb-4 flex items-center gap-2 rounded-lg border border-[#1f3d29] px-3 py-2.5 text-[13px] font-medium text-green-100/70 transition-colors hover:border-white/10 hover:bg-white/5 hover:text-white"
-      >
+      <Link href="/" onClick={onClose}
+        className="mb-4 flex items-center gap-2 rounded-lg border border-[#1f3d29] px-3 py-2.5 text-[13px] font-medium text-green-100/70 transition-colors hover:border-white/10 hover:bg-white/5 hover:text-white">
         <LogOut size={15} />
         Switch to Home
       </Link>
@@ -49,11 +55,10 @@ export default function AdminSidebar({ onClose }: AdminSidebarProps) {
       <nav className="flex flex-col gap-0.5">
         {navItems.map(({ icon: Icon, label, href }) => {
           const isActive = href === "/admin" ? pathname === "/admin" : pathname?.startsWith(href);
+          const isVerification = href === "/admin/verification";
+
           return (
-            <Link
-              key={label}
-              href={href}
-              onClick={onClose}
+            <Link key={label} href={href} onClick={onClose}
               className={`flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-[13.5px] transition-colors ${
                 isActive
                   ? "bg-green-600 font-semibold text-white"
@@ -61,8 +66,18 @@ export default function AdminSidebar({ onClose }: AdminSidebarProps) {
               }`}
             >
               <Icon size={16} className="shrink-0" />
-              <span className="truncate">{label}</span>
-              {isActive && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-white/60" />}
+              <span className="truncate flex-1">{label}</span>
+
+              {/* Notification badge on Verification */}
+              {isVerification && pendingCount > 0 && (
+                <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500 text-[10px] font-bold text-black px-1">
+                  {pendingCount}
+                </span>
+              )}
+
+              {isActive && pendingCount === 0 && (
+                <span className="ml-auto h-1.5 w-1.5 rounded-full bg-white/60" />
+              )}
             </Link>
           );
         })}
