@@ -60,7 +60,7 @@ export default function AddProductModal({ open, onClose, onSave }: AddProductMod
     onSave({
       id: Date.now(),
       name, tag, price, weight, description, status,
-      published: false,
+      published: true,
       imageUrl: imageUrl || undefined,
     });
   }

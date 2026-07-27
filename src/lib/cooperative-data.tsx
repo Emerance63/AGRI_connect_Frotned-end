@@ -166,20 +166,12 @@ function readStoredState(): CooperativeDataState {
 const CooperativeDataContext = createContext<CooperativeDataContextValue | null>(null);
 
 export function CooperativeDataProvider({ children }: { children: React.ReactNode }) {
-  const [buyers, setBuyers] = useState<Buyer[]>(initialState.buyers);
-  const [products, setProducts] = useState<ProductItemType[]>(initialState.products);
-  const [inventory, setInventory] = useState<InventoryItem[]>(initialState.inventory);
-  const [members, setMembers] = useState<Member[]>(initialState.members);
-  const [orders, setOrders] = useState<OrderItem[]>(initialState.orders);
-
-  useEffect(() => {
-    const stored = readStoredState();
-    setBuyers(stored.buyers);
-    setProducts(stored.products);
-    setInventory(stored.inventory);
-    setMembers(stored.members);
-    setOrders(stored.orders);
-  }, []);
+  // Lazy initializers — read localStorage on first render, no useEffect flash
+  const [buyers, setBuyers] = useState<Buyer[]>(() => readStoredState().buyers);
+  const [products, setProducts] = useState<ProductItemType[]>(() => readStoredState().products);
+  const [inventory, setInventory] = useState<InventoryItem[]>(() => readStoredState().inventory);
+  const [members, setMembers] = useState<Member[]>(() => readStoredState().members);
+  const [orders, setOrders] = useState<OrderItem[]>(() => readStoredState().orders);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
